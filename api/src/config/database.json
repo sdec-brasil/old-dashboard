@@ -1,16 +1,16 @@
 {
   "development": {
     "username": "root",
-    "password": null,
-    "database": "graphql",
+    "password": "admin",
+    "database": "development",
     "host": "127.0.0.1",
-    "dialect": "mysql"
+    "dialect": "postgres"
   },
   "production": {
     "username": "root",
     "password": null,
-    "database": "graphql_production",
+    "database": "production",
     "host": "127.0.0.1",
-    "dialect": "mysql"
+    "dialect": "postgres"
   }
 }
