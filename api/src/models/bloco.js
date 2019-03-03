@@ -1,14 +1,10 @@
 // Bloco
 export default (sequelize, DataTypes) => sequelize.define('bloco', {
-  id_bloco: {
-    type: DataTypes.STRING,
-    primaryKey: true,
-    unique: true,
-    allowNull: false,
-  },
   hash_bloco: {
     type: DataTypes.STRING,
+    primaryKey: true,
     allowNull: false,
+    unique: true,
   },
   num_transacoes: {
     type: DataTypes.INTEGER,
@@ -30,11 +26,6 @@ export default (sequelize, DataTypes) => sequelize.define('bloco', {
     type: DataTypes.TIME,
     allowNull: false,
   },
-  minerador: {
-    // chave_estrangeira
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
   dificuldade: {
     type: DataTypes.DOUBLE,
     allowNull: false,
@@ -45,10 +36,6 @@ export default (sequelize, DataTypes) => sequelize.define('bloco', {
   },
   nonce: {
     type: DataTypes.INTEGER,
-    allowNull: false,
-  },
-  recompensa: {
-    type: DataTypes.DOUBLE,
     allowNull: false,
   },
 });
