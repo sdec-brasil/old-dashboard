@@ -1,38 +1,35 @@
 // Imports
-import React, {Component} from 'react'
-import {connect} from 'react-redux'
-import PropTypes from 'prop-types'
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
 
 // App Imports
-import {renderIf} from '../../setup/helpers'
-import {menuShow, menuHide, messageHide} from './api/actions'
-import Menu from './Menu'
+import { renderIf } from "../../setup/helpers";
+import { menuShow, menuHide, messageHide } from "./api/actions";
+import Menu from "./Menu";
 
 // Component
 class Layout extends Component {
-
   render() {
-    const {children} = this.props
+    const { children } = this.props;
 
     return (
       <div>
         {/* Header */}
         <header>
           {renderIf(this.props.common.menuIsVisible, () => (
-            <Menu/>
+            <Menu />
           ))}
 
           {/* Header visible toggle button */}
-          {
-            this.props.common.menuIsVisible
-              ?
-              <button onClick={this.props.menuHide}>Hide Menu</button>
-              :
-              <button onClick={this.props.menuShow}>Show Menu</button>
-          }
+          {this.props.common.menuIsVisible ? (
+            <button onClick={this.props.menuHide}>Hide Menu</button>
+          ) : (
+            <button onClick={this.props.menuShow}>Show Menu</button>
+          )}
         </header>
 
-        <hr/>
+        <hr />
 
         {/* Message */}
         {renderIf(this.props.common.message.open, () => (
@@ -45,16 +42,14 @@ class Layout extends Component {
 
             <button onClick={this.props.messageHide}>Hide Messages</button>
 
-            <hr/>
+            <hr />
           </div>
         ))}
 
         {/* Page content */}
-        <section>
-          {children}
-        </section>
+        <section>{children}</section>
       </div>
-    )
+    );
   }
 }
 
@@ -64,13 +59,16 @@ Layout.propTypes = {
   menuShow: PropTypes.func.isRequired,
   menuHide: PropTypes.func.isRequired,
   messageHide: PropTypes.func.isRequired
-}
+};
 
 // Component State
 function commonState(state) {
   return {
     common: state.common
-  }
+  };
 }
 
-export default connect(commonState, {menuShow, menuHide, messageHide})(Layout)
+export default connect(
+  commonState,
+  { menuShow, menuHide, messageHide }
+)(Layout);

@@ -1,14 +1,14 @@
 // Imports
-import {GraphQLSchema} from 'graphql'
+import { GraphQLSchema } from 'graphql';
 
 // App Imports
-import query from './query'
-import mutation from './mutation'
+import query from './query';
+import mutation from './mutation';
 
 // Schema
 const schema = new GraphQLSchema({
   query,
-  mutation
-})
+  mutation,
+});
 
-export default schema
+export default schema;

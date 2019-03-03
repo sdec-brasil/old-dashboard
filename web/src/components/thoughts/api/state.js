@@ -7,8 +7,8 @@ import {
   THOUGHTS_GET_LIST_FAILURE,
   THOUGHTS_GET_REQUEST,
   THOUGHTS_GET_RESPONSE,
-  THOUGHTS_GET_FAILURE,
-} from './actions'
+  THOUGHTS_GET_FAILURE
+} from "./actions";
 
 // Thoughts list
 
@@ -17,7 +17,7 @@ const thoughtsInitialState = {
   isLoading: false,
   error: null,
   list: []
-}
+};
 
 // State
 export const thoughts = (state = thoughtsInitialState, action) => {
@@ -27,7 +27,7 @@ export const thoughts = (state = thoughtsInitialState, action) => {
         ...state,
         isLoading: action.isLoading,
         error: null
-      }
+      };
 
     case THOUGHTS_GET_LIST_RESPONSE:
       return {
@@ -35,20 +35,19 @@ export const thoughts = (state = thoughtsInitialState, action) => {
         isLoading: false,
         error: action.error,
         list: action.list
-      }
+      };
 
     case THOUGHTS_GET_LIST_FAILURE:
       return {
         ...state,
         isLoading: false,
         error: action.error
-      }
+      };
 
     default:
-      return state
+      return state;
   }
-}
-
+};
 
 // Single thought
 
@@ -57,7 +56,7 @@ const thoughtInitialState = {
   isLoading: false,
   error: null,
   item: {}
-}
+};
 
 // State
 export const thought = (state = thoughtInitialState, action) => {
@@ -67,7 +66,7 @@ export const thought = (state = thoughtInitialState, action) => {
         ...state,
         isLoading: action.isLoading,
         error: null
-      }
+      };
 
     case THOUGHTS_GET_RESPONSE:
       return {
@@ -75,16 +74,16 @@ export const thought = (state = thoughtInitialState, action) => {
         isLoading: false,
         error: action.error,
         item: action.item
-      }
+      };
 
     case THOUGHTS_GET_FAILURE:
       return {
         ...state,
         isLoading: false,
         error: action.error
-      }
+      };
 
     default:
-      return state
+      return state;
   }
-}
+};

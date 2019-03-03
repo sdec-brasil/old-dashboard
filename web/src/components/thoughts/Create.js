@@ -1,52 +1,52 @@
 // Imports
-import React, {Component} from 'react'
-import PropTypes from 'prop-types'
-import {connect} from 'react-redux'
-import {Link} from 'react-router-dom'
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 
 // App Imports
-import {routes} from '../../setup/routes'
-import {create} from './api/actions'
-import {messageShow, messageHide} from '../common/api/actions'
+import { routes } from "../../setup/routes";
+import { create } from "./api/actions";
+import { messageShow, messageHide } from "../common/api/actions";
 
 // Component
 class Create extends Component {
-
-  onChange = (event) => {
+  onChange = event => {
     this.setState({
       [event.target.name]: event.target.value
-    })
-  }
-  submit = (event) => {
-    event.preventDefault()
+    });
+  };
+  submit = event => {
+    event.preventDefault();
 
     // Hide old messages
-    this.props.messageHide()
+    this.props.messageHide();
 
-    this.props.messageShow('Creating thought, please wait...')
+    this.props.messageShow("Creating thought, please wait...");
 
     // Call API
-    this.props.create(this.state)
+    this.props
+      .create(this.state)
       .then(response => {
         this.setState({
-          name: '',
-          thought: '',
-        })
+          name: "",
+          thought: ""
+        });
 
-        this.props.messageShow('Thought created successfully.')
+        this.props.messageShow("Thought created successfully.");
       })
       .catch(error => {
-        this.props.messageShow('Error creating thought. Please try again.')
-      })
-  }
+        this.props.messageShow("Error creating thought. Please try again.");
+      });
+  };
 
   constructor(props) {
-    super(props)
+    super(props);
 
     this.state = {
-      name: '',
-      thought: ''
-    }
+      name: "",
+      thought: ""
+    };
   }
 
   render() {
@@ -70,7 +70,8 @@ class Create extends Component {
             onChange={this.onChange}
           />
 
-          <br/><br/>
+          <br />
+          <br />
 
           {/* Thought */}
           <textarea
@@ -81,13 +82,14 @@ class Create extends Component {
             onChange={this.onChange}
           />
 
-          <br/><br/>
+          <br />
+          <br />
 
           {/* Submit */}
           <button type="submit">Save</button>
         </form>
       </div>
-    )
+    );
   }
 }
 
@@ -96,6 +98,9 @@ Create.propTypes = {
   create: PropTypes.func.isRequired,
   messageShow: PropTypes.func.isRequired,
   messageHide: PropTypes.func.isRequired
-}
+};
 
-export default connect(null, {create, messageShow, messageHide})(Create)
+export default connect(
+  null,
+  { create, messageShow, messageHide }
+)(Create);

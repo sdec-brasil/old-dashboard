@@ -1,15 +1,14 @@
 // Imports
-import React, {Component} from 'react'
+import React, { Component } from "react";
 
 // App Imports
 
 // Component
 class DummyComponent extends Component {
-
   constructor(props) {
-    super(props)
+    super(props);
 
-    this.state = {}
+    this.state = {};
   }
 
   render() {
@@ -17,8 +16,8 @@ class DummyComponent extends Component {
       <div>
         <h1>Dummy Component</h1>
       </div>
-    )
+    );
   }
 }
 
-export default DummyComponent
+export default DummyComponent;

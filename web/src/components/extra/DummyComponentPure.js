@@ -1,5 +1,5 @@
 // Imports
-import React from 'react'
+import React from "react";
 
 // App Imports
 
@@ -8,6 +8,6 @@ const DummyComponentPure = () => (
   <div>
     <h1>Dummy Component Pure</h1>
   </div>
-)
+);
 
-export default DummyComponentPure
+export default DummyComponentPure;

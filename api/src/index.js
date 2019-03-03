@@ -1,19 +1,19 @@
 // Imports
-import express from 'express'
+import express from 'express';
 
 // App Imports
-import setupLoadModules from './setup/loadModules'
-import setupGraphQL from './setup/graphql'
-import setupStartServer from './setup/startServer'
+import setupLoadModules from './setup/loadModules';
+import setupGraphQL from './setup/graphql';
+import setupStartServer from './setup/startServer';
 
 // Create express server
-const server = express()
+const server = express();
 
 // Setup load modules
-setupLoadModules(server)
+setupLoadModules(server);
 
 // Setup GraphQL
-setupGraphQL(server)
+setupGraphQL(server);
 
 // Start server
-setupStartServer(server)
+setupStartServer(server);

@@ -1,5 +1,5 @@
 // App Imports
-import {MENU_SHOW, MENU_HIDE, MESSAGE_SHOW, MESSAGE_HIDE} from './actions'
+import { MENU_SHOW, MENU_HIDE, MESSAGE_SHOW, MESSAGE_HIDE } from "./actions";
 
 // Initial State
 export const commonInitialState = {
@@ -9,7 +9,7 @@ export const commonInitialState = {
     text: [],
     open: false
   }
-}
+};
 
 // State
 export default (state = commonInitialState, action) => {
@@ -18,13 +18,13 @@ export default (state = commonInitialState, action) => {
       return {
         ...state,
         menuIsVisible: true
-      }
+      };
 
     case MENU_HIDE:
       return {
         ...state,
         menuIsVisible: false
-      }
+      };
 
     case MESSAGE_SHOW:
       return {
@@ -33,7 +33,7 @@ export default (state = commonInitialState, action) => {
           text: [...state.message.text, action.message],
           open: true
         }
-      }
+      };
 
     case MESSAGE_HIDE:
       return {
@@ -42,9 +42,9 @@ export default (state = commonInitialState, action) => {
           text: [],
           open: false
         }
-      }
+      };
 
     default:
-      return state
+      return state;
   }
-}
+};

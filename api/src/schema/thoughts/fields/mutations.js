@@ -1,9 +1,9 @@
 // Imports
-import {GraphQLString, GraphQLInt} from 'graphql'
+import { GraphQLString, GraphQLInt } from 'graphql';
 
 // App Imports
-import ThoughtType from '../type'
-import {create, remove} from '../resolvers'
+import ThoughtType from '../type';
+import { create, remove } from '../resolvers';
 
 // Thought create
 export const thoughtCreate = {
@@ -11,16 +11,16 @@ export const thoughtCreate = {
   args: {
     name: {
       name: 'name',
-      type: GraphQLString
+      type: GraphQLString,
     },
 
     thought: {
       name: 'thought',
-      type: GraphQLString
-    }
+      type: GraphQLString,
+    },
   },
-  resolve: create
-}
+  resolve: create,
+};
 
 // Thought remove
 export const thoughtRemove = {
@@ -28,8 +28,8 @@ export const thoughtRemove = {
   args: {
     id: {
       name: 'id',
-      type: GraphQLInt
-    }
+      type: GraphQLInt,
+    },
   },
-  resolve: remove
-}
+  resolve: remove,
+};
