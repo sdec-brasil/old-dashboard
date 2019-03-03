@@ -8,24 +8,23 @@ export default (sequelize, DataTypes) => sequelize.define('dados_bancarios', {
     autoIncrement: true,
   },
   agencia: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.STRING,
     allowNull: false,
   },
   conta: {
-    type: DataTypes.BIGINT,
+    type: DataTypes.STRING,
     allowNull: false,
   },
   banco: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.STRING,
     allowNull: false,
   },
-  /* Com esse modelo existe uma questao.
-  1 - Como garantir a unicidade dos campos agencia + conta + banco ?
-  2 - Daria pra criar um campo que eh obtido pela concatenacao dos 3 e declarar ele como unico
-  3 - Outra solucao eh fazer um indice incremental inteiro, e quando novos dados vao ser inseridos
-      na tabela, a gente roda um procedure pra checar se eles ja nao foram inseridos antes
-
-  Coloquei a solucao descrita no item 3, mas ainda nao parei pra pensar em como fazer os procedures
-  Talvez seja melhor colocar os dados concatenados, so nao tenho certeza.
-  */
+}, {
+  underscored: true,
+  indexes: [
+    {
+      unique: true,
+      fields: ['agencia', 'conta', 'banco'],
+    },
+  ],
 });
