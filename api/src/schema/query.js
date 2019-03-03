@@ -3,6 +3,7 @@ import { GraphQLObjectType } from 'graphql';
 
 // App Imports
 import * as thought from './thoughts/fields/query';
+import * as block from './blocos/fields/query';
 
 // Query
 const query = new GraphQLObjectType({
@@ -10,7 +11,7 @@ const query = new GraphQLObjectType({
   description: '...',
 
   fields: () => ({
-    ...thought,
+    ...thought, block,
   }),
 });
 
