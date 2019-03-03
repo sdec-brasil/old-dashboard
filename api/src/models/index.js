@@ -6,6 +6,7 @@ import databaseConnection from '../setup/databaseConnection';
 
 const models = {
   Thought: databaseConnection.import('./thought'),
+  Bloco: databaseConnection.import('./bloco'),
 };
 
 Object.keys(models).forEach((modelName) => {

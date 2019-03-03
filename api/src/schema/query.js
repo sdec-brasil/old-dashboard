@@ -11,7 +11,7 @@ const query = new GraphQLObjectType({
   description: '...',
 
   fields: () => ({
-    ...thought, block,
+    ...thought, ...block,
   }),
 });
 
