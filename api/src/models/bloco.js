@@ -14,10 +14,6 @@ export default (sequelize, DataTypes) => sequelize.define('bloco', {
     type: DataTypes.DOUBLE,
     allowNull: false,
   },
-  volume_transacao: {
-    type: DataTypes.DOUBLE,
-    allowNull: false,
-  },
   altura: {
     type: DataTypes.INTEGER,
     allowNull: false,
@@ -27,7 +23,7 @@ export default (sequelize, DataTypes) => sequelize.define('bloco', {
     allowNull: false,
   },
   dificuldade: {
-    type: DataTypes.DOUBLE,
+    type: DataTypes.INTEGER,
     allowNull: false,
   },
   total_bits: {
