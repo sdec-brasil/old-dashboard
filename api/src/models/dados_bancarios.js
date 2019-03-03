@@ -2,14 +2,14 @@
 export default (sequelize, DataTypes) => {
   return sequelize.define("dados_bancarios", {
     id_dados_bancarios: {
-      type: DataTypes.Integer,
+      type: DataTypes.INTEGER,
       allowNull: false,
       unique: true,
       primaryKey: true,
       autoIncrement: true
     },
     agencia: {
-      type: DataTypes.Integer,
+      type: DataTypes.INTEGER,
       allowNull: false
     },
     conta: {
@@ -17,7 +17,7 @@ export default (sequelize, DataTypes) => {
       allowNull: false
     },
     banco: {
-      type: DataTypes.Integer,
+      type: DataTypes.INTEGER,
       allowNull: false
     }
     /* Com esse modelo existe uma questao.

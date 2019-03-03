@@ -2,13 +2,13 @@
 export default (sequelize, DataTypes) => {
   return sequelize.define("prefeitura", {
     codigo_municipio: {
-      type: DataTypes.Integer,
+      type: DataTypes.INTEGER,
       primaryKey: true,
       unique: true,
       allowNull: false
     },
     conta_bancaria: {
-      type: DataTypes.Integer,
+      type: DataTypes.INTEGER,
       unique: true,
       allowNull: false
       // Precisamos averiguar como conectar esse campo dessa tabela com a chave primaria

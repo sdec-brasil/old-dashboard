@@ -2,54 +2,54 @@
 export default (sequelize, DataTypes) => {
   return sequelize.define("bloco", {
     id_bloco: {
-      type: DataTypes.String,
+      type: DataTypes.STRING,
       primaryKey: true,
       unique: true,
       allowNull: false
     },
     hash_bloco: {
-      type: DataTypes.String,
+      type: DataTypes.STRING,
       allowNull: false
     },
     num_transacoes: {
-      type: DataTypes.Integer,
+      type: DataTypes.INTEGER,
       allowNull: false
     },
     output_total: {
-      type: DataTypes.Double,
+      type: DataTypes.DOUBLE,
       allowNull: false
     },
     volume_transacao: {
-      type: DataTypes.Double,
+      type: DataTypes.DOUBLE,
       allowNull: false
     },
     altura: {
-      type: DataTypes.Integer,
+      type: DataTypes.INTEGER,
       allowNull: false
     },
     data_emissao: {
-      type: DataTypes.Time,
+      type: DataTypes.TIME,
       allowNull: false
     },
     minerador: {
-      // precisa ser associado ao endereco de algum minerador
-      type: DataTypes.String,
+      // chave_estrangeira
+      type: DataTypes.STRING,
       allowNull: false
     },
     dificuldade: {
-      type: DataTypes.Double,
+      type: DataTypes.DOUBLE,
       allowNull: false
     },
     total_bits: {
-      type: DataTypes.Integer,
+      type: DataTypes.INTEGER,
       allowNull: false
     },
     nonce: {
-      type: DataTypes.Integer,
+      type: DataTypes.INTEGER,
       allowNull: false
     },
     recompensa: {
-      type: DataTypes.Double,
+      type: DataTypes.DOUBLE,
       allowNull: false
     }
   });
