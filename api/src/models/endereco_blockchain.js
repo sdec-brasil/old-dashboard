@@ -6,10 +6,6 @@ export default (sequelize, DataTypes) => sequelize.define('endereco_blockchain',
     unique: true,
     primaryKey: true,
   },
-  hash_160: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
   saldo_atual: {
     type: DataTypes.DOUBLE,
     allowNull: false,
