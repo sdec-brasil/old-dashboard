@@ -14,7 +14,7 @@ export default function (server) {
     config.graphqlEndpoint,
     graphqlHTTP(() => ({
       schema,
-      graphiql: config.graphql.ide,
+      graphiql: true, // Bug: for Rests Requests to work, this has to be false
       pretty: config.graphql.pretty,
     })),
   );
