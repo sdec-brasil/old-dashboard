@@ -4,7 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon --exec babel-node -- src/index.js"
+    "start": "nodemon --exec babel-node -- src/index.js",
+    "doc" : "graphdoc"
+  },
+  "graphdoc": {
+    "endpoint": "http://localhost:8000/graphql",
+    "output": "./doc/schema"
   },
   "keywords": [],
   "author": "",
@@ -17,6 +22,7 @@
     "nodemon": "1.18.10"
   },
   "dependencies": {
+    "@2fd/graphdoc": "^2.4.0",
     "bcrypt": "^3.0.0",
     "body-parser": "1.18.3",
     "cookie-parser": "^1.4.3",
