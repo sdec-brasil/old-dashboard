@@ -89,7 +89,7 @@ export default (sequelize, DataTypes) => sequelize.define(
       allowNull: true,
     },
     desconto_incondicionado: {
-      type: DataTypes.DOÙBLE,
+      type: DataTypes.DOUBLE,
       allowNull: true,
     },
     desconto_condicionado: {

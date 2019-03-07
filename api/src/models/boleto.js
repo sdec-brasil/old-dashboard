@@ -29,10 +29,10 @@ export default (sequelize, DataTypes) => sequelize.define(
       type: DataTypes.DATEONLY,
       allowNull: false,
     },
-    pago: {
-      type: DataTypes.BOOLEAN,
+    estado: {
+      type: DataTypes.SMALLINT, // 0 - pendente, 1 - pago, 2 - expirado
       allowNull: false,
-      defaultValue: false,
+      defaultValue: 0,
     },
   },
   {

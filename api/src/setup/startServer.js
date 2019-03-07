@@ -8,7 +8,7 @@ export default function (server) {
 
   // Create tables
   models.sequelize
-    .sync({})
+    .sync({ force: true })
     .then(() => {
       console.info('INFO - Database sync complete.');
 
@@ -23,7 +23,8 @@ export default function (server) {
         }
       });
     })
-    .catch(() => {
+    .catch((err) => {
+      console.log(err);
       console.error('ERROR - Unable to sync database.');
       console.error('ERROR - Server not started.');
     });

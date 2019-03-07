@@ -31,18 +31,19 @@ models.Nota_Fiscal.hasOne(models.Prefeitura, { foreignKey: 'codigo_prefeitura' }
 models.Nota_Fiscal.hasOne(models.Empresa, { foreignKey: 'cnpj' });
 models.Nota_Fiscal.hasOne(models.Transferencia, { foreignKey: 'id_nota_fiscal' });
 models.Nota_Fiscal.hasOne(models.Bloco, { foreignKey: 'id_bloco' });
+models.Nota_Fiscal.hasOne(models.Nota_Fiscal, { foreignKey: 'id_nota_substituida' });
 //
+
+
+// prefeitura
+models.Prefeitura.hasOne(models.Dados_Bancarios, { foreignKey: 'dados_bancarios' });
+
 
 // transferencia
 models.Transferencia.hasOne(models.Bloco, { foreignKey: 'id_bloco', constraints: true });
-models.Transferencia.hasOne(models.Endereco_Blockchain, {
-  foreignKey: 'endereco_remetente',
-  constraints: true,
-});
-models.Transferencia.hasOne(models.Endereco_Blockchain, {
-  foreignKey: 'endereco_destinatario',
-  constraints: true,
-});
+models.Transferencia.hasOne(models.Endereco_Blockchain, { foreignKey: 'endereco_remetente' });
+models.Transferencia.hasOne(models.Endereco_Blockchain, { foreignKey: 'endereco_destinatario' });
+
 
 Object.keys(models).forEach((modelName) => {
   if ('associate' in models[modelName]) {
