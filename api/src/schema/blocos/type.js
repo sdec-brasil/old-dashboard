@@ -9,17 +9,17 @@ const BlocoType = new GraphQLObjectType({
   description: 'Esse campo descreve um bloco da rede.',
 
   fields: () => ({
-    hash: { type: GraphQLString },
-    altura: { type: GraphQLInt },
-    numeroTransacoes: { type: GraphQLString },
-    outputTotal: { type: GraphQLFloat },
-    volumeTransacao: { type: GraphQLFloat },
-    dataEmissao: { type: GraphQLString },
-    dificuldade: { type: GraphQLInt },
-    totalBits: { type: GraphQLInt },
-    nonce: { type: GraphQLInt },
-    createdAt: { type: GraphQLString },
-    updatedAt: { type: GraphQLString },
+    hash: { type: GraphQLString, description: 'A hash do Bloco' },
+    altura: { type: GraphQLInt, description: 'A altura (número) do bloco' },
+    numeroTransacoes: { type: GraphQLString, description: 'Número de transações (nf + transf)' },
+    outputTotal: { type: GraphQLFloat, description: '' },
+    volumeTransacao: { type: GraphQLFloat, description: '' },
+    dataEmissao: { type: GraphQLString, description: '' },
+    dificuldade: { type: GraphQLInt, description: '' },
+    totalBits: { type: GraphQLInt, description: '' },
+    nonce: { type: GraphQLInt, description: '' },
+    createdAt: { type: GraphQLString, description: '' },
+    updatedAt: { type: GraphQLString, description: '' },
   }),
 });
 
