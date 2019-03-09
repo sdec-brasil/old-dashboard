@@ -8,6 +8,11 @@ import databaseConfig from '../config/database.json';
 // Load database config
 const databaseConfigEnv = databaseConfig[env];
 
+const opts = {
+  define: {
+    freezeTableName: true,
+  },
+};
 // Create new database connection
 const connection = new Sequelize(
   databaseConfigEnv.database,
@@ -18,7 +23,7 @@ const connection = new Sequelize(
     dialect: databaseConfigEnv.dialect,
     logging: false,
     operatorsAliases: Sequelize.Op,
-  },
+  }, opts,
 );
 
 // Test connection

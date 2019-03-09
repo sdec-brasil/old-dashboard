@@ -8,15 +8,6 @@ export default (sequelize, DataTypes) => sequelize.define(
       allowNull: false,
       unique: true,
     },
-    /* notas_correspondentes: {
-      type: DataTypes.ARRAY(DataTypes.STRING),
-      allowNull: false,
-      // tem que relacionar com a tabela nota_fiscal como chaves estrageiras para as notas
-    }, */
-    /* cnpj_pagador: {
-      type: DataTypes.STRING(14),
-      allowNull: false,
-    }, */
     data_pagamento: {
       type: DataTypes.DATEONLY,
       allowNull: false,
@@ -37,5 +28,7 @@ export default (sequelize, DataTypes) => sequelize.define(
   },
   {
     underscored: true,
+    tableName: 'boleto',
+    freezeTableName: true,
   },
 );

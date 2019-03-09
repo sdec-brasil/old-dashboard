@@ -4,30 +4,13 @@
 export default (sequelize, DataTypes) => sequelize.define(
   'nota_fiscal',
   {
-    id_transacao: {
-      type: DataTypes.STRING(64),
+    id_nota: {
+      type: DataTypes.BIGINT,
       primaryKey: true,
       unique: true,
+      autoIncremenet: true,
       allowNull: false,
     },
-    /* cnpj: {
-      type: DataTypes.STRING(14),
-      allowNull: false, // fazer referencia para a tabela empresa
-    }, */
-    /* id_municipio: {
-      type: DataTypes.STRING(7),
-      allowNull: false, // referenciar tabela de prefeitura
-    }, */
-    /* id_bloco: {
-      type: DataTypes.STRING(64),
-      allowNull: false,
-      // referenciar tabela de blocos
-    }, */
-    /* id_nota_substituida: {
-      type: DataTypes.STRING(64),
-      allowNull: true,
-      // tem que ter um validador pra checar se a id da nota substituida existe no banco
-    }, */
     base_calculo: {
       type: DataTypes.DOUBLE,
       allowNull: false,
@@ -124,19 +107,11 @@ export default (sequelize, DataTypes) => sequelize.define(
       type: DataTypes.TEXT(2000),
       allowNull: false,
     },
-    /* municipio_prestacao_servico: {
-      type: DataTypes.STRING(7),
-      allowNull: false,
-    }, */
     pais_prestacao_servico: {
       type: DataTypes.INTEGER,
       allowNull: true,
       // se for null entao eh brasil, ou algo do tipo. Tem isso explicitado no gist do Tiago
     },
-    /* municipio_incidencia: {
-      type: DataTypes.STRING(7),
-      allowNull: true,
-    }, */
     exibilidade_iss: {
       type: DataTypes.INTEGER, // esse codigo eh descrito no gist
       allowNull: false,
@@ -167,14 +142,10 @@ export default (sequelize, DataTypes) => sequelize.define(
       allowNull: false,
       defaultValue: 0,
     },
-    /* boleto_correspondente: {
-      // chave estrangeira pra tabela de boletos
-      type: DataTypes.STRING(48),
-      allowNull: true,
-      defaultValue: null,
-    }, */
   },
   {
     underscored: true,
+    tableName: 'nota_fiscal',
+    freezeTableName: true,
   },
 );

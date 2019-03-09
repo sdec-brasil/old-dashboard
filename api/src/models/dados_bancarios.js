@@ -24,6 +24,8 @@ export default (sequelize, DataTypes) => sequelize.define(
   },
   {
     underscored: true,
+    tableName: 'dados_bancarios',
+    freezeTableName: true,
     indexes: [
       {
         unique: true,

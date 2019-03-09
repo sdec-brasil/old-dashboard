@@ -60,5 +60,7 @@ export default (sequelize, DataTypes) => sequelize.define(
   },
   {
     underscored: true,
+    tableName: 'empresa',
+    freezeTableName: true,
   },
 );

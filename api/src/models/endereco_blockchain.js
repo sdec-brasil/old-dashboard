@@ -16,5 +16,7 @@ export default (sequelize, DataTypes) => sequelize.define(
   },
   {
     underscored: true,
+    tableName: 'endereco_blockchain',
+    freezeTableName: true,
   },
 );

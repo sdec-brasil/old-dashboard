@@ -39,5 +39,7 @@ export default (sequelize, DataTypes) => sequelize.define(
   },
   {
     underscored: true,
+    tableName: 'bloco',
+    freezeTableName: true,
   },
 );

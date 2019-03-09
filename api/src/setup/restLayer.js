@@ -11,7 +11,7 @@ export default function (server) {
   console.info('SETUP - Rest Layer...');
 
   const adapter = new RestAdapter({
-    isError:  response => !!response.errors,
+    isError: response => !!response.errors,
     transformError: response => response.errors[0].http_secret,
   });
 
