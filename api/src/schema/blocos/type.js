@@ -3,13 +3,16 @@ import {
   GraphQLObjectType, GraphQLString, GraphQLInt, GraphQLFloat,
 } from 'graphql';
 
+// App Imports
+import { hashType } from '../utils/types';
+
 // Bloco type
 const BlocoType = new GraphQLObjectType({
   name: 'bloco',
   description: 'Esse campo descreve um bloco da rede.',
 
   fields: () => ({
-    hash: { type: GraphQLString, description: 'A hash do Bloco' },
+    hash: { type: hashType },
     altura: { type: GraphQLInt, description: 'A altura (número) do bloco' },
     numeroTransacoes: { type: GraphQLString, description: 'Número de transações (nf + transf)' },
     outputTotal: { type: GraphQLFloat, description: '' },
