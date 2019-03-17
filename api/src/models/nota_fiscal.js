@@ -104,7 +104,7 @@ export default (sequelize, DataTypes) => sequelize.define(
       allowNull: true,
     },
     discriminacao: {
-      type: DataTypes.TEXT(2000),
+      type: DataTypes.STRING(2000),
       allowNull: false,
     },
     pais_prestacao_servico: {

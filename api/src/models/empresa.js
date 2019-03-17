@@ -9,32 +9,32 @@ export default (sequelize, DataTypes) => sequelize.define(
       allowNull: false,
     },
     razao_social: {
-      type: DataTypes.TEXT(150),
+      type: DataTypes.STRING(150),
       unique: true,
       allowNull: false,
     },
     nome_fantasia: {
-      type: DataTypes.TEXT(60),
+      type: DataTypes.STRING(60),
       allowNull: false,
     },
     endereco_empresa: {
-      type: DataTypes.TEXT(125),
+      type: DataTypes.STRING(125),
       allowNull: false,
     },
     numero_endereco: {
-      type: DataTypes.INTEGER(10),
+      type: DataTypes.INTEGER,
       allowNull: false,
     },
     complemento_endereco: {
-      type: DataTypes.TEXT(60),
+      type: DataTypes.STRING(60),
       allowNull: true,
     },
     bairro_endereco: {
-      type: DataTypes.TEXT(60),
+      type: DataTypes.STRING(60),
       allowNull: false,
     },
     cidade_endereco: {
-      type: DataTypes.TEXT(7),
+      type: DataTypes.STRING(7),
       allowNull: false,
     },
     unidade_federacao: {
@@ -42,7 +42,7 @@ export default (sequelize, DataTypes) => sequelize.define(
       allowNull: false,
     },
     pais_endereco: {
-      type: DataTypes.TEXT(4),
+      type: DataTypes.STRING(4),
       allowNull: true,
     },
     cep: {
