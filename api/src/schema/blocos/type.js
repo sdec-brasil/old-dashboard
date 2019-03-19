@@ -4,7 +4,7 @@ import {
 } from 'graphql';
 
 // App Imports
-import { hashType } from '../utils/types';
+import { hashType, dateTime } from '../utils/types';
 
 // Bloco type
 const BlocoType = new GraphQLObjectType({
@@ -12,17 +12,17 @@ const BlocoType = new GraphQLObjectType({
   description: 'Esse campo descreve um bloco da rede.',
 
   fields: () => ({
-    hash: { type: hashType },
+    hash: { type: hashType, description: hashType.description },
     altura: { type: GraphQLInt, description: 'A altura (número) do bloco' },
     numeroTransacoes: { type: GraphQLString, description: 'Número de transações (nf + transf)' },
     outputTotal: { type: GraphQLFloat, description: '' },
     volumeTransacao: { type: GraphQLFloat, description: '' },
-    dataEmissao: { type: GraphQLString, description: '' },
+    dataEmissao: { type: dateTime },
     dificuldade: { type: GraphQLInt, description: '' },
     totalBits: { type: GraphQLInt, description: '' },
     nonce: { type: GraphQLInt, description: '' },
-    createdAt: { type: GraphQLString, description: '' },
-    updatedAt: { type: GraphQLString, description: '' },
+    createdAt: { type: dateTime, description: dateTime.description },
+    updatedAt: { type: dateTime, description: dateTime.description },
   }),
 });
 
