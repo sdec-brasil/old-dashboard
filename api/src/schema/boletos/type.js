@@ -3,19 +3,22 @@ import {
   GraphQLObjectType, GraphQLString, GraphQLNonNull, GraphQLList, GraphQLFloat,
 } from 'graphql';
 
+// App Imports
+import { date, EnumBoletoStatus } from '../utils/types';
+
 // Boleto type
 const BoletoType = new GraphQLObjectType({
-  name: 'boleto',
-  description: '...',
+  name: 'Boleto',
+  description: 'Essa entidade descreve um boleto de pagamento de notas fiscais',
 
   fields: () => ({
-    numBoleto: { type: GraphQLString, description: '' },
+    numBoleto: { type: GraphQLNonNull(GraphQLString), description: '' },
     notasCorrespondentes: { type: GraphQLList(GraphQLNonNull(GraphQLString)), description: '' },
-    cnpjPagador: { type: GraphQLString, description: '' },
-    dataPagamento: { type: GraphQLString, description: '' },
-    valorTotal: { type: GraphQLFloat, description: '' },
-    dataVencimento: { type: GraphQLString, description: '' },
-    status: { type: GraphQLString, description: '' },
+    cnpjPagador: { type: GraphQLNonNull(GraphQLString), description: '' },
+    dataPagamento: { type: GraphQLNonNull(date), description: '' },
+    valorTotal: { type: GraphQLNonNull(GraphQLFloat), description: '' },
+    dataVencimento: { type: GraphQLNonNull(date), description: '' },
+    status: { type: GraphQLNonNull(EnumBoletoStatus), description: '' },
   }),
 });
 

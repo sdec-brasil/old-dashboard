@@ -5,8 +5,9 @@ import {
 
 // App Imports
 import {
-  isValidHash, validateNonNegativeFloat, validateJSDate, serializeDateTime, validateDateTime, 
-  serializeDateTimeString, validateUnixTimestamp, serializeUnixTimestamp, parseDateTime,
+  isValidHash, validateNonNegativeFloat, validateJSDate, serializeDateTime, validateDateTime,
+  serializeDateTimeString, validateUnixTimestamp, serializeUnixTimestamp, parseDateTime, 
+  serializeDate, validateDate, parseDate,
 } from './validations';
 
 export const nonNegativeFloat = new GraphQLScalarType({
@@ -62,49 +63,90 @@ export const hashType = new GraphQLScalarType({
 export const dateTime = new GraphQLScalarType({
   name: 'DateTime',
   description: `Uma string dateTime em UTC (ex: 2007-12-03T10:15:30Z) conforme descrito na seção
-                5.6 do RFC 3399 de perfil para ISO 8601, padrão para representações de tempo e data 
+                5.6 do RFC 3339 de perfil para ISO 8601, padrão para representações de tempo e data 
                 usando o calendário Gregoriano`,
   serialize: (value) => {
     if (value instanceof Date) {
       if (validateJSDate(value)) {
         return serializeDateTime(value);
       }
-      throw new TypeError('DateTime não pode representar uma instância inválida de data');
+      throw new GraphQLError('DateTime não pode representar uma instância inválida de data');
     } else if (typeof value === 'string' || value instanceof String) {
       if (validateDateTime(value)) {
         return serializeDateTimeString(value);
       }
-      throw new TypeError(`DateTime não pode representar uma string date-time inválida ${value}.`);
+      throw new GraphQLError(`DateTime não pode representar uma string date-time inválida ${value}.`);
     } else if (typeof value === 'number' || value instanceof Number) {
       if (validateUnixTimestamp(value)) {
         return serializeUnixTimestamp(value);
       }
-      throw new TypeError(`DateTime não pode representar um timestamp Unix inválido ${value}`);
+      throw new GraphQLError(`DateTime não pode representar um timestamp Unix inválido ${value}`);
     } else {
-      throw new TypeError(`DateTime não pode ser obtido de um tipo não-string, não-númerico e não-Data ${JSON.stringify(value)}`);
+      throw new GraphQLError(`DateTime não pode ser obtido de um tipo não-string, não-númerico e não-Data ${JSON.stringify(value)}`);
     }
   },
 
   parseValue: (value) => {
     if (!(typeof value === 'string' || value instanceof String)) {
-      throw new TypeError(`DateTime não pode representar um tipo não-string ${JSON.stringify(value)}`);
+      throw new GraphQLError(`DateTime não pode representar um tipo não-string ${JSON.stringify(value)}`);
     }
 
     if (validateDateTime(value)) {
       return parseDateTime(value);
     }
-    throw new TypeError(`DateTime não pode representar uma string date-time inválida ${value}.`);
+    throw new GraphQLError(`DateTime não pode representar uma string date-time inválida ${value}.`);
   },
 
   parseLiteral: (ast) => {
     if (ast.kind !== Kind.STRING) {
-      throw new TypeError(`DateTime não pode representar um tipo não-string ${String(ast.value != null ? ast.value : null)}`);
+      throw new GraphQLError(`DateTime não pode representar um tipo não-string ${String(ast.value != null ? ast.value : null)}`);
     }
     const { value } = ast;
     if (validateDateTime(value)) {
       return parseDateTime(value);
     }
-    throw new TypeError(`DateTime não pode representar uma string date-time inválida ${String(value)}.`);
+    throw new GraphQLError(`DateTime não pode representar uma string date-time inválida ${String(value)}.`);
+  },
+});
+
+export const date = new GraphQLScalarType({
+  name: 'Date',
+  description: `Uma data (ex: 2008-11-03) compatível com o formato 'full-date' especificado 
+                na seção 5.6 do RFC 3339. `,
+  serialize: (value) => {
+    if (value instanceof Date) {
+      if (validateJSDate(value)) {
+        return serializeDate(value);
+      }
+      throw new GraphQLError('Date não pode representar uma instância inválida de Data');
+    } else if (typeof value === 'string' || value instanceof String) {
+      if (validateDate(value)) {
+        return value;
+      }
+      throw new GraphQLError(`Date não pode representar uma string inválida ${value}.`);
+    } else {
+      throw new GraphQLError(`Date não pode representar um tipo não-string e não-Data ' + ${JSON.stringify(value)}.`);
+    }
+  },
+  parseValue: (value) => {
+    if (!(typeof value === 'string' || value instanceof String)) {
+      throw new GraphQLError(`Date não pode representar um tipo não-string ${JSON.stringify(value)}.`);
+    }
+
+    if (validateDate(value)) {
+      return parseDate(value);
+    }
+    throw new GraphQLError(`Date não pode representar uma string inválida ${value}.`);
+  },
+  parseLiteral: (ast) => {
+    if (ast.kind !== Kind.STRING) {
+      throw new GraphQLError(`Date não pode representar um tipo não-string ${String(ast.value != null ? ast.value : null)}`);
+    }
+    const { value } = ast;
+    if (validateDate(value)) {
+      return parseDate(value);
+    }
+    throw new GraphQLError(`Date não pode representar uma string inválida ${String(value)}.`);
   },
 });
 
@@ -114,5 +156,16 @@ export const EnumBlockConstraint = new GraphQLEnumType({
   values: {
     hash: hashType,
     altura: { value: 1, description: 'Um inteiro que repsenta o número do Bloco procurado' },
+  },
+});
+
+export const EnumBoletoStatus = new GraphQLEnumType({
+  name: 'BoletoStatus',
+  description: 'Status de um boleto no Sistema.',
+  values: {
+    pendente: { value: 0, description: 'Boleto emitido e dentro do prazo de validade.' },
+    pago: { value: 1, description: 'Boleto emitido e pago dentro do prazo de validade.' },
+    vencido: { value: 2, description: 'Boleto vencido e não pago.' },
+    cancelado: { value: 3, description: 'Boleto cancelado antes do seu prazo de validade. '}
   },
 });
