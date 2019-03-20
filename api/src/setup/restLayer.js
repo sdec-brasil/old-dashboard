@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import RestAdapter from 'rest-graphql';
 // import * as block from '../schema/blocos/resolvers';
 

@@ -1,6 +1,6 @@
 // Imports
 import {
-  GraphQLInt, GraphQLList, GraphQLNonNull as GNN, GraphQLString,
+  GraphQLList, GraphQLNonNull as GNN, GraphQLString,
 } from 'graphql';
 
 // App Imports

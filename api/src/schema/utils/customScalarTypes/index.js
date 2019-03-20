@@ -6,7 +6,7 @@ import {
 // App Imports
 import {
   isValidHash, validateNonNegativeFloat, validateJSDate, serializeDateTime, validateDateTime,
-  serializeDateTimeString, validateUnixTimestamp, serializeUnixTimestamp, parseDateTime, 
+  serializeDateTimeString, validateUnixTimestamp, serializeUnixTimestamp, parseDateTime,
   serializeDate, validateDate, parseDate, isUUID,
 } from '../validators';
 

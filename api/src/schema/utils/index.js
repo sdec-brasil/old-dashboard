@@ -6,7 +6,7 @@ import {
   EnumBlockConstraint, EnumBoletoStatus,
 } from './customEnumTypes';
 
-export default {
+export {
   GraphQLNonNegativeFloat,
   GraphQLHashType,
   GraphQLDateTime,

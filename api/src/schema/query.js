@@ -4,7 +4,7 @@ import { GraphQLObjectType } from 'graphql';
 // App Imports
 import * as thought from './thoughts/fields/query';
 import * as block from './blocos/fields/query';
-import * as boleto from './boletos/fields/query'
+import * as boleto from './boletos/fields/query';
 
 // Query
 const query = new GraphQLObjectType({
