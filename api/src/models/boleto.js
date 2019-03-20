@@ -27,7 +27,7 @@ export default (sequelize, DataTypes) => sequelize.define(
       type: DataTypes.ENUM,
       values: ['pendente', 'pago', 'vencido', 'cancelado'],
       allowNull: false,
-      defaultValue: 0,
+      defaultValue: 'pendente',
     },
   },
   {
