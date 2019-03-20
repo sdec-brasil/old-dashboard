@@ -4,7 +4,7 @@ import {
 } from 'graphql';
 
 // App Imports
-import { GraphQLDate, EnumBoletoStatus } from '../utils/types';
+import { GraphQLDate, EnumBoletoStatus } from '../utils';
 
 // Boleto type
 const BoletoType = new GraphQLObjectType({

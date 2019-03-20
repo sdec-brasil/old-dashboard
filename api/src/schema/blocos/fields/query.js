@@ -4,7 +4,7 @@ import { GraphQLInt, GraphQLList, GraphQLNonNull as GNN } from 'graphql';
 // App Imports
 import BlocoType from '../type';
 import { getAll, getByConstraint } from '../resolvers';
-import { EnumBlockConstraint } from '../../utils/types';
+import { EnumBlockConstraint } from '../../utils';
 
 // All Blocks
 export const getBlocks = {

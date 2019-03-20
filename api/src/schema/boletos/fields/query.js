@@ -6,7 +6,7 @@ import {
 // App Imports
 import BoletoType from '../type';
 import { getFromEntityWithStatus, getByID } from '../resolvers';
-import { EnumBoletoStatus, GraphQLUUID } from '../../utils/types';
+import { EnumBoletoStatus, GraphQLUUID } from '../../utils';
 
 // Get a single boleto through the ID
 export const getBoleto = {

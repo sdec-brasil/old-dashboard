@@ -1,6 +1,6 @@
 // Imports
 import {
-  GraphQLEnumType, GraphQLScalarType, GraphQLError, Kind,
+  GraphQLScalarType, GraphQLError, Kind,
 } from 'graphql';
 
 // App Imports
@@ -8,11 +8,9 @@ import {
   isValidHash, validateNonNegativeFloat, validateJSDate, serializeDateTime, validateDateTime,
   serializeDateTimeString, validateUnixTimestamp, serializeUnixTimestamp, parseDateTime, 
   serializeDate, validateDate, parseDate, isUUID,
-} from './validations';
+} from '../validators';
 
-// === SCALAR TYPES === //
-
-export const GraphQLNonNegativeFloat = new GraphQLScalarType({
+const GraphQLNonNegativeFloat = new GraphQLScalarType({
   name: 'NonNegativeFloat',
   description: 'Pontos flutuantes que terão um valor de 0 ou mais.',
   serialize(value) {
@@ -37,7 +35,7 @@ export const GraphQLNonNegativeFloat = new GraphQLScalarType({
   },
 });
 
-export const GraphQLHashType = new GraphQLScalarType({
+const GraphQLHashType = new GraphQLScalarType({
   name: 'Hash',
   description: 'Representa um valor hexadecimal resultado de uma SHA256',
   serialize: (value) => {
@@ -62,7 +60,7 @@ export const GraphQLHashType = new GraphQLScalarType({
   },
 });
 
-export const GraphQLDateTime = new GraphQLScalarType({
+const GraphQLDateTime = new GraphQLScalarType({
   name: 'DateTime',
   description: `Uma string dateTime em UTC (ex: 2007-12-03T10:15:30Z) conforme descrito na seção
                 5.6 do RFC 3339 de perfil para ISO 8601, padrão para representações de tempo e data 
@@ -111,7 +109,7 @@ export const GraphQLDateTime = new GraphQLScalarType({
   },
 });
 
-export const GraphQLDate = new GraphQLScalarType({
+const GraphQLDate = new GraphQLScalarType({
   name: 'Date',
   description: `Uma data (ex: 2008-11-03) compatível com o formato 'full-date' especificado 
                 na seção 5.6 do RFC 3339. `,
@@ -152,7 +150,7 @@ export const GraphQLDate = new GraphQLScalarType({
   },
 });
 
-export const GraphQLUUID = new GraphQLScalarType({
+const GraphQLUUID = new GraphQLScalarType({
   name: 'UUID',
   description: 'O scalar UUID representa valores de identificadores como especificado pelo [RFC 4122](https://tools.ietf.org/html/rfc4122).',
   serialize: (value) => {
@@ -181,24 +179,6 @@ export const GraphQLUUID = new GraphQLScalarType({
   },
 });
 
-// ==== ENUM TYPES ==== //
-
-export const EnumBlockConstraint = new GraphQLEnumType({
-  name: 'BlockConstraint',
-  description: 'Identificadores únicos de um bloco na rede.',
-  values: {
-    hash: GraphQLHashType,
-    altura: { value: 1, description: 'Um inteiro que repsenta o número do Bloco procurado' },
-  },
-});
-
-export const EnumBoletoStatus = new GraphQLEnumType({
-  name: 'BoletoStatus',
-  description: 'Status de um boleto no Sistema.',
-  values: {
-    pendente: { value: 0, description: 'Boleto emitido e dentro do prazo de validade.' },
-    pago: { value: 1, description: 'Boleto emitido e pago dentro do prazo de validade.' },
-    vencido: { value: 2, description: 'Boleto vencido e não pago.' },
-    cancelado: { value: 3, description: 'Boleto cancelado antes do seu prazo de validade. '}
-  },
-});
+export {
+  GraphQLNonNegativeFloat, GraphQLHashType, GraphQLDateTime, GraphQLDate, GraphQLUUID,
+};

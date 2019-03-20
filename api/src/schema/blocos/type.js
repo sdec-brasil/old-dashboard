@@ -4,7 +4,7 @@ import {
 } from 'graphql';
 
 // App Imports
-import { GraphQLHashType, GraphQLDateTime } from '../utils/types';
+import { GraphQLHashType, GraphQLDateTime } from '../utils';
 
 // Bloco type
 const BlocoType = new GraphQLObjectType({
