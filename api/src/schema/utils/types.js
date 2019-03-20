@@ -7,12 +7,12 @@ import {
 import {
   isValidHash, validateNonNegativeFloat, validateJSDate, serializeDateTime, validateDateTime,
   serializeDateTimeString, validateUnixTimestamp, serializeUnixTimestamp, parseDateTime, 
-  serializeDate, validateDate, parseDate, isUUID
+  serializeDate, validateDate, parseDate, isUUID,
 } from './validations';
 
 // === SCALAR TYPES === //
 
-export const nonNegativeFloat = new GraphQLScalarType({
+export const GraphQLNonNegativeFloat = new GraphQLScalarType({
   name: 'NonNegativeFloat',
   description: 'Pontos flutuantes que terão um valor de 0 ou mais.',
   serialize(value) {
@@ -37,7 +37,7 @@ export const nonNegativeFloat = new GraphQLScalarType({
   },
 });
 
-export const hashType = new GraphQLScalarType({
+export const GraphQLHashType = new GraphQLScalarType({
   name: 'Hash',
   description: 'Representa um valor hexadecimal resultado de uma SHA256',
   serialize: (value) => {
@@ -62,7 +62,7 @@ export const hashType = new GraphQLScalarType({
   },
 });
 
-export const dateTime = new GraphQLScalarType({
+export const GraphQLDateTime = new GraphQLScalarType({
   name: 'DateTime',
   description: `Uma string dateTime em UTC (ex: 2007-12-03T10:15:30Z) conforme descrito na seção
                 5.6 do RFC 3339 de perfil para ISO 8601, padrão para representações de tempo e data 
@@ -111,7 +111,7 @@ export const dateTime = new GraphQLScalarType({
   },
 });
 
-export const date = new GraphQLScalarType({
+export const GraphQLDate = new GraphQLScalarType({
   name: 'Date',
   description: `Uma data (ex: 2008-11-03) compatível com o formato 'full-date' especificado 
                 na seção 5.6 do RFC 3339. `,
@@ -187,7 +187,7 @@ export const EnumBlockConstraint = new GraphQLEnumType({
   name: 'BlockConstraint',
   description: 'Identificadores únicos de um bloco na rede.',
   values: {
-    hash: hashType,
+    hash: GraphQLHashType,
     altura: { value: 1, description: 'Um inteiro que repsenta o número do Bloco procurado' },
   },
 });

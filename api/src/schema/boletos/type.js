@@ -4,7 +4,7 @@ import {
 } from 'graphql';
 
 // App Imports
-import { date, EnumBoletoStatus } from '../utils/types';
+import { GraphQLDate, EnumBoletoStatus } from '../utils/types';
 
 // Boleto type
 const BoletoType = new GraphQLObjectType({
@@ -15,9 +15,9 @@ const BoletoType = new GraphQLObjectType({
     numBoleto: { type: GraphQLNonNull(GraphQLString), description: '' },
     notasCorrespondentes: { type: GraphQLList(GraphQLNonNull(GraphQLString)), description: '' },
     cnpjPagador: { type: GraphQLNonNull(GraphQLString), description: '' },
-    dataPagamento: { type: GraphQLNonNull(date), description: '' },
+    dataPagamento: { type: GraphQLNonNull(GraphQLDate), description: '' },
     valorTotal: { type: GraphQLNonNull(GraphQLFloat), description: '' },
-    dataVencimento: { type: GraphQLNonNull(date), description: '' },
+    dataVencimento: { type: GraphQLNonNull(GraphQLDate), description: '' },
     status: { type: GraphQLNonNull(EnumBoletoStatus), description: '' },
   }),
 });
