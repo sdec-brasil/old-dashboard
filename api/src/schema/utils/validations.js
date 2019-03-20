@@ -1,8 +1,13 @@
+// === Const Values ===
+const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+const nilUUID = '00000000-0000-0000-0000-000000000000';
+
 // === Number Validations ===
 export const validateNonNegativeFloat = value => Number.isFinite(value) && value >= 0;
 
 // === Cryptographic Validations ===
 export const isValidHash = value => (String(value).match(/^([a-f0-9]{64})$/) != null);
+export const isUUID = value => uuidRegex.test(value) || nilUUID === value;
 
 // === Date & Time Validations ===
 // Check whether a certain year is a leap year.

@@ -7,8 +7,10 @@ import {
 import {
   isValidHash, validateNonNegativeFloat, validateJSDate, serializeDateTime, validateDateTime,
   serializeDateTimeString, validateUnixTimestamp, serializeUnixTimestamp, parseDateTime, 
-  serializeDate, validateDate, parseDate,
+  serializeDate, validateDate, parseDate, isUUID
 } from './validations';
+
+// === SCALAR TYPES === //
 
 export const nonNegativeFloat = new GraphQLScalarType({
   name: 'NonNegativeFloat',
@@ -149,6 +151,37 @@ export const date = new GraphQLScalarType({
     throw new GraphQLError(`Date não pode representar uma string inválida ${String(value)}.`);
   },
 });
+
+export const GraphQLUUID = new GraphQLScalarType({
+  name: 'UUID',
+  description: 'O scalar UUID representa valores de identificadores como especificado pelo [RFC 4122](https://tools.ietf.org/html/rfc4122).',
+  serialize: (value) => {
+    if (!isUUID(value)) {
+      throw new TypeError(`UUID não pode representar valores que não sejam UUID: ${value}`);
+    }
+
+    return value.toLowerCase();
+  },
+  parseValue: (value) => {
+    if (!isUUID(value)) {
+      throw new TypeError(`UUID não pode representar valores que não sejam UUID: ${value}`);
+    }
+
+    return value.toLowerCase();
+  },
+  parseLiteral: (ast) => {
+    if (ast.kind === Kind.STRING) {
+      if (isUUID(ast.value)) {
+        return ast.value;
+      }
+      throw new TypeError(`UUID não pode representar valores que não sejam UUID: ${ast.value}`);
+    }
+
+    throw new TypeError(`UUID não pode representar valores não sejam strings: ${ast.value}`);
+  },
+});
+
+// ==== ENUM TYPES ==== //
 
 export const EnumBlockConstraint = new GraphQLEnumType({
   name: 'BlockConstraint',
