@@ -1,6 +1,6 @@
 // Imports
 import {
-  GraphQLObjectType, GraphQLString, GraphQLInt, GraphQLFloat, GraphQLNonNull, 
+  GraphQLObjectType, GraphQLString, GraphQLInt, GraphQLFloat, GraphQLNonNull as GNN,
 } from 'graphql';
 
 // App Imports
@@ -12,15 +12,15 @@ const BlocoType = new GraphQLObjectType({
   description: 'Essa entidade descreve um bloco da rede.',
 
   fields: () => ({
-    hash: { type: GraphQLNonNull(GraphQLHashType), description: GraphQLHashType.description },
-    altura: { type: GraphQLNonNull(GraphQLInt), description: 'A altura (número) do bloco' },
-    numeroTransacoes: { type: GraphQLNonNull(GraphQLString), description: 'Número de transações (nf + transf)' },
-    outputTotal: { type: GraphQLNonNull(GraphQLFloat), description: '' },
-    volumeTransacao: { type: GraphQLNonNull(GraphQLFloat), description: '' },
-    dataEmissao: { type: GraphQLNonNull(GraphQLDateTime), description: GraphQLDateTime.description },
-    dificuldade: { type: GraphQLNonNull(GraphQLInt), description: '' },
-    totalBits: { type: GraphQLNonNull(GraphQLInt), description: '' },
-    nonce: { type: GraphQLNonNull(GraphQLInt), description: '' },
+    hash: { type: GNN(GraphQLHashType), description: GraphQLHashType.description },
+    altura: { type: GNN(GraphQLInt), description: 'A altura (número) do bloco' },
+    numeroTransacoes: { type: GNN(GraphQLString), description: 'Número de transações (nf + transf)' },
+    outputTotal: { type: GNN(GraphQLFloat), description: '' },
+    volumeTransacao: { type: GNN(GraphQLFloat), description: '' },
+    dataEmissao: { type: GNN(GraphQLDateTime), description: GraphQLDateTime.description },
+    dificuldade: { type: GNN(GraphQLInt), description: '' },
+    totalBits: { type: GNN(GraphQLInt), description: '' },
+    nonce: { type: GNN(GraphQLInt), description: '' },
   }),
 });
 
