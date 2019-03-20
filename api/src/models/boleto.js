@@ -2,9 +2,12 @@
 export default (sequelize, DataTypes) => sequelize.define(
   'boleto',
   {
+    guid: {
+      type: DataTypes.UUID,
+      primaryKey: true,
+    },
     num_boleto: {
       type: DataTypes.STRING(48),
-      primaryKey: true,
       allowNull: false,
       unique: true,
     },
@@ -20,8 +23,9 @@ export default (sequelize, DataTypes) => sequelize.define(
       type: DataTypes.DATEONLY,
       allowNull: false,
     },
-    estado: {
-      type: DataTypes.SMALLINT, // 0 - pendente, 1 - pago, 2 - expirado
+    status: {
+      type: DataTypes.ENUM,
+      values: ['pendente', 'pago', 'vencido', 'cancelado'],
       allowNull: false,
       defaultValue: 0,
     },
