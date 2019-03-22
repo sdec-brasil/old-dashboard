@@ -29,7 +29,7 @@ A [documentação](https://sdec.readme.io) do projeto possui:
 - Rode a API `cd api` e `npm start`, visite @ http://localhost:8000/graphql/
 - Rode o Webapp `cd web` e `npm start`, visite @ http://localhost:3000/
 
-## 🏗 Core Structure
+## 🏗 Estrutura do Projeto
     dashboard
       ├── api 
       │   ├── src
