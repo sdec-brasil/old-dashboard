@@ -5,7 +5,31 @@ import Sequelize from 'sequelize';
 import databaseConnection from '../setup/databaseConnection';
 
 const models = {
-  Thought: databaseConnection.import('./thought'),
+
+  // Models following the Abe blockchain-explorer project
+  abe_lock: databaseConnection.import('./abe_lock'),
+  abe_sequences: databaseConnection.import('./abe_sequences'),
+  asset_address: databaseConnection.import('./asset_address'),
+  asset_txid: databaseConnection.import('./asset_txid'),
+  asset: databaseConnection.import('./asset'),
+  block_next: databaseConnection.import('./block_next'),
+  block_tx: databaseConnection.import('./block_tx'),
+  block_txin: databaseConnection.import('./block_txin'),
+  block: databaseConnection.import('./block'),
+  chain_candidates: databaseConnection.import('./chain_candidate'),
+  chain: databaseConnection.import('./chain'),
+  configvar: databaseConnection.import('./configvar'),
+  datadir: databaseConnection.import('./datadir'),
+  multisig_pubkey: databaseConnection.import('./multisig_pubkey'),
+  orphan_block: databaseConnection.import('./orphan_block'),
+  pubkey: databaseConnection.import('./pubkey'),
+  tx: databaseConnection.import('./tx'),
+  txin: databaseConnection.import('./txin'),
+  txout: databaseConnection.import('./txout'),
+  unlinked_txin: databaseConnection.import('./unlinked_txin'),
+
+  // Specific models for SDEC case of use
+  /* Thought: databaseConnection.import('./thought'),
   Bloco: databaseConnection.import('./bloco'),
   Boleto: databaseConnection.import('./boleto'),
   Dados_Bancarios: databaseConnection.import('./dados_bancarios'),
@@ -13,7 +37,8 @@ const models = {
   Endereco_Blockchain: databaseConnection.import('./endereco_blockchain'),
   Nota_Fiscal: databaseConnection.import('./nota_fiscal'),
   Prefeitura: databaseConnection.import('./prefeitura'),
-  Transferencia: databaseConnection.import('./transferencia'),
+  Transferencia: databaseConnection.import('./transferencia'), */
+
 };
 
 /* Observacoes importantes
@@ -40,6 +65,7 @@ const models = {
  */
 
 
+/* Vou deixar essas associations comentadas por motivos historicos. Numa versao inicial do sistema elas foram elaboradas
 // Boleto
 models.Boleto.hasMany(models.Nota_Fiscal, { foreignKey: 'id_boleto' });
 models.Boleto.belongsTo(models.Empresa, { foreignKey: { name: 'cnpj_empresa', allowNull: false }, onDelete: 'CASCADE' });
@@ -84,7 +110,7 @@ models.Dados_Bancarios.belongsTo(models.Prefeitura, { foreignKey: 'id_prefeitura
 // Endereco_blockchain
 models.Endereco_Blockchain.hasMany(models.Transferencia, { as: 'EnderecoRemetente', foreignKey: 'endereco_remetente' });
 models.Endereco_Blockchain.hasMany(models.Transferencia, { as: 'EnderecoDestinatario', foreignKey: 'endereco_destinatario' });
-
+*/
 
 Object.keys(models).forEach((modelName) => {
   if ('associate' in models[modelName]) {
