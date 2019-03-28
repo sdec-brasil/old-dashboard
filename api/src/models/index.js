@@ -9,14 +9,14 @@ const models = {
   // Models following the Abe blockchain-explorer project
   abe_lock: databaseConnection.import('./abe_lock'),
   abe_sequences: databaseConnection.import('./abe_sequences'),
-  asset_address: databaseConnection.import('./asset_address'),
+  asset_address_balance: databaseConnection.import('./asset_address_balance'),
   asset_txid: databaseConnection.import('./asset_txid'),
   asset: databaseConnection.import('./asset'),
   block_next: databaseConnection.import('./block_next'),
   block_tx: databaseConnection.import('./block_tx'),
   block_txin: databaseConnection.import('./block_txin'),
   block: databaseConnection.import('./block'),
-  chain_candidates: databaseConnection.import('./chain_candidate'),
+  chain_candidate: databaseConnection.import('./chain_candidate'),
   chain: databaseConnection.import('./chain'),
   configvar: databaseConnection.import('./configvar'),
   datadir: databaseConnection.import('./datadir'),
@@ -41,29 +41,83 @@ const models = {
 
 };
 
-/* Observacoes importantes
- * (https://github.com/sequelize/issues/2837)) -> motivacao de setar o onDelete: 'CASCADE'
- *
- * Em alguns momentos, usaremos definicoes que aparentam ser redundantes, mas que
- * sao feitas dessa forma para cumprir um papel especifico.
- *
- * Ex: Suponha que temos o modelo Man e o modelo RightArm.
- * As vezes teremos as duas seguintes linhas:
- * Man.hasOne( rightArm );
- * rightArm.belongsTo(Man);
- *
- * Essas linhas alteram o BD da mesma forma, mas se usarmos apenas a primeira, não
- * poderemos usar o ORM para descobrir a qual homem um braço direito pertence.
- *
- * Um caso mais de mundo real que usarei essa "redundancia" é o seguinte, Prefeitura e
- * Dados_Bancarios. A relação óbvia é: Prefeitura.hasOne( Dados_Bancarios ), mas
- * também adicionarei o outro formato: DadosBancarios.belongsTo( Prefeitura ), para
- * poder usar o ORM para obter
- * o dono de uma determinada prefeitura.
- *
- * Para ler mais sobre a motivação por trás desse uso: ( https://stackoverflow.com/questions/34565360/difference-between-hasone-and-belongsto-in-sequelize-orm )
- */
+/* TO-DO
+- Sequelize-auto did not create correctly any field from models that are a combination of two or more fields
 
+- Analyse chain_candidate pk. It should be (chain_id, block_id), but the model does not reflect that
+- Insert pk on block_next table as a combination of (block_id, block_next_id)
+- Insert pk on block_tx as a combination of (block_id, tx_pos) and the combination as unique
+- Insert pk on multisig_pubkey as a combination of (multisig_id, pubkey_id)
+- Insert pk on txout as a combination of (tx_id, txout_pos)
+- Insert unique attribute on txin table as (tx_id, txin_pos)
+- Insert pk on block_txin table as a combination of (block_id, txin_id)
+- Insert unique attribute on asset_txid table (asset_id, td_ix, txout_pos)
+
+*/
+
+// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Associations of block-explorer entities
+
+
+// block model
+models.block.belongsTo(models.block, { as: 'prev_block', foreignKey: { name: 'prev_block_id', allowNull: true } });
+models.block.belongsTo(models.block, { as: 'search_block', foreignKey: { name: 'search_block_id', allowNull: true } });
+
+// chain model
+models.chain.belongsTo(models.block, { as: 'chain_last_block', foreignKey: { name: 'chain_last_block_id', allowNull: true } });
+
+// chain_candidate model
+models.chain_candidate.belongsTo(models.block, { foreignKey: { name: 'block_id', allowNull: false } });
+
+// orphan_block model
+models.orphan_block.belongsTo(models.block, { foreignKey: 'block_id' });
+
+// block_next model
+models.block_next.belongsTo(models.block, { as: 'next_block', foreignKey: 'next_block_id' });
+models.block_next.belongsTo(models.block, { as: 'block', foreignKey: 'block_id' });
+
+// tx model
+
+// block_tx model
+models.block_tx.belongsTo(models.block, { foreignKey: 'block_id' });
+models.block_tx.belongsTo(models.tx_id, { foreignKey: 'tx_id' });
+
+// pubkey model
+
+// multisig_pubkey
+models.multisig_pubkey.belongsTo(models.pubkey, { as: 'multisig_id', foreignKey: { name: 'multisig_id', allowNull: false } });
+models.multisig_pubkey.belongsTo(models.pubkey, { as: 'pubkey_id', foreignKey: { name: 'pubkey_id', allowNull: false } });
+
+// txout model
+models.txout.belongsTo(models.pubkey, { foreignKey: 'pubkey_id' });
+
+// txin model
+models.txin.belongsTo(models.tx, { foreignKey: 'tx_id' });
+
+// unlinked_txin model
+models.unlinked_txin.belongsTo(models.txin, { foreingKey: 'txin_id' });
+
+// block_txin model
+models.block_txin.belongsTo(models.block, { as: 'block_id', foreignKey: { name: 'block_id', allowNull: false } });
+models.block_txin.belongsTo(models.block, { as: 'out_block_id', foreignKey: { name: 'out_block_id', allowNull: false } });
+models.block_txin.belongsTo(models.txin, { foreignKey: { name: 'txin_id', allowNull: false } });
+
+// abe-lock model
+
+// asset model
+models.asset.belongsTo(models.tx, { foreignKey: { name: 'tx_id', unique: true } });
+models.asset.belongsTo(models.chain, { foreignKey: 'chain_id' });
+
+// asset_txid model
+models.asset_txid.belongsTo(models.tx, { foreignKey: { name: 'tx_id', allowNull: false } });
+models.asset_txid.belongsTo(models.asset, { foreignKey: { name: 'asset_id', allowNull: false } });
+
+// asset_address_balance
+models.asset_address_balance.belongsTo(models.asset, { foreignKey: { name: 'asset_id', allowNull: false } });
+models.asset_address_balance.belongsTo(models.pubkey, { foreignKey: { name: 'pubkey_id', allowNull: false } });
+
+
+// End of block-explored define associations //////////////////////////////////////////////////
 
 /* Vou deixar essas associations comentadas por motivos historicos. Numa versao inicial do sistema elas foram elaboradas
 // Boleto
