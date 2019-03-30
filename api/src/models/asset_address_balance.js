@@ -21,6 +21,7 @@ module.exports = function (sequelize, DataTypes) {
       allowNull: false,
     },
   }, {
+    underscored: true,
     tableName: 'asset_address_balance',
   });
 };

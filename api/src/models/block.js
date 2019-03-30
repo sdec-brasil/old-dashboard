@@ -6,7 +6,7 @@ module.exports = function (sequelize, DataTypes) {
       primaryKey: true,
     },
     block_hash: {
-      type: 'BINARY(32)',
+      type: DataTypes.BLOB(32),
       allowNull: false,
     },
     block_version: {
@@ -14,7 +14,7 @@ module.exports = function (sequelize, DataTypes) {
       allowNull: true,
     },
     block_hashMerkleRoot: {
-      type: 'BINARY(32)',
+      type: DataTypes.BLOB(32),
       allowNull: true,
     },
     block_nTime: {
@@ -50,7 +50,7 @@ module.exports = function (sequelize, DataTypes) {
       },
     },
     block_chain_work: {
-      type: 'BINARY(38)',
+      type: DataTypes.BLOB(38),
       allowNull: true,
     },
     block_value_in: {
@@ -86,6 +86,7 @@ module.exports = function (sequelize, DataTypes) {
       allowNull: true,
     },
   }, {
+    underscored: true,
     tableName: 'block',
   });
 };

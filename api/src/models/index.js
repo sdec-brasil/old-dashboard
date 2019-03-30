@@ -42,17 +42,9 @@ const models = {
 };
 
 /* TO-DO
-- Sequelize-auto did not create correctly any field from models that are a combination of two or more fields
 
-- Analyse chain_candidate pk. It should be (chain_id, block_id), but the model does not reflect that
-- Insert pk on block_next table as a combination of (block_id, block_next_id)
-- Insert pk on block_tx as a combination of (block_id, tx_pos) and the combination as unique
-- Insert pk on multisig_pubkey as a combination of (multisig_id, pubkey_id)
-- Insert pk on txout as a combination of (tx_id, txout_pos)
-- Insert unique attribute on txin table as (tx_id, txin_pos)
-- Insert pk on block_txin table as a combination of (block_id, txin_id)
-- Insert unique attribute on asset_txid table (asset_id, td_ix, txout_pos)
-
+- Add PostgreSQL extension to automatically add UUID values on insert.
+- Make sure all indexes have been created properly
 */
 
 // ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -80,13 +72,13 @@ models.block_next.belongsTo(models.block, { as: 'block', foreignKey: 'block_id' 
 
 // block_tx model
 models.block_tx.belongsTo(models.block, { foreignKey: 'block_id' });
-models.block_tx.belongsTo(models.tx_id, { foreignKey: 'tx_id' });
+models.block_tx.belongsTo(models.tx, { foreignKey: 'tx_id' });
 
 // pubkey model
 
 // multisig_pubkey
-models.multisig_pubkey.belongsTo(models.pubkey, { as: 'multisig_id', foreignKey: { name: 'multisig_id', allowNull: false } });
-models.multisig_pubkey.belongsTo(models.pubkey, { as: 'pubkey_id', foreignKey: { name: 'pubkey_id', allowNull: false } });
+models.multisig_pubkey.belongsTo(models.pubkey, { as: '_multisig_id', foreignKey: { name: 'multisig_id', allowNull: false } });
+models.multisig_pubkey.belongsTo(models.pubkey, { as: '_pubkey_id', foreignKey: { name: 'pubkey_id', allowNull: false } });
 
 // txout model
 models.txout.belongsTo(models.pubkey, { foreignKey: 'pubkey_id' });
@@ -98,8 +90,8 @@ models.txin.belongsTo(models.tx, { foreignKey: 'tx_id' });
 models.unlinked_txin.belongsTo(models.txin, { foreingKey: 'txin_id' });
 
 // block_txin model
-models.block_txin.belongsTo(models.block, { as: 'block_id', foreignKey: { name: 'block_id', allowNull: false } });
-models.block_txin.belongsTo(models.block, { as: 'out_block_id', foreignKey: { name: 'out_block_id', allowNull: false } });
+models.block_txin.belongsTo(models.block, { as: '_block_id', foreignKey: { name: 'block_id', allowNull: false } });
+models.block_txin.belongsTo(models.block, { as: '_out_block_id', foreignKey: { name: 'out_block_id', allowNull: false } });
 models.block_txin.belongsTo(models.txin, { foreignKey: { name: 'txin_id', allowNull: false } });
 
 // abe-lock model

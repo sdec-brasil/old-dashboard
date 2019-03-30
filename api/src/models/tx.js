@@ -6,7 +6,7 @@ module.exports = function (sequelize, DataTypes) {
       primaryKey: true,
     },
     tx_hash: {
-      type: 'BINARY(32)',
+      type: DataTypes.BLOB(32), // changed type because of postgres naming
       allowNull: false,
     },
     tx_version: {
@@ -22,6 +22,7 @@ module.exports = function (sequelize, DataTypes) {
       allowNull: true,
     },
   }, {
+    underscored: true,
     tableName: 'tx',
   });
 };

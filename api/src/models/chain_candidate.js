@@ -1,9 +1,13 @@
 module.exports = function (sequelize, DataTypes) {
   return sequelize.define('chain_candidate', {
+    chain_uuid: {
+      type: DataTypes.UUID,
+      allowNull: false,
+      primaryKey: true,
+    },
     chain_id: {
       type: DataTypes.DOUBLE,
       allowNull: false,
-      primaryKey: true,
     },
     block_id: {
       type: DataTypes.DOUBLE,
@@ -22,6 +26,14 @@ module.exports = function (sequelize, DataTypes) {
       allowNull: true,
     },
   }, {
+    underscored: true,
     tableName: 'chain_candidate',
+    indexes: [
+      {
+        unique: true,
+        fields: ['chain_id', 'block_id'],
+        allowNull: false,
+      },
+    ],
   });
 };

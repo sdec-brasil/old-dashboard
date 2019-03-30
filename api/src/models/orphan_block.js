@@ -9,10 +9,11 @@ module.exports = function (sequelize, DataTypes) {
       },
     },
     block_hashPrev: {
-      type: 'BINARY(32)',
+      type: DataTypes.BLOB(32),
       allowNull: false,
     },
   }, {
+    underscored: true,
     tableName: 'orphan_block',
   });
 };

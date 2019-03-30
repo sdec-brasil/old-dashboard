@@ -21,6 +21,14 @@ module.exports = function (sequelize, DataTypes) {
       allowNull: false,
     },
   }, {
+    underscored: true,
     tableName: 'asset_txid',
+    indexes:
+    [
+      {
+        unique: true,
+        fields: ['asset_id', 'tx_id', 'txout_pos'],
+      },
+    ],
   });
 };

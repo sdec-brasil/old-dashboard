@@ -6,11 +6,11 @@ module.exports = function (sequelize, DataTypes) {
       primaryKey: true,
     },
     pubkey_hash: {
-      type: 'BINARY(20)',
+      type: DataTypes.BLOB(20),
       allowNull: false,
     },
     pubkey: {
-      type: 'VARBINARY(65)',
+      type: DataTypes.BLOB(65),
       allowNull: true,
     },
     pubkey_flags: {
@@ -18,6 +18,7 @@ module.exports = function (sequelize, DataTypes) {
       allowNull: true,
     },
   }, {
+    underscored: true,
     tableName: 'pubkey',
   });
 };

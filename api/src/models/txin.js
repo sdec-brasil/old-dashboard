@@ -22,7 +22,7 @@ module.exports = function (sequelize, DataTypes) {
       allowNull: true,
     },
     txin_scriptSig: {
-      type: 'VARBINARY(1000000)',
+      type: DataTypes.BLOB(1000000),
       allowNull: true,
     },
     txin_sequence: {
@@ -30,6 +30,15 @@ module.exports = function (sequelize, DataTypes) {
       allowNull: true,
     },
   }, {
+    underscored: true,
     tableName: 'txin',
+    indexes:
+    [
+      {
+        unique: true,
+        fields: ['tx_id', 'txin_pos'],
+        allowNull: false,
+      },
+    ],
   });
 };

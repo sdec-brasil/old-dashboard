@@ -14,19 +14,19 @@ module.exports = function (sequelize, DataTypes) {
       allowNull: true,
     },
     chain_address_version: {
-      type: 'VARBINARY(100)',
+      type: DataTypes.BLOB(100),
       allowNull: false,
     },
     chain_script_addr_vers: {
-      type: 'VARBINARY(100)',
+      type: DataTypes.BLOB(100),
       allowNull: true,
     },
     chain_address_checksum: {
-      type: 'VARBINARY(100)',
+      type: DataTypes.BLOB(100),
       allowNull: true,
     },
     chain_magic: {
-      type: 'BINARY(4)',
+      type: DataTypes.BLOB(4),
       allowNull: true,
     },
     chain_policy: {
@@ -50,6 +50,7 @@ module.exports = function (sequelize, DataTypes) {
       allowNull: false,
     },
   }, {
+    underscored: true,
     tableName: 'chain',
   });
 };

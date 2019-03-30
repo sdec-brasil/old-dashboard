@@ -18,7 +18,7 @@ module.exports = function (sequelize, DataTypes) {
       allowNull: false,
     },
     txout_scriptPubKey: {
-      type: 'VARBINARY(1000000)',
+      type: DataTypes.BLOB(1000000),
       allowNull: true,
     },
     pubkey_id: {
@@ -30,6 +30,14 @@ module.exports = function (sequelize, DataTypes) {
       },
     },
   }, {
+    underscored: true,
     tableName: 'txout',
+    indexes:
+    [
+      {
+        unique: true,
+        fields: ['tx_id', 'txout_pos'],
+      },
+    ],
   });
 };

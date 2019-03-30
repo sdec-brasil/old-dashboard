@@ -9,7 +9,7 @@ module.exports = function (sequelize, DataTypes) {
       },
     },
     txout_tx_hash: {
-      type: 'BINARY(32)',
+      type: DataTypes.BLOB(32),
       allowNull: false,
     },
     txout_pos: {
@@ -17,6 +17,7 @@ module.exports = function (sequelize, DataTypes) {
       allowNull: false,
     },
   }, {
+    underscored: true,
     tableName: 'unlinked_txin',
   });
 };

@@ -10,6 +10,7 @@ module.exports = function (sequelize, DataTypes) {
       allowNull: true,
     },
   }, {
+    underscored: true,
     tableName: 'abe_lock',
   });
 };
