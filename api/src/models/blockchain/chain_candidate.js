@@ -1,5 +1,5 @@
-module.exports = function (sequelize, DataTypes) {
-  return sequelize.define('chain_candidate', {
+export default function (sequelize, DataTypes) {
+  const Chain_Candidate = sequelize.define('Chain_Candidate', {
     chain_uuid: {
       type: DataTypes.UUID,
       allowNull: false,
@@ -36,4 +36,8 @@ module.exports = function (sequelize, DataTypes) {
       },
     ],
   });
-};
+
+  Chain_Candidate.associate = (models) => {
+    Chain_Candidate.belongsTo(models.block, { foreignKey: { name: 'block_id', allowNull: false } });
+  };
+}

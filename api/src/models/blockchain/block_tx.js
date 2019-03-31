@@ -1,5 +1,5 @@
-module.exports = function (sequelize, DataTypes) {
-  return sequelize.define('block_tx', {
+export default function (sequelize, DataTypes) {
+  const Block_Tx = sequelize.define('Block_Tx', {
     block_tx_id: {
       type: DataTypes.UUID,
       allowNull: false,
@@ -42,4 +42,11 @@ module.exports = function (sequelize, DataTypes) {
       },
     ],
   });
-};
+
+  Block_Tx.associate = (models) => {
+    Block_Tx.belongsTo(models.Block, { foreignKey: 'block_id' });
+    Block_Tx.belongsTo(models.Tx, { foreignKey: 'tx_id' });
+  };
+
+  return Block_Tx;
+}

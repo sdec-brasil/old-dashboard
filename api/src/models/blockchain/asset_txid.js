@@ -1,5 +1,5 @@
-module.exports = function (sequelize, DataTypes) {
-  return sequelize.define('asset_txid', {
+export default function (sequelize, DataTypes) {
+  const Asset_Txid = sequelize.define('Asset_Txid', {
     asset_id: {
       type: DataTypes.DOUBLE,
       allowNull: false,
@@ -31,4 +31,11 @@ module.exports = function (sequelize, DataTypes) {
       },
     ],
   });
-};
+
+  Asset_Txid.associate = (models) => {
+    Asset_Txid.belongsTo(models.Tx, { foreignKey: { name: 'tx_id', allowNull: false } });
+    Asset_Txid.belongsTo(models.Asset, { foreignKey: { name: 'asset_id', allowNull: false } });
+  };
+
+  return Asset_Txid;
+}

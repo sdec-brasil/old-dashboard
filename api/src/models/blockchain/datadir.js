@@ -1,5 +1,5 @@
-module.exports = function (sequelize, DataTypes) {
-  return sequelize.define('datadir', {
+export default function (sequelize, DataTypes) {
+  return sequelize.define('Datadir', {
     datadir_id: {
       type: DataTypes.DOUBLE,
       allowNull: false,
@@ -25,4 +25,4 @@ module.exports = function (sequelize, DataTypes) {
     underscored: true,
     tableName: 'datadir',
   });
-};
+}

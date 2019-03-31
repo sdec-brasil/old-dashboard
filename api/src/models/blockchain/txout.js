@@ -1,6 +1,6 @@
-module.exports = function (sequelize, DataTypes) {
-  return sequelize.define('txin', {
-    txin_id: {
+export default function (sequelize, DataTypes) {
+  const Txout = sequelize.define('Txout', {
+    txout_id: {
       type: DataTypes.DOUBLE,
       allowNull: false,
       primaryKey: true,
@@ -8,37 +8,42 @@ module.exports = function (sequelize, DataTypes) {
     tx_id: {
       type: DataTypes.DOUBLE,
       allowNull: false,
-      references: {
-        model: 'tx',
-        key: 'tx_id',
-      },
     },
-    txin_pos: {
+    txout_pos: {
       type: DataTypes.DOUBLE,
       allowNull: false,
     },
-    txout_id: {
+    txout_value: {
       type: DataTypes.DOUBLE,
-      allowNull: true,
+      allowNull: false,
     },
-    txin_scriptSig: {
+    txout_scriptPubKey: {
       type: DataTypes.BLOB(1000000),
       allowNull: true,
     },
-    txin_sequence: {
+    pubkey_id: {
       type: DataTypes.DOUBLE,
       allowNull: true,
+      references: {
+        model: 'pubkey',
+        key: 'pubkey_id',
+      },
     },
   }, {
     underscored: true,
-    tableName: 'txin',
+    tableName: 'txout',
     indexes:
     [
       {
         unique: true,
-        fields: ['tx_id', 'txin_pos'],
-        allowNull: false,
+        fields: ['tx_id', 'txout_pos'],
       },
     ],
   });
-};
+
+  Txout.associate = (models) => {
+    Txout.belongsTo(models.pubkey, { foreignKey: 'pubkey_id' });
+  };
+
+  return Txout;
+}

@@ -1,5 +1,5 @@
-module.exports = function (sequelize, DataTypes) {
-  return sequelize.define('configvar', {
+export default function (sequelize, DataTypes) {
+  return sequelize.define('Configvar', {
     configvar_name: {
       type: DataTypes.STRING(100),
       allowNull: false,
@@ -12,4 +12,4 @@ module.exports = function (sequelize, DataTypes) {
   }, {
     tableName: 'configvar',
   });
-};
+}

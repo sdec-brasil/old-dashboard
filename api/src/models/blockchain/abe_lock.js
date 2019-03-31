@@ -1,5 +1,5 @@
-module.exports = function (sequelize, DataTypes) {
-  return sequelize.define('abe_lock', {
+export default function (sequelize, DataTypes) {
+  return sequelize.define('Abe_Lock', {
     lock_id: {
       type: DataTypes.DOUBLE,
       allowNull: false,
@@ -13,4 +13,4 @@ module.exports = function (sequelize, DataTypes) {
     underscored: true,
     tableName: 'abe_lock',
   });
-};
+}

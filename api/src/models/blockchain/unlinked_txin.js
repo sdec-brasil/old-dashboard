@@ -1,5 +1,5 @@
-module.exports = function (sequelize, DataTypes) {
-  return sequelize.define('unlinked_txin', {
+export default function (sequelize, DataTypes) {
+  const Unliked_Txin = sequelize.define('Unlinked_Txin', {
     txin_id: {
       type: DataTypes.DOUBLE,
       allowNull: false,
@@ -20,4 +20,10 @@ module.exports = function (sequelize, DataTypes) {
     underscored: true,
     tableName: 'unlinked_txin',
   });
-};
+
+  Unliked_Txin.associate = (models) => {
+    Unliked_Txin.belongsTo(models.txin, { foreingKey: 'txin_id' });
+  };
+
+  return Unliked_Txin;
+}

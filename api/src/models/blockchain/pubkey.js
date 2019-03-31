@@ -1,5 +1,5 @@
-module.exports = function (sequelize, DataTypes) {
-  return sequelize.define('pubkey', {
+export default function (sequelize, DataTypes) {
+  return sequelize.define('Pubkey', {
     pubkey_id: {
       type: DataTypes.DOUBLE,
       allowNull: false,
@@ -21,4 +21,4 @@ module.exports = function (sequelize, DataTypes) {
     underscored: true,
     tableName: 'pubkey',
   });
-};
+}

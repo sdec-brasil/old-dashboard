@@ -1,5 +1,5 @@
-module.exports = function (sequelize, DataTypes) {
-  return sequelize.define('abe_sequences', {
+export default function (sequelize, DataTypes) {
+  return sequelize.define('Abe_Sequences', {
     sequence_key: {
       type: DataTypes.STRING(100),
       allowNull: false,
@@ -13,4 +13,4 @@ module.exports = function (sequelize, DataTypes) {
     underscored: true,
     tableName: 'abe_sequences',
   });
-};
+}

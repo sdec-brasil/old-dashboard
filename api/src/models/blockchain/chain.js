@@ -1,5 +1,5 @@
-module.exports = function (sequelize, DataTypes) {
-  return sequelize.define('chain', {
+export default function (sequelize, DataTypes) {
+  const Chain = sequelize.define('Chain', {
     chain_id: {
       type: DataTypes.DOUBLE,
       allowNull: false,
@@ -53,4 +53,10 @@ module.exports = function (sequelize, DataTypes) {
     underscored: true,
     tableName: 'chain',
   });
-};
+
+  Chain.associate = (models) => {
+    Chain.belongsTo(models.block, { as: 'chain_last_block', foreignKey: { name: 'chain_last_block_id', allowNull: true } });
+  };
+
+  return Chain;
+}

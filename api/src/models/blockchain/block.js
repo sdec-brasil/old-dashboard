@@ -1,5 +1,5 @@
-module.exports = function (sequelize, DataTypes) {
-  return sequelize.define('block', {
+export default function (sequelize, DataTypes) {
+  const Block = sequelize.define('Block', {
     block_id: {
       type: DataTypes.DOUBLE,
       allowNull: false,
@@ -89,4 +89,11 @@ module.exports = function (sequelize, DataTypes) {
     underscored: true,
     tableName: 'block',
   });
-};
+
+  Block.associate = (models) => {
+    Block.belongsTo(models.block, { as: 'prev_block', foreignKey: { name: 'prev_block_id', allowNull: true } });
+    Block.belongsTo(models.block, { as: 'search_block', foreignKey: { name: 'search_block_id', allowNull: true } });
+  };
+
+  return Block;
+}

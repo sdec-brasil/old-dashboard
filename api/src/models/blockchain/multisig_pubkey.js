@@ -1,5 +1,5 @@
-module.exports = function (sequelize, DataTypes) {
-  return sequelize.define('multisig_pubkey', {
+export default function (sequelize, DataTypes) {
+  const Multisig_Pubkey = sequelize.define('multisig_pubkey', {
     multisig_uuid: {
       type: DataTypes.UUID,
       allowNull: false,
@@ -34,4 +34,11 @@ module.exports = function (sequelize, DataTypes) {
       },
     ],
   });
-};
+
+  Multisig_Pubkey.associate = (models) => {
+    Multisig_Pubkey.belongsTo(models.pubkey, { as: '_multisig_id', foreignKey: { name: 'multisig_id', allowNull: false } });
+    Multisig_Pubkey.belongsTo(models.pubkey, { as: '_pubkey_id', foreignKey: { name: 'pubkey_id', allowNull: false } });
+  };
+
+  return Multisig_Pubkey;
+}
