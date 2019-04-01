@@ -1,0 +1,1 @@
+{"info":{"title":"SDEC","version":"1.0.0","description":"API Pública do Sistema"},"host":"localhost:8000","basePath":"/","swagger":"2.0","paths":{"/":{"get":{"description":"Returns the homepage","responses":{"200":{"description":"hello world"}}}}},"definitions":{},"responses":{},"parameters":{},"securityDefinitions":{},"tags":[]}

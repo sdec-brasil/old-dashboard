@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon --exec babel-node -- src/index.js",
+    "start": "nodemon --ignore docs/swagger.json --exec babel-node -- src/index.js",
     "doc": "graphdoc"
   },
   "graphdoc": {
@@ -41,6 +41,7 @@
     "mysql2": "1.6.5",
     "pg": "^7.9.0",
     "sequelize": "5.2.7",
-    "sequelize-import": "^1.2.1"
+    "sequelize-import": "^1.2.1",
+    "swagger-jsdoc": "^3.2.8"
   }
 }
