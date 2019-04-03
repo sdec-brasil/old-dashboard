@@ -1,17 +1,22 @@
 // User
-export default (sequelize, DataTypes) => sequelize.define(
-  'user',
-  {
-    codigo_municipio: {
-      type: DataTypes.STRING(7),
+export default function (sequelize, DataTypes) {
+  const User = sequelize.define('User', {
+    user_id: {
+      type: DataTypes.UUID(),
       primaryKey: true,
-      unique: true,
+    },
+    name: {
+      type: DataTypes.STRING(),
       allowNull: false,
     },
-  },
-  {
+  }, {
     underscored: true,
     tableName: 'user',
-    freezeTableName: true,
-  },
-);
+  });
+
+  User.associate = (models) => {
+    User.hasMany(models.Conta_Bancaria, { primaryKey: { name: 'user_id' } });
+  };
+
+  return User;
+}

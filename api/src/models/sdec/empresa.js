@@ -1,7 +1,6 @@
 // Empresa
-export default (sequelize, DataTypes) => sequelize.define(
-  'empresa',
-  {
+export default function (sequelize, DataTypes) {
+  const Empresa = sequelize.define('Empresa', {
     cnpj: {
       type: DataTypes.STRING(14),
       primaryKey: true,
@@ -62,5 +61,12 @@ export default (sequelize, DataTypes) => sequelize.define(
     underscored: true,
     tableName: 'empresa',
     freezeTableName: true,
-  },
-);
+  });
+
+  Empresa.associate = (models) => {
+    Empresa.hasMany(models.Nota_Fiscal, { primaryKey: { name: 'cnpj_empresa' } });
+  };
+
+
+  return Empresa;
+}

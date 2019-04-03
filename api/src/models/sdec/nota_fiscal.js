@@ -1,9 +1,6 @@
 // Nota_fiscal
-// Para obter mais informacoes ( https://gist.github.com/tloriato/3a59843a6826afc23c4f6ebaf078166f )
-
-export default (sequelize, DataTypes) => sequelize.define(
-  'nota_fiscal',
-  {
+export default function (sequelize, DataTypes) {
+  const Nota_Fiscal = sequelize.define('Nota_Fiscal', {
     id_nota: {
       type: DataTypes.BIGINT,
       primaryKey: true,
@@ -147,5 +144,14 @@ export default (sequelize, DataTypes) => sequelize.define(
     underscored: true,
     tableName: 'nota_fiscal',
     freezeTableName: true,
-  },
-);
+  });
+
+  Nota_Fiscal.associate = (models) => {
+    Nota_Fiscal.belongsTo(models.Empresa, { foreignKey: { name: 'cnpj_empresa', allowNull: false } });
+    Nota_Fiscal.belongsTo(models.Nota_Fiscal, { as: 'NotaSubstituida', foreignKey: 'id_nota_substituta' });
+    Nota_Fiscal.belongsTo(models.Prefeitura, { as: 'Municipio', foreignKey: { name: 'cod_prefeitura', allowNull: false }, onDelete: 'CASCADE' });
+    Nota_Fiscal.belongsTo(models.Prefeitura, { as: 'MunicipioPrestacaoServico', foreignKey: { name: 'cod_municipio_prestacao_servico', allowNull: false }, onDelete: 'CASCADE' });
+    Nota_Fiscal.belongsTo(models.Prefeitura, { as: 'MunicipioIncidencia', foreignKey: 'cod_municipio_incidencia' });
+  };
+  return Nota_Fiscal;
+}

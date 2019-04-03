@@ -1,6 +1,6 @@
 // Prefeitura
 export default (sequelize, DataTypes) => sequelize.define(
-  'prefeitura',
+  'Prefeitura',
   {
     codigo_municipio: {
       type: DataTypes.STRING(7),
