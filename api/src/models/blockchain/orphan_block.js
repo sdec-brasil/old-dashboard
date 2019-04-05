@@ -9,7 +9,7 @@ export default function (sequelize, DataTypes) {
       },
     },
     block_hashPrev: {
-      type: DataTypes.BLOB(32),
+      type: DataTypes.BLOB,
       allowNull: false,
     },
   }, {

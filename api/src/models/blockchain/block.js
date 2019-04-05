@@ -6,7 +6,7 @@ export default function (sequelize, DataTypes) {
       primaryKey: true,
     },
     block_hash: {
-      type: DataTypes.BLOB(32),
+      type: DataTypes.BLOB,
       allowNull: false,
     },
     block_version: {
@@ -14,7 +14,7 @@ export default function (sequelize, DataTypes) {
       allowNull: true,
     },
     block_hashMerkleRoot: {
-      type: DataTypes.BLOB(32),
+      type: DataTypes.BLOB,
       allowNull: true,
     },
     block_nTime: {
@@ -50,7 +50,7 @@ export default function (sequelize, DataTypes) {
       },
     },
     block_chain_work: {
-      type: DataTypes.BLOB(38),
+      type: DataTypes.BLOB,
       allowNull: true,
     },
     block_value_in: {

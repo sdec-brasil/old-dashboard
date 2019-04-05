@@ -9,7 +9,7 @@ export default function (sequelize, DataTypes) {
       },
     },
     txout_tx_hash: {
-      type: DataTypes.BLOB(32),
+      type: DataTypes.BLOB,
       allowNull: false,
     },
     txout_pos: {

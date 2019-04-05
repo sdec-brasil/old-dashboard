@@ -18,7 +18,7 @@ export default function (sequelize, DataTypes) {
       allowNull: false,
     },
     txout_scriptPubKey: {
-      type: DataTypes.BLOB(1000000),
+      type: DataTypes.BLOB,
       allowNull: true,
     },
     pubkey_id: {

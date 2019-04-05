@@ -6,11 +6,11 @@ export default function (sequelize, DataTypes) {
       primaryKey: true,
     },
     pubkey_hash: {
-      type: DataTypes.BLOB(20),
+      type: DataTypes.BLOB,
       allowNull: false,
     },
     pubkey: {
-      type: DataTypes.BLOB(65),
+      type: DataTypes.BLOB,
       allowNull: true,
     },
     pubkey_flags: {

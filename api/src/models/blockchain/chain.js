@@ -14,19 +14,19 @@ export default function (sequelize, DataTypes) {
       allowNull: true,
     },
     chain_address_version: {
-      type: DataTypes.BLOB(100),
+      type: DataTypes.BLOB,
       allowNull: false,
     },
     chain_script_addr_vers: {
-      type: DataTypes.BLOB(100),
+      type: DataTypes.BLOB,
       allowNull: true,
     },
     chain_address_checksum: {
-      type: DataTypes.BLOB(100),
+      type: DataTypes.BLOB,
       allowNull: true,
     },
     chain_magic: {
-      type: DataTypes.BLOB(4),
+      type: DataTypes.BLOB,
       allowNull: true,
     },
     chain_policy: {

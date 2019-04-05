@@ -22,7 +22,7 @@ export default function (sequelize, DataTypes) {
       allowNull: true,
     },
     txin_scriptSig: {
-      type: DataTypes.BLOB(1000000),
+      type: DataTypes.BLOB,
       allowNull: true,
     },
     txin_sequence: {

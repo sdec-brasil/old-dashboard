@@ -6,7 +6,7 @@ export default function (sequelize, DataTypes) {
       primaryKey: true,
     },
     tx_hash: {
-      type: DataTypes.BLOB(32), // changed type because of postgres naming
+      type: DataTypes.BLOB,
       allowNull: false,
     },
     tx_version: {
