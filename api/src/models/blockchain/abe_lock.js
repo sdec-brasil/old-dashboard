@@ -1,7 +1,7 @@
 export default function (sequelize, DataTypes) {
-  return sequelize.define('Abe_Lock', {
+  return sequelize.define('abe_lock', {
     lock_id: {
-      type: DataTypes.DOUBLE,
+      type: DataTypes.DECIMAL,
       allowNull: false,
       primaryKey: true,
     },
@@ -10,7 +10,6 @@ export default function (sequelize, DataTypes) {
       allowNull: true,
     },
   }, {
-    underscored: true,
     tableName: 'abe_lock',
   });
 }
