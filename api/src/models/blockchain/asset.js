@@ -1,20 +1,21 @@
 export default function (sequelize, DataTypes) {
-  const Asset = sequelize.define('Asset', {
+  return sequelize.define('asset', {
     asset_id: {
-      type: DataTypes.DOUBLE,
+      type: DataTypes.DECIMAL(10, 0),
       allowNull: false,
       primaryKey: true,
     },
     tx_id: {
-      type: DataTypes.DOUBLE,
+      type: DataTypes.DECIMAL(26, 0),
       allowNull: false,
       references: {
         model: 'tx',
         key: 'tx_id',
       },
+      unique: true,
     },
     chain_id: {
-      type: DataTypes.DOUBLE,
+      type: DataTypes.DECIMAL(10, 0),
       allowNull: false,
       references: {
         model: 'chain',
@@ -26,26 +27,18 @@ export default function (sequelize, DataTypes) {
       allowNull: false,
     },
     multiplier: {
-      type: DataTypes.DOUBLE,
+      type: DataTypes.DECIMAL(10, 0),
       allowNull: false,
     },
     issue_qty: {
-      type: DataTypes.DOUBLE,
+      type: DataTypes.DECIMAL(30, 0),
       allowNull: false,
     },
     prefix: {
-      type: DataTypes.DOUBLE,
+      type: DataTypes.DECIMAL(10, 0),
       allowNull: false,
     },
   }, {
-    underscored: true,
     tableName: 'asset',
   });
-
-  Asset.associate = (models) => {
-    Asset.belongsTo(models.Tx, { foreignKey: { name: 'tx_id', unique: true } });
-    Asset.belongsTo(models.Chain, { foreignKey: 'chain_id' });
-  };
-
-  return Asset;
 }
