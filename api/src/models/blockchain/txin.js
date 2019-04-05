@@ -1,12 +1,12 @@
 export default function (sequelize, DataTypes) {
-  const Txin = sequelize.define('Txin', {
+  return sequelize.define('txin', {
     txin_id: {
-      type: DataTypes.DOUBLE,
+      type: DataTypes.DECIMAL(26, 0),
       allowNull: false,
       primaryKey: true,
     },
     tx_id: {
-      type: DataTypes.DOUBLE,
+      type: DataTypes.DECIMAL(26, 0),
       allowNull: false,
       references: {
         model: 'tx',
@@ -14,37 +14,22 @@ export default function (sequelize, DataTypes) {
       },
     },
     txin_pos: {
-      type: DataTypes.DOUBLE,
+      type: DataTypes.DECIMAL(10, 0),
       allowNull: false,
     },
     txout_id: {
-      type: DataTypes.DOUBLE,
+      type: DataTypes.DECIMAL(26, 0),
       allowNull: true,
     },
     txin_scriptSig: {
-      type: DataTypes.BLOB,
+      type: 'MEDIUMBLOB',
       allowNull: true,
     },
     txin_sequence: {
-      type: DataTypes.DOUBLE,
+      type: DataTypes.DECIMAL(10, 0),
       allowNull: true,
     },
   }, {
-    underscored: true,
     tableName: 'txin',
-    indexes:
-    [
-      {
-        unique: true,
-        fields: ['tx_id', 'txin_pos'],
-        allowNull: false,
-      },
-    ],
   });
-
-  Txin.associate = (models) => {
-    Txin.belongsTo(models.tx, { foreignKey: 'tx_id' });
-  };
-
-  return Txin;
 }

@@ -1,29 +1,23 @@
 export default function (sequelize, DataTypes) {
-  const Unliked_Txin = sequelize.define('Unlinked_Txin', {
+  return sequelize.define('unlinked_txin', {
     txin_id: {
-      type: DataTypes.DOUBLE,
+      type: DataTypes.DECIMAL(26, 0),
       allowNull: false,
+      primaryKey: true,
       references: {
         model: 'txin',
         key: 'txin_id',
       },
     },
     txout_tx_hash: {
-      type: DataTypes.BLOB,
+      type: 'BINARY(32)',
       allowNull: false,
     },
     txout_pos: {
-      type: DataTypes.DOUBLE,
+      type: DataTypes.DECIMAL(10, 0),
       allowNull: false,
     },
   }, {
-    underscored: true,
     tableName: 'unlinked_txin',
   });
-
-  Unliked_Txin.associate = (models) => {
-    Unliked_Txin.belongsTo(models.txin, { foreingKey: 'txin_id' });
-  };
-
-  return Unliked_Txin;
 }

@@ -1,28 +1,28 @@
 export default function (sequelize, DataTypes) {
-  const Txout = sequelize.define('Txout', {
+  return sequelize.define('txout', {
     txout_id: {
-      type: DataTypes.DOUBLE,
+      type: DataTypes.DECIMAL(26, 0),
       allowNull: false,
       primaryKey: true,
     },
     tx_id: {
-      type: DataTypes.DOUBLE,
+      type: DataTypes.DECIMAL(26, 0),
       allowNull: false,
     },
     txout_pos: {
-      type: DataTypes.DOUBLE,
+      type: DataTypes.DECIMAL(10, 0),
       allowNull: false,
     },
     txout_value: {
-      type: DataTypes.DOUBLE,
+      type: DataTypes.DECIMAL(30, 0),
       allowNull: false,
     },
     txout_scriptPubKey: {
-      type: DataTypes.BLOB,
+      type: 'MEDIUMBLOB',
       allowNull: true,
     },
     pubkey_id: {
-      type: DataTypes.DOUBLE,
+      type: DataTypes.DECIMAL(26, 0),
       allowNull: true,
       references: {
         model: 'pubkey',
@@ -30,20 +30,6 @@ export default function (sequelize, DataTypes) {
       },
     },
   }, {
-    underscored: true,
     tableName: 'txout',
-    indexes:
-    [
-      {
-        unique: true,
-        fields: ['tx_id', 'txout_pos'],
-      },
-    ],
   });
-
-  Txout.associate = (models) => {
-    Txout.belongsTo(models.pubkey, { foreignKey: 'pubkey_id' });
-  };
-
-  return Txout;
 }

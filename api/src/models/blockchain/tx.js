@@ -1,28 +1,28 @@
 export default function (sequelize, DataTypes) {
-  return sequelize.define('Tx', {
+  return sequelize.define('tx', {
     tx_id: {
-      type: DataTypes.DOUBLE,
+      type: DataTypes.DECIMAL(26, 0),
       allowNull: false,
       primaryKey: true,
     },
     tx_hash: {
-      type: DataTypes.BLOB,
+      type: 'BINARY(32)',
       allowNull: false,
+      unique: true,
     },
     tx_version: {
-      type: DataTypes.DOUBLE,
+      type: DataTypes.DECIMAL(10, 0),
       allowNull: true,
     },
     tx_lockTime: {
-      type: DataTypes.DOUBLE,
+      type: DataTypes.DECIMAL(10, 0),
       allowNull: true,
     },
     tx_size: {
-      type: DataTypes.DOUBLE,
+      type: DataTypes.DECIMAL(10, 0),
       allowNull: true,
     },
   }, {
-    underscored: true,
     tableName: 'tx',
   });
 }

@@ -1,24 +1,24 @@
 export default function (sequelize, DataTypes) {
-  return sequelize.define('Pubkey', {
+  return sequelize.define('pubkey', {
     pubkey_id: {
-      type: DataTypes.DOUBLE,
+      type: DataTypes.DECIMAL(26, 0),
       allowNull: false,
       primaryKey: true,
     },
     pubkey_hash: {
-      type: DataTypes.BLOB,
+      type: 'BINARY(20)',
       allowNull: false,
+      unique: true,
     },
     pubkey: {
-      type: DataTypes.BLOB,
+      type: 'VARBINARY(65)',
       allowNull: true,
     },
     pubkey_flags: {
-      type: DataTypes.DOUBLE,
+      type: DataTypes.DECIMAL(32, 0),
       allowNull: true,
     },
   }, {
-    underscored: true,
     tableName: 'pubkey',
   });
 }
