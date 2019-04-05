@@ -1,6 +1,6 @@
 // Banco
 export default function (sequelize, DataTypes) {
-  const Banco = sequelize.define('Banco', {
+  const banco = sequelize.define('banco', {
     banco_id: {
       type: DataTypes.STRING(),
       primaryKey: true,
@@ -16,9 +16,9 @@ export default function (sequelize, DataTypes) {
   });
 
   // not quite sure that this is necessary
-  Banco.associate = (models) => {
-    Banco.hasMany(models.Conta_Bancaria, { primaryKey: 'banco_id' });
+  banco.associate = (models) => {
+    banco.hasMany(models.conta_bancaria, { primaryKey: 'banco_id' });
   };
 
-  return Banco;
+  return banco;
 }

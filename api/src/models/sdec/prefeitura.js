@@ -1,6 +1,6 @@
 // Prefeitura
 export default function (sequelize, DataTypes) {
-  const Prefeitura = sequelize.define('Prefeitura', {
+  const prefeitura = sequelize.define('prefeitura', {
     codigo_municipio: {
       type: DataTypes.STRING(7),
       primaryKey: true,
@@ -18,7 +18,9 @@ export default function (sequelize, DataTypes) {
     freezeTableName: true,
   });
 
-  Prefeitura.associate = (models) => {
-    Prefeitura.belongsTo(models.Municipio, { foreignKey: { name: 'codigo_municipio', allowNull: false, unique: true } });
+  prefeitura.associate = (models) => {
+    prefeitura.belongsTo(models.municipio, { foreignKey: { name: 'codigo_municipio', allowNull: false, unique: true } });
   };
+
+  return prefeitura;
 }

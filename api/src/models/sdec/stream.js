@@ -1,6 +1,6 @@
 // Stream
 export default function (sequelize, DataTypes) {
-  return sequelize.define('Stream', {
+  return sequelize.define('stream', {
     stream_id: {
       type: DataTypes.STRING(),
       primaryKey: true,

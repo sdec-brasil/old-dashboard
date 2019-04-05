@@ -1,6 +1,6 @@
 // Nota_Pagamento
 export default function (sequelize, DataTypes) {
-  const Estado = sequelize.define('Estado', {
+  const estado = sequelize.define('estado', {
     sigla: {
       type: DataTypes.STRING(2),
       primaryKey: true,
@@ -19,5 +19,5 @@ export default function (sequelize, DataTypes) {
     freezeTableName: true,
   });
 
-  return Estado;
+  return estado;
 }

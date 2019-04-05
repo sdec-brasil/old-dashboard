@@ -1,6 +1,6 @@
 // Conta Bancária
 export default function (sequelize, DataTypes) {
-  const Conta_Bancaria = sequelize.define('Conta_Bancaria', {
+  const conta_bancaria = sequelize.define('conta_bancaria', {
     banco_id: {
       type: DataTypes.STRING(),
       primaryKey: true,
@@ -31,10 +31,10 @@ export default function (sequelize, DataTypes) {
     ],
   });
 
-  Conta_Bancaria.associate = (models) => {
-    Conta_Bancaria.belongsTo(models.Banco, { primaryKey: { name: 'banco_id', allowNull: false } });
-    Conta_Bancaria.belongsTo(models.User, { primaryKey: { name: 'user_id', allowNull: false } });
+  conta_bancaria.associate = (models) => {
+    conta_bancaria.belongsTo(models.banco, { primaryKey: { name: 'banco_id', allowNull: false } });
+    conta_bancaria.belongsTo(models.user, { primaryKey: { name: 'user_id', allowNull: false } });
   };
 
-  return Conta_Bancaria;
+  return conta_bancaria;
 }

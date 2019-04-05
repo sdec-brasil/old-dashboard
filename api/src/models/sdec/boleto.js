@@ -16,7 +16,7 @@ export default (sequelize, DataTypes) => sequelize.define(
       allowNull: false,
     },
     valor_total: {
-      type: DataTypes.DOUBLE,
+      type: DataTypes.DECIMAL,
       allowNull: false,
     },
     data_vencimento: {

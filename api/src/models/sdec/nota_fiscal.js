@@ -1,6 +1,6 @@
-// Nota_fiscal
+// nota_fiscal
 export default function (sequelize, DataTypes) {
-  const Nota_Fiscal = sequelize.define('Nota_Fiscal', {
+  const nota_fiscal = sequelize.define('nota_fiscal', {
     id_nota: {
       type: DataTypes.BIGINT,
       primaryKey: true,
@@ -9,19 +9,19 @@ export default function (sequelize, DataTypes) {
       allowNull: false,
     },
     base_calculo: {
-      type: DataTypes.DOUBLE,
+      type: DataTypes.DECIMAL,
       allowNull: false,
     },
     aliquota_servicos: {
-      type: DataTypes.DOUBLE,
+      type: DataTypes.DECIMAL,
       allowNull: false,
     },
     valor_iss: {
-      type: DataTypes.DOUBLE,
+      type: DataTypes.DECIMAL,
       allowNull: false,
     },
     valor_liquido_nota: {
-      type: DataTypes.DOUBLE,
+      type: DataTypes.DECIMAL,
       allowNull: false,
     },
     competencia: {
@@ -29,51 +29,51 @@ export default function (sequelize, DataTypes) {
       allowNull: false,
     },
     valor_servicos: {
-      type: DataTypes.DOUBLE,
+      type: DataTypes.DECIMAL,
       allowNull: false,
     },
     valor_deducoes: {
-      type: DataTypes.DOUBLE,
+      type: DataTypes.DECIMAL,
       allowNull: true,
     },
     valor_pis: {
-      type: DataTypes.DOUBLE,
+      type: DataTypes.DECIMAL,
       allowNull: true,
     },
     valor_cofins: {
-      type: DataTypes.DOUBLE,
+      type: DataTypes.DECIMAL,
       allowNull: true,
     },
     valor_inss: {
-      type: DataTypes.DOUBLE,
+      type: DataTypes.DECIMAL,
       allowNull: true,
     },
     valor_ir: {
-      type: DataTypes.DOUBLE,
+      type: DataTypes.DECIMAL,
       allowNull: true,
     },
     valor_csll: {
-      type: DataTypes.DOUBLE,
+      type: DataTypes.DECIMAL,
       allowNull: true,
     },
     outras_retencoes: {
-      type: DataTypes.DOUBLE,
+      type: DataTypes.DECIMAL,
       allowNull: true,
     },
     valor_total_tributos: {
-      type: DataTypes.DOUBLE,
+      type: DataTypes.DECIMAL,
       allowNull: true,
     },
     aliquota: {
-      type: DataTypes.DOUBLE,
+      type: DataTypes.DECIMAL,
       allowNull: true,
     },
     desconto_incondicionado: {
-      type: DataTypes.DOUBLE,
+      type: DataTypes.DECIMAL,
       allowNull: true,
     },
     desconto_condicionado: {
-      type: DataTypes.DOUBLE,
+      type: DataTypes.DECIMAL,
       allowNull: true,
     },
     iss_retido: {
@@ -146,12 +146,12 @@ export default function (sequelize, DataTypes) {
     freezeTableName: true,
   });
 
-  Nota_Fiscal.associate = (models) => {
-    Nota_Fiscal.belongsTo(models.Empresa, { foreignKey: { name: 'cnpj_empresa', allowNull: false } });
-    Nota_Fiscal.belongsTo(models.Nota_Fiscal, { as: 'NotaSubstituida', foreignKey: 'id_nota_substituta' });
-    Nota_Fiscal.belongsTo(models.Prefeitura, { as: 'Municipio', foreignKey: { name: 'cod_prefeitura', allowNull: false }, onDelete: 'CASCADE' });
-    Nota_Fiscal.belongsTo(models.Prefeitura, { as: 'MunicipioPrestacaoServico', foreignKey: { name: 'cod_municipio_prestacao_servico', allowNull: false }, onDelete: 'CASCADE' });
-    Nota_Fiscal.belongsTo(models.Prefeitura, { as: 'MunicipioIncidencia', foreignKey: 'cod_municipio_incidencia' });
+  nota_fiscal.associate = (models) => {
+    nota_fiscal.belongsTo(models.empresa, { foreignKey: { name: 'cnpj_empresa', allowNull: false } });
+    nota_fiscal.belongsTo(models.nota_fiscal, { as: 'NotaSubstituida', foreignKey: 'id_nota_substituta' });
+    nota_fiscal.belongsTo(models.prefeitura, { as: 'Municipio', foreignKey: { name: 'cod_prefeitura', allowNull: false }, onDelete: 'CASCADE' });
+    nota_fiscal.belongsTo(models.prefeitura, { as: 'MunicipioPrestacaoServico', foreignKey: { name: 'cod_municipio_prestacao_servico', allowNull: false }, onDelete: 'CASCADE' });
+    nota_fiscal.belongsTo(models.prefeitura, { as: 'MunicipioIncidencia', foreignKey: 'cod_municipio_incidencia' });
   };
-  return Nota_Fiscal;
+  return nota_fiscal;
 }

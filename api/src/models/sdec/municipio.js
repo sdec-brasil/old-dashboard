@@ -1,6 +1,6 @@
 // Nota_Pagamento
 export default function (sequelize, DataTypes) {
-  const Municipio = sequelize.define('Municipio', {
+  const municipio = sequelize.define('municipio', {
     codigo_ibge: {
       type: DataTypes.STRING(7),
       primaryKey: true,
@@ -19,9 +19,9 @@ export default function (sequelize, DataTypes) {
     freezeTableName: true,
   });
 
-  Municipio.associate = (models) => {
-    Municipio.belongsTo(models.Estado, { primaryKey: { name: 'sigla', allowNull: false } });
+  municipio.associate = (models) => {
+    municipio.belongsTo(models.estado, { primaryKey: { name: 'sigla', allowNull: false } });
   };
 
-  return Municipio;
+  return municipio;
 }

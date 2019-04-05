@@ -1,8 +1,8 @@
 // User
 export default function (sequelize, DataTypes) {
-  const User = sequelize.define('User', {
+  const user = sequelize.define('user', {
     user_id: {
-      type: DataTypes.UUID(),
+      type: DataTypes.UUID,
       primaryKey: true,
     },
     name: {
@@ -14,9 +14,9 @@ export default function (sequelize, DataTypes) {
     tableName: 'user',
   });
 
-  User.associate = (models) => {
-    User.hasMany(models.Conta_Bancaria, { primaryKey: { name: 'user_id' } });
+  user.associate = (models) => {
+    user.hasMany(models.conta_bancaria, { primaryKey: { name: 'user_id' } });
   };
 
-  return User;
+  return user;
 }

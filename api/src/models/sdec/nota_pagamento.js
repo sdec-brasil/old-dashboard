@@ -1,6 +1,6 @@
-// Nota_Pagamento
+// nota_pagamento
 export default function (sequelize, DataTypes) {
-  const Nota_Pagamento = sequelize.define('Nota_Pagamento', {
+  const nota_pagamento = sequelize.define('nota_pagamento', {
     guid: {
       type: DataTypes.UUID,
       primaryKey: true,
@@ -26,11 +26,11 @@ export default function (sequelize, DataTypes) {
     freezeTableName: true,
   });
 
-  Nota_Pagamento.associate = (models) => {
-    Nota_Pagamento.belongsTo(models.Nota_Fiscal, { primaryKey: { name: 'id_nota', allowNull: false } });
-    Nota_Pagamento.belongsTo(models.Empresa, { primaryKey: { name: 'cnpj_empresa', allowNull: false } });
-    Nota_Pagamento.belongsTo(models.Metodo_Pagamento, { primaryKey: { name: 'id_metodo', allowNull: false } });
+  nota_pagamento.associate = (models) => {
+    nota_pagamento.belongsTo(models.Nota_Fiscal, { primaryKey: { name: 'id_nota', allowNull: false } });
+    nota_pagamento.belongsTo(models.Empresa, { primaryKey: { name: 'cnpj_empresa', allowNull: false } });
+    nota_pagamento.belongsTo(models.Metodo_Pagamento, { primaryKey: { name: 'id_metodo', allowNull: false } });
   };
 
-  return Nota_Pagamento;
+  return nota_pagamento;
 }

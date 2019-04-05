@@ -1,7 +1,7 @@
 // Metodo_Pagamento
 // Num primeiro momento esse vai ser um modelo frankenstein, quando tivermos melhor a nocao do dominio vamos dividir em varias tabelas
 export default function (sequelize, DataTypes) {
-  const Metodo_Pagamento = sequelize.define('Nota_Pagamento', {
+  const metodo_pagamento = sequelize.define('nota_pagamento', {
     metodo_pagamento_uuid: {
       type: DataTypes.UUID,
       allowNull: false,
@@ -19,9 +19,9 @@ export default function (sequelize, DataTypes) {
   });
 
   // Isso ainda deve ser determinado
-  Metodo_Pagamento.associate = (models) => {
-    Metodo_Pagamento.belongsTo(models.Empresa, { primaryKey: { name: 'cnpj_empresa', allowNull: false } });
+  metodo_pagamento.associate = (models) => {
+    metodo_pagamento.belongsTo(models.empresa, { primaryKey: { name: 'cnpj_empresa', allowNull: false } });
   };
 
-  return Metodo_Pagamento;
+  return metodo_pagamento;
 }
