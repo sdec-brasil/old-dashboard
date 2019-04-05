@@ -1,32 +1,33 @@
 export default function (sequelize, DataTypes) {
-  const Chain = sequelize.define('Chain', {
+  return sequelize.define('chain', {
     chain_id: {
-      type: DataTypes.DOUBLE,
+      type: DataTypes.DECIMAL(10, 0),
       allowNull: false,
       primaryKey: true,
     },
     chain_name: {
       type: DataTypes.STRING(100),
       allowNull: false,
+      unique: true,
     },
     chain_code3: {
       type: DataTypes.STRING(5),
       allowNull: true,
     },
     chain_address_version: {
-      type: DataTypes.BLOB,
+      type: 'VARBINARY(100)',
       allowNull: false,
     },
     chain_script_addr_vers: {
-      type: DataTypes.BLOB,
+      type: 'VARBINARY(100)',
       allowNull: true,
     },
     chain_address_checksum: {
-      type: DataTypes.BLOB,
+      type: 'VARBINARY(100)',
       allowNull: true,
     },
     chain_magic: {
-      type: DataTypes.BLOB,
+      type: 'BINARY(4)',
       allowNull: true,
     },
     chain_policy: {
@@ -34,11 +35,11 @@ export default function (sequelize, DataTypes) {
       allowNull: false,
     },
     chain_decimals: {
-      type: DataTypes.DOUBLE,
+      type: DataTypes.DECIMAL(2, 0),
       allowNull: true,
     },
     chain_last_block_id: {
-      type: DataTypes.DOUBLE,
+      type: DataTypes.DECIMAL(14, 0),
       allowNull: true,
       references: {
         model: 'block',
@@ -46,17 +47,10 @@ export default function (sequelize, DataTypes) {
       },
     },
     chain_protocol_version: {
-      type: DataTypes.DOUBLE,
+      type: DataTypes.DECIMAL(10, 0),
       allowNull: false,
     },
   }, {
-    underscored: true,
     tableName: 'chain',
   });
-
-  Chain.associate = (models) => {
-    Chain.belongsTo(models.block, { as: 'chain_last_block', foreignKey: { name: 'chain_last_block_id', allowNull: true } });
-  };
-
-  return Chain;
 }
