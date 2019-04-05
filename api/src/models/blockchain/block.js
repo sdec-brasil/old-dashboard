@@ -1,40 +1,41 @@
 export default function (sequelize, DataTypes) {
-  const Block = sequelize.define('Block', {
+  return sequelize.define('block', {
     block_id: {
-      type: DataTypes.DOUBLE,
+      type: DataTypes.DECIMAL(14, 0),
       allowNull: false,
       primaryKey: true,
     },
     block_hash: {
-      type: DataTypes.BLOB,
+      type: 'BINARY(32)',
       allowNull: false,
+      unique: true,
     },
     block_version: {
-      type: DataTypes.DOUBLE,
+      type: DataTypes.DECIMAL(10, 0),
       allowNull: true,
     },
     block_hashMerkleRoot: {
-      type: DataTypes.BLOB,
+      type: 'BINARY(32)',
       allowNull: true,
     },
     block_nTime: {
-      type: DataTypes.DOUBLE,
+      type: DataTypes.DECIMAL(20, 0),
       allowNull: true,
     },
     block_nBits: {
-      type: DataTypes.DOUBLE,
+      type: DataTypes.DECIMAL(10, 0),
       allowNull: true,
     },
     block_nNonce: {
-      type: DataTypes.DOUBLE,
+      type: DataTypes.DECIMAL(10, 0),
       allowNull: true,
     },
     block_height: {
-      type: DataTypes.DOUBLE,
+      type: DataTypes.DECIMAL(14, 0),
       allowNull: true,
     },
     prev_block_id: {
-      type: DataTypes.DOUBLE,
+      type: DataTypes.DECIMAL(14, 0),
       allowNull: true,
       references: {
         model: 'block',
@@ -42,7 +43,7 @@ export default function (sequelize, DataTypes) {
       },
     },
     search_block_id: {
-      type: DataTypes.DOUBLE,
+      type: DataTypes.DECIMAL(14, 0),
       allowNull: true,
       references: {
         model: 'block',
@@ -50,50 +51,42 @@ export default function (sequelize, DataTypes) {
       },
     },
     block_chain_work: {
-      type: DataTypes.BLOB,
+      type: 'BINARY(38)',
       allowNull: true,
     },
     block_value_in: {
-      type: DataTypes.DOUBLE,
+      type: DataTypes.DECIMAL(30, 0),
       allowNull: true,
     },
     block_value_out: {
-      type: DataTypes.DOUBLE,
+      type: DataTypes.DECIMAL(30, 0),
       allowNull: true,
     },
     block_total_satoshis: {
-      type: DataTypes.DOUBLE,
+      type: DataTypes.DECIMAL(26, 0),
       allowNull: true,
     },
     block_total_seconds: {
-      type: DataTypes.DOUBLE,
+      type: DataTypes.DECIMAL(20, 0),
       allowNull: true,
     },
     block_satoshi_seconds: {
-      type: DataTypes.DOUBLE,
+      type: DataTypes.DECIMAL(28, 0),
       allowNull: true,
     },
     block_total_ss: {
-      type: DataTypes.DOUBLE,
+      type: DataTypes.DECIMAL(28, 0),
       allowNull: true,
     },
     block_num_tx: {
-      type: DataTypes.DOUBLE,
+      type: DataTypes.DECIMAL(10, 0),
       allowNull: false,
     },
     block_ss_destroyed: {
-      type: DataTypes.DOUBLE,
+      type: DataTypes.DECIMAL(28, 0),
       allowNull: true,
     },
   }, {
-    underscored: true,
     tableName: 'block',
   });
-
-  Block.associate = (models) => {
-    Block.belongsTo(models.block, { as: 'prev_block', foreignKey: { name: 'prev_block_id', allowNull: true } });
-    Block.belongsTo(models.block, { as: 'search_block', foreignKey: { name: 'search_block_id', allowNull: true } });
-  };
-
-  return Block;
 }
