@@ -1,5 +1,5 @@
 export default function (sequelize, DataTypes) {
-  return sequelize.define('Configvar', {
+  return sequelize.define('configvar', {
     configvar_name: {
       type: DataTypes.STRING(100),
       allowNull: false,

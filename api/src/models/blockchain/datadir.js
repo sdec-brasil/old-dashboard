@@ -1,7 +1,7 @@
 export default function (sequelize, DataTypes) {
-  return sequelize.define('Datadir', {
+  return sequelize.define('datadir', {
     datadir_id: {
-      type: DataTypes.DOUBLE,
+      type: DataTypes.DECIMAL(10, 0),
       allowNull: false,
       primaryKey: true,
     },
@@ -10,19 +10,18 @@ export default function (sequelize, DataTypes) {
       allowNull: false,
     },
     blkfile_number: {
-      type: DataTypes.DOUBLE,
+      type: DataTypes.DECIMAL(8, 0),
       allowNull: true,
     },
     blkfile_offset: {
-      type: DataTypes.DOUBLE,
+      type: DataTypes.DECIMAL(20, 0),
       allowNull: true,
     },
     chain_id: {
-      type: DataTypes.DOUBLE,
+      type: DataTypes.DECIMAL(10, 0),
       allowNull: true,
     },
   }, {
-    underscored: true,
     tableName: 'datadir',
   });
 }
