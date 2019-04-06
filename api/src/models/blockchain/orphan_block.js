@@ -15,5 +15,11 @@ export default function (sequelize, DataTypes) {
     },
   }, {
     tableName: 'orphan_block',
+    indexes: [
+      {
+        name: 'x_orphan_block_hashPrev',
+        fields: ['block_hashPrev'],
+      },
+    ],
   });
 }

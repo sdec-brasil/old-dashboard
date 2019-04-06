@@ -31,5 +31,11 @@ export default function (sequelize, DataTypes) {
     },
   }, {
     tableName: 'txout',
+    indexes: [
+      {
+        name: 'x_txout_pubkey',
+        fields: ['pubkey_id'],
+      },
+    ],
   });
 }

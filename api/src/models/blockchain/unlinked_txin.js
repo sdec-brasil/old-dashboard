@@ -19,5 +19,11 @@ export default function (sequelize, DataTypes) {
     },
   }, {
     tableName: 'unlinked_txin',
+    indexes: [
+      {
+        name: 'x_unlinked_txin_outpoint',
+        fields: ['txout_tx_hash', 'txout_pos'],
+      },
+    ],
   });
 }
