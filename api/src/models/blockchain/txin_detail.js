@@ -1,15 +1,15 @@
 export default function (sequelize, DataTypes) {
   return sequelize.define('txin_detail', {
     chain_id: {
-      type: DataTypes.DECIMAL,
+      type: DataTypes.DECIMAL(10),
       allowNull: false,
     },
     in_longest: {
-      type: DataTypes.DECIMAL,
+      type: DataTypes.DECIMAL(1),
       allowNull: true,
     },
     block_id: {
-      type: DataTypes.DECIMAL,
+      type: DataTypes.DECIMAL(14),
       allowNull: false,
     },
     block_hash: {
@@ -17,15 +17,15 @@ export default function (sequelize, DataTypes) {
       allowNull: false,
     },
     block_height: {
-      type: DataTypes.DECIMAL,
+      type: DataTypes.DECIMAL(14),
       allowNull: true,
     },
     tx_pos: {
-      type: DataTypes.DECIMAL,
+      type: DataTypes.DECIMAL(10),
       allowNull: false,
     },
     tx_id: {
-      type: DataTypes.DECIMAL,
+      type: DataTypes.DECIMAL(26),
       allowNull: false,
     },
     tx_hash: {
@@ -33,27 +33,27 @@ export default function (sequelize, DataTypes) {
       allowNull: false,
     },
     tx_lockTime: {
-      type: DataTypes.DECIMAL,
+      type: DataTypes.DECIMAL(10),
       allowNull: true,
     },
     tx_version: {
-      type: DataTypes.DECIMAL,
+      type: DataTypes.DECIMAL(10),
       allowNull: true,
     },
     tx_size: {
-      type: DataTypes.DECIMAL,
+      type: DataTypes.DECIMAL(10),
       allowNull: true,
     },
     txin_id: {
-      type: DataTypes.DECIMAL,
+      type: DataTypes.DECIMAL(26),
       allowNull: false,
     },
     txin_pos: {
-      type: DataTypes.DECIMAL,
+      type: DataTypes.DECIMAL(10),
       allowNull: false,
     },
     prevout_id: {
-      type: DataTypes.DECIMAL,
+      type: DataTypes.DECIMAL(26),
       allowNull: true,
     },
     txin_scriptSig: {
@@ -61,11 +61,11 @@ export default function (sequelize, DataTypes) {
       allowNull: true,
     },
     txin_sequence: {
-      type: DataTypes.DECIMAL,
+      type: DataTypes.DECIMAL(10),
       allowNull: true,
     },
     txin_value: {
-      type: DataTypes.DECIMAL,
+      type: DataTypes.DECIMAL(30),
       allowNull: true,
     },
     txin_scriptPubKey: {
@@ -73,7 +73,7 @@ export default function (sequelize, DataTypes) {
       allowNull: true,
     },
     pubkey_id: {
-      type: DataTypes.DECIMAL,
+      type: DataTypes.DECIMAL(26),
       allowNull: true,
     },
     pubkey_hash: {
@@ -86,5 +86,6 @@ export default function (sequelize, DataTypes) {
     },
   }, {
     tableName: 'txin_detail',
+    engine: 'MYISAM',
   });
 }
