@@ -52,19 +52,5 @@ export default function (sequelize, DataTypes) {
     },
   }, {
     tableName: 'chain',
-    indexes: [
-      {
-        name: 'x_cc_block',
-        fields: ['block_id'],
-      },
-      {
-        name: 'x_cc_chain_block_height',
-        fields: ['chain_id', 'block_height'],
-      },
-      {
-        name: 'x_cc_block_height',
-        fields: ['block_height'],
-      },
-    ],
   });
 }
