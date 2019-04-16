@@ -6,7 +6,7 @@ import SequelizeImport from 'sequelize-import';
 import databaseConnection from '../setup/databaseConnection';
 
 // Importing all models from the directory and subdirectories
-const models = SequelizeImport(`${__dirname}`, databaseConnection, {
+const models = SequelizeImport(`${__dirname}/sdec/`, databaseConnection, {
   exclude: ['index.js'],
 });
 

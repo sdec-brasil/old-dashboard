@@ -27,9 +27,9 @@ export default function (sequelize, DataTypes) {
   });
 
   nota_pagamento.associate = (models) => {
-    nota_pagamento.belongsTo(models.Nota_Fiscal, { primaryKey: { name: 'id_nota', allowNull: false } });
-    nota_pagamento.belongsTo(models.Empresa, { primaryKey: { name: 'cnpj_empresa', allowNull: false } });
-    nota_pagamento.belongsTo(models.Metodo_Pagamento, { primaryKey: { name: 'id_metodo', allowNull: false } });
+    nota_pagamento.belongsTo(models.nota_fiscal, { primaryKey: { name: 'id_nota', allowNull: false } });
+    nota_pagamento.belongsTo(models.empresa, { primaryKey: { name: 'cnpj_empresa', allowNull: false } });
+    nota_pagamento.belongsTo(models.metodo_pagamento, { primaryKey: { name: 'id_metodo', allowNull: false } });
   };
 
   return nota_pagamento;
