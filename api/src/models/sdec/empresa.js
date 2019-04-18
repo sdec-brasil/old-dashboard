@@ -61,6 +61,7 @@ export default function (sequelize, DataTypes) {
     underscored: true,
     tableName: 'empresa',
     freezeTableName: true,
+    timestamp: false,
   });
 
   empresa.associate = (models) => {

@@ -144,6 +144,7 @@ export default function (sequelize, DataTypes) {
     underscored: true,
     tableName: 'nota_fiscal',
     freezeTableName: true,
+    timestamp: false,
   });
 
   nota_fiscal.associate = (models) => {
