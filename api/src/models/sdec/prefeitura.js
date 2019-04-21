@@ -16,6 +16,7 @@ export default function (sequelize, DataTypes) {
     underscored: true,
     tableName: 'prefeitura',
     freezeTableName: true,
+    timestamps: false,
   });
 
   prefeitura.associate = (models) => {

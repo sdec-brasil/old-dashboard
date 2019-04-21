@@ -17,10 +17,11 @@ export default function (sequelize, DataTypes) {
     underscored: true,
     tableName: 'municipio',
     freezeTableName: true,
+    timestamps: false,
   });
 
   municipio.associate = (models) => {
-    municipio.belongsTo(models.estado, { primaryKey: { name: 'sigla', allowNull: false } });
+    municipio.belongsTo(models.estado, { foreignKey: { name: 'sigla', allowNull: false } });
   };
 
   return municipio;
