@@ -109,7 +109,7 @@ export default function (sequelize, DataTypes) {
       allowNull: true,
       // se for null entao eh brasil, ou algo do tipo. Tem isso explicitado no gist do Tiago
     },
-    exibilidade_iss: {
+    exigibilidade_iss: {
       type: DataTypes.INTEGER, // esse codigo eh descrito no gist
       allowNull: false,
     },
