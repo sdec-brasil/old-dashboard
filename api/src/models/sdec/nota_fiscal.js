@@ -104,11 +104,6 @@ export default function (sequelize, DataTypes) {
       type: DataTypes.STRING(2000),
       allowNull: false,
     },
-    pais_prestacao_servico: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-      // se for null entao eh brasil, ou algo do tipo. Tem isso explicitado no gist do Tiago
-    },
     exigibilidade_iss: {
       type: DataTypes.INTEGER, // esse codigo eh descrito no gist
       allowNull: false,
@@ -147,12 +142,12 @@ export default function (sequelize, DataTypes) {
     timestamps: false,
   });
 
-  nota_fiscal.associate = (models) => {
+  /*nota_fiscal.associate = (models) => {
     nota_fiscal.belongsTo(models.empresa, { foreignKey: { name: 'cnpj_empresa', allowNull: false } });
     nota_fiscal.belongsTo(models.nota_fiscal, { as: 'NotaSubstituida', foreignKey: 'id_nota_substituta' });
     nota_fiscal.belongsTo(models.prefeitura, { as: 'Municipio', foreignKey: { name: 'cod_prefeitura', allowNull: false }, onDelete: 'CASCADE' });
     nota_fiscal.belongsTo(models.prefeitura, { as: 'MunicipioPrestacaoServico', foreignKey: { name: 'cod_municipio_prestacao_servico', allowNull: false }, onDelete: 'CASCADE' });
     nota_fiscal.belongsTo(models.prefeitura, { as: 'MunicipioIncidencia', foreignKey: 'cod_municipio_incidencia' });
-  };
+  };*/
   return nota_fiscal;
 }
