@@ -8,7 +8,7 @@ export default function (sequelize, DataTypes) {
       allowNull: false,
     },
     endereco_blockchain: {
-      type: DataTypes.STRIGN(35),
+      type: DataTypes.STRING(35),
       unique: true,
       allowNull: false,
     },
