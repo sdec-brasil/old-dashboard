@@ -127,7 +127,7 @@ export default function (sequelize, DataTypes) {
       allowNull: false,
     },
     estado: {
-      type: DataTypes.SMALLINT, // 0 - pendente, 1 - atrasado, 2 - pago, 3 - substituida
+      type: DataTypes.SMALLINT, // 0 - pendente, 1 - atrasado, 2 - pago, 3 - substituida, 4 - dados inconsistentes
       allowNull: false,
       defaultValue: 0,
     },
