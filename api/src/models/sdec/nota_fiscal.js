@@ -1,12 +1,9 @@
 // nota_fiscal
 export default function (sequelize, DataTypes) {
   const nota_fiscal = sequelize.define('nota_fiscal', {
-    id_nota: {
-      type: DataTypes.BIGINT,
+    txid: {
+      type: DataTypes.STRING(64),
       primaryKey: true,
-      unique: true,
-      autoIncremenet: true,
-      allowNull: false,
     },
     base_calculo: {
       type: DataTypes.DECIMAL,
@@ -142,12 +139,12 @@ export default function (sequelize, DataTypes) {
     timestamps: false,
   });
 
-  /*nota_fiscal.associate = (models) => {
+  /* nota_fiscal.associate = (models) => {
     nota_fiscal.belongsTo(models.empresa, { foreignKey: { name: 'cnpj_empresa', allowNull: false } });
     nota_fiscal.belongsTo(models.nota_fiscal, { as: 'NotaSubstituida', foreignKey: 'id_nota_substituta' });
     nota_fiscal.belongsTo(models.prefeitura, { as: 'Municipio', foreignKey: { name: 'cod_prefeitura', allowNull: false }, onDelete: 'CASCADE' });
     nota_fiscal.belongsTo(models.prefeitura, { as: 'MunicipioPrestacaoServico', foreignKey: { name: 'cod_municipio_prestacao_servico', allowNull: false }, onDelete: 'CASCADE' });
     nota_fiscal.belongsTo(models.prefeitura, { as: 'MunicipioIncidencia', foreignKey: 'cod_municipio_incidencia' });
-  };*/
+  }; */
   return nota_fiscal;
 }
