@@ -123,7 +123,7 @@ export default function (sequelize, DataTypes) {
       allowNull: false,
     },
     data_emissao: {
-      type: DataTypes.DATEONLY,
+      type: DataTypes.DATE,
       allowNull: false,
     },
     estado: {
