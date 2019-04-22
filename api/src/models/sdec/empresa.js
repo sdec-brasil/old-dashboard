@@ -7,6 +7,11 @@ export default function (sequelize, DataTypes) {
       unique: true,
       allowNull: false,
     },
+    endereco_blockchain: {
+      type: DataTypes.STRIGN(35),
+      unique: true,
+      allowNull: false,
+    },
     razao_social: {
       type: DataTypes.STRING(150),
       unique: true,
