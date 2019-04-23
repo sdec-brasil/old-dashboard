@@ -93,10 +93,6 @@ export default function (sequelize, DataTypes) {
       type: DataTypes.STRING(9),
       allowNull: true,
     },
-    codigo_tributacao_municipio: {
-      type: DataTypes.STRING(20),
-      allowNull: true,
-    },
     discriminacao: {
       type: DataTypes.STRING(2000),
       allowNull: false,
@@ -126,6 +122,11 @@ export default function (sequelize, DataTypes) {
       type: DataTypes.DATE,
       allowNull: false,
     },
+    // This may need to be a table
+    codigo_servico: {
+      type: DataTypes.STRING(10),
+      allowNull: true,
+    },
     estado: {
       type: DataTypes.SMALLINT, // 0 - pendente, 1 - atrasado, 2 - pago, 3 - substituida, 4 - dados inconsistentes
       allowNull: false,
@@ -139,12 +140,10 @@ export default function (sequelize, DataTypes) {
     timestamps: false,
   });
 
-  /* nota_fiscal.associate = (models) => {
-    nota_fiscal.belongsTo(models.empresa, { foreignKey: { name: 'cnpj_empresa', allowNull: false } });
-    nota_fiscal.belongsTo(models.nota_fiscal, { as: 'NotaSubstituida', foreignKey: 'id_nota_substituta' });
-    nota_fiscal.belongsTo(models.prefeitura, { as: 'Municipio', foreignKey: { name: 'cod_prefeitura', allowNull: false }, onDelete: 'CASCADE' });
-    nota_fiscal.belongsTo(models.prefeitura, { as: 'MunicipioPrestacaoServico', foreignKey: { name: 'cod_municipio_prestacao_servico', allowNull: false }, onDelete: 'CASCADE' });
-    nota_fiscal.belongsTo(models.prefeitura, { as: 'MunicipioIncidencia', foreignKey: 'cod_municipio_incidencia' });
-  }; */
+  nota_fiscal.associate = (models) => {
+    nota_fiscal.belongsTo(models.prefeitura, { targetKey: 'codigo_municipio', foreignKey: { name: 'prefeitura_incidencia', allowNull: false } });
+    nota_fiscal.belongsTo(models.empresa, { targetKey: 'endereco_blockchain', foreignKey: { name: 'endereco_emissor', allowNull: false } });
+  };
+
   return nota_fiscal;
 }
