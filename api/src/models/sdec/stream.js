@@ -1,9 +1,13 @@
 // Stream
 export default function (sequelize, DataTypes) {
-  return sequelize.define('stream', {
+  const stream = sequelize.define('stream', {
     stream_id: {
       type: DataTypes.STRING(),
       primaryKey: true,
+    },
+    creation_txid: {
+      type: DataTypes.STRING(65),
+      allowNull: false,
     },
     name: {
       type: DataTypes.STRING(),
@@ -17,4 +21,10 @@ export default function (sequelize, DataTypes) {
     underscored: true,
     tableName: 'stream',
   });
+
+  stream.associate = (models) => {
+    stream.belongsTo(models.estado, { foreignKey: { name: 'estado', allowNull: false } });
+  };
+
+  return stream;
 }
