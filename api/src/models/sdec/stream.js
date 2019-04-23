@@ -13,10 +13,6 @@ export default function (sequelize, DataTypes) {
       type: DataTypes.STRING(),
       allowNull: false,
     },
-    description: {
-      type: DataTypes.STRING(),
-      allowNull: false,
-    },
   }, {
     underscored: true,
     tableName: 'stream',
