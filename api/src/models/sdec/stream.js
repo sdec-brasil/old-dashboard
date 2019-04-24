@@ -16,10 +16,11 @@ export default function (sequelize, DataTypes) {
   }, {
     underscored: true,
     tableName: 'stream',
+    timestamps: false,
   });
 
   stream.associate = (models) => {
-    stream.belongsTo(models.estado, { foreignKey: { name: 'UF', allowNull: true } });
+    stream.belongsTo(models.estado, { targetKey: 'sigla', foreignKey: { name: 'unidade_federacao', allowNull: true } });
   };
 
   return stream;
