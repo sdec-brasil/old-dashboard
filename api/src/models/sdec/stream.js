@@ -1,20 +1,27 @@
 // Stream
 export default function (sequelize, DataTypes) {
-  return sequelize.define('stream', {
+  const stream = sequelize.define('stream', {
     stream_id: {
       type: DataTypes.STRING(),
       primaryKey: true,
     },
-    name: {
-      type: DataTypes.STRING(),
+    creation_txid: {
+      type: DataTypes.STRING(65),
       allowNull: false,
     },
-    description: {
+    name: {
       type: DataTypes.STRING(),
       allowNull: false,
     },
   }, {
     underscored: true,
     tableName: 'stream',
+    timestamps: false,
   });
+
+  stream.associate = (models) => {
+    stream.belongsTo(models.estado, { targetKey: 'sigla', foreignKey: { name: 'unidade_federacao', allowNull: true } });
+  };
+
+  return stream;
 }
