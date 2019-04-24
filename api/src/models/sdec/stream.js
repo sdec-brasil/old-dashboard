@@ -20,7 +20,7 @@ export default function (sequelize, DataTypes) {
   });
 
   stream.associate = (models) => {
-    stream.belongsTo(models.estado, { targetKey: 'sigla', foreignKey: { name: 'unidade_federacao', allowNull: true } });
+    stream.belongsTo(models.regiao, { targetKey: 'regiao_id', foreignKey: { name: 'regiao_id', allowNull: false } });
   };
 
   return stream;
