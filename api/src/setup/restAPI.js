@@ -26,7 +26,7 @@ export default function (server) {
 
   const swaggerSpec = swaggerJSDoc(options);
 
-  fs.writeFile('./docs/swagger.json', JSON.stringify(swaggerSpec), (err) => {
+  fs.writeFile('./docs/swagger.json', JSON.stringify(swaggerSpec, null, 4), (err) => {
     if (err) console.log(`SETUP - Failed to create docs: ${err}`);
     else console.log('SETUP - Docs created');
   });
