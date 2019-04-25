@@ -6,7 +6,7 @@ import setupLoadModules from './setup/loadModules';
 import setupGraphQL from './setup/graphql';
 import setupRestAPI from './setup/restAPI';
 import setupStartServer from './setup/startServer';
-import syncDatabase from './setup/syncDatabase';
+// import syncDatabase from './setup/syncDatabase';
 
 // Create express server
 const server = express();
@@ -21,7 +21,7 @@ setupRestAPI(server);
 setupGraphQL(server);
 
 // Sync Database
-syncDatabase();
+// syncDatabase();
 
 // Start server
 setupStartServer(server);

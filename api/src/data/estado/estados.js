@@ -1,4 +1,4 @@
-module.exports = [
+const data_estados = [
   {
     model: 'estado',
     data: {
@@ -189,3 +189,5 @@ module.exports = [
     },
   },
 ];
+
+module.exports = data_estados;
