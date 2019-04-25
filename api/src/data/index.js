@@ -7,12 +7,16 @@ export default function (models) {
   return new Promise((resolve, reject) => {
     fixtures.loadFile(`${__dirname}/estado/estados.js`, models)
       .then(() => {
-        fixtures.loadFile(`${__dirname}/regiao/regioes.js`, models)
+        fixtures.loadFile(`${__dirname}/regiao/regioes.js`, models, {
+          transformFixtureDataFn: data => console.log(data),
+          // modifyFixtureDataFn: data => console.log(data),
+        })
           .then(() => {
-            fixtures.loadFile(`${__dirname}/municipio/municipios.js`, models)
+            /* fixtures.loadFile(`${__dirname}/municipio/municipios.js`, models)
               .then(() => {
                 resolve();
-              });
+              }); */
+            resolve();
           });
       })
       .catch(err => reject(err));

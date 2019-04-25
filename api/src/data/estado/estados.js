@@ -108,7 +108,7 @@ module.exports = [
     model: 'estado',
     data: {
       sigla: 'PR',
-      nome: 'Paranná',
+      nome: 'Paraná',
     },
   },
   {
