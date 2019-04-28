@@ -1,6 +1,6 @@
 // Regiao
 export default function (sequelize, DataTypes) {
-  const stream = sequelize.define('regiao', {
+  const regiao = sequelize.define('regiao', {
     regiao_id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
@@ -11,9 +11,20 @@ export default function (sequelize, DataTypes) {
     },
   }, {
     underscored: true,
-    tableName: 'stream',
+    tableName: 'regiao',
     timestamps: false,
   });
 
-  return stream;
+  regiao.associate = (models) => {
+    regiao.belongsTo(models.estado, {
+      targetKey: 'sigla',
+      foreignKey: {
+        name: 'uf',
+        allowNull: false,
+        primaryKey: true,
+      },
+    });
+  };
+
+  return regiao;
 }
