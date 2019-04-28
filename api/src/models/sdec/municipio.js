@@ -10,7 +10,6 @@ export default function (sequelize, DataTypes) {
     nome: {
       type: DataTypes.STRING(60),
       allowNull: false,
-      unique: true,
     },
   },
   {
@@ -21,7 +20,7 @@ export default function (sequelize, DataTypes) {
   });
 
   municipio.associate = (models) => {
-    municipio.belongsTo(models.estado, { foreignKey: { name: 'sigla', allowNull: false } });
+    municipio.belongsTo(models.estado, { targetKey: 'sigla', foreignKey: { name: 'uf', allowNull: false } });
     municipio.belongsTo(models.regiao, { targetKey: 'regiao_id', foreignKey: { name: 'regiao_id', allowNull: false } });
   };
 
