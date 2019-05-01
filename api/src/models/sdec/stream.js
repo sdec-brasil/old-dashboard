@@ -28,6 +28,10 @@ export default function (sequelize, DataTypes) {
       targetKey: 'nome_regiao',
       foreignKey: { name: 'nome_regiao', allowNull: false },
     });
+    stream.belongsTo(models.regiao, {
+      targetKey: 'uf',
+      foreignKey: { name: 'uf', allowNull: false },
+    });
   };
 
   return stream;
