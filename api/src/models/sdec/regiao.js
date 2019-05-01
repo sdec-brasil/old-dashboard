@@ -1,19 +1,20 @@
 // Regiao
 export default function (sequelize, DataTypes) {
-  const regiao = sequelize.define('regiao', {
-    regiao_id: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
+  const regiao = sequelize.define(
+    'regiao',
+    {
+      nome_regiao: {
+        type: DataTypes.STRING(65),
+        allowNull: false,
+        primaryKey: true,
+      },
     },
-    nome: {
-      type: DataTypes.STRING(65),
-      allowNull: false,
+    {
+      underscored: true,
+      tableName: 'regiao',
+      timestamps: false,
     },
-  }, {
-    underscored: true,
-    tableName: 'regiao',
-    timestamps: false,
-  });
+  );
 
   regiao.associate = (models) => {
     regiao.belongsTo(models.estado, {
