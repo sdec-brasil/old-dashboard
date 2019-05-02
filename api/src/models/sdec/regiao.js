@@ -1,13 +1,10 @@
 // Regiao
 export default function (sequelize, DataTypes) {
   const regiao = sequelize.define('regiao', {
-    regiao_id: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
-    },
-    nome: {
+    nome_regiao: {
       type: DataTypes.STRING(65),
       allowNull: false,
+      primaryKey: true,
     },
   }, {
     underscored: true,
