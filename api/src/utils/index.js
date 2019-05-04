@@ -6,13 +6,15 @@ function getRandomInt(min, max) {
 
 export const users = {
 
-  findByUsername: username => models.user.find({
+  findByUsername: username => models.user.findOne({
+    raw: true,
     where: {
       username,
     },
   }),
 
-  findById: id => models.user.find({
+  findById: id => models.user.findAll({
+    raw: true,
     where: {
       id,
     },
@@ -20,7 +22,8 @@ export const users = {
 };
 
 export const clients = {
-  findById: id => models.client.find({
+  findById: id => models.client.findAll({
+    raw: true,
     where: {
       id,
     },
@@ -28,13 +31,15 @@ export const clients = {
 };
 
 export const accessTokens = {
-  findByToken: token => models.token.find({
+  findByToken: token => models.token.findAll({
+    raw: true,
     where: {
       id: token,
     },
   }),
 
-  findByUserAndClient: (userId, clientId) => models.token.find({
+  findByUserAndClient: (userId, clientId) => models.token.findAll({
+    raw: true,
     where: {
       user_id: userId,
       client_id: clientId,
@@ -49,7 +54,8 @@ export const accessTokens = {
 };
 
 export const authoCode = {
-  findByCode: code => models.authorization_code.find({
+  findByCode: code => models.authorization_code.findAll({
+    raw: true,
     where: {
       code,
     },

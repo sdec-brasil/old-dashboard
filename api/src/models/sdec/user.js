@@ -3,7 +3,7 @@ export default function (sequelize, DataTypes) {
   const user = sequelize.define('user', {
     id: {
       type: DataTypes.UUID,
-      defaultValue: sequelize.UUIDV1,
+      defaultValue: DataTypes.UUIDV1,
       primaryKey: true,
     },
     name: {

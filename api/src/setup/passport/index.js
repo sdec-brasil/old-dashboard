@@ -4,11 +4,14 @@ import { Strategy as LocalStrategy } from 'passport-local';
 import { BasicStrategy } from 'passport-http';
 import { Strategy as ClientPasswordStrategy } from 'passport-oauth2-client-password';
 import { Strategy as BearerStrategy } from 'passport-http-bearer';
+import { OAuth2Strategy } from 'passport-oauth';
 
 // App Imports
 import { users, clients, accessTokens } from '../../utils';
+import { oauth2 } from '../../config/config.json';
 
 export default function () {
+  console.log('Calling this!!');
   /**
    * LocalStrategy
    *
@@ -18,7 +21,9 @@ export default function () {
    */
   passport.use(new LocalStrategy(
     (username, password, done) => {
+      console.log('#123');
       users.findByUsername(username).then((user) => {
+        console.log(user);
         if (!user) {
           return done(null, false);
         }
@@ -30,9 +35,13 @@ export default function () {
     },
   ));
 
-  passport.serializeUser((user, done) => done(null, user.id));
+  passport.serializeUser((user, done) => {
+    console.log('#425');
+    done(null, user.id);
+  });
 
   passport.deserializeUser((id, done) => {
+    console.log('#324');
     users.findById(id)
       .then(user => done(null, user))
       .catch(error => done(error));
@@ -50,6 +59,7 @@ export default function () {
    * the specification, in practice it is quite common.
    */
   function verifyClient(clientId, clientSecret, done) {
+    console.log('#743');
     clients.findById(clientId)
       .then((client) => {
         if (!client) {
@@ -76,6 +86,7 @@ export default function () {
    */
   passport.use(new BearerStrategy(
     (accessToken, done) => {
+      console.log('#732');
       accessTokens.findByToken(accessToken)
         .then((token) => {
           if (!token) {
@@ -109,4 +120,16 @@ export default function () {
         }).catch(error => done(error));
     },
   ));
+
+  passport.use('oauth2-example', new OAuth2Strategy({
+    authorizationURL: oauth2.oauth2ServerBaseUrl + oauth2.authorizationURL,
+    tokenURL: oauth2.oauth2ServerBaseUrl + oauth2.tokenURL,
+    clientID: oauth2.clientId,
+    clientSecret: oauth2.clientSecret,
+    callbackURL: oauth2.callbackURL,
+  }, (acToken, refToken, profile, cb) => {
+    console.log(acToken);
+    console.log(refToken);
+    console.log(profile);
+  }));
 }

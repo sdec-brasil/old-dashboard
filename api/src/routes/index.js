@@ -8,7 +8,7 @@ const routes = {
    *       200:
    *         description: hello world
    */
-  'GET /': 'RestExample.test',
+  'GET /success': 'RestExample.test',
   'GET /login': 'Auth.loginTemp',
   'POST /login': 'Auth.login',
   'GET /error': 'Auth.error',
@@ -21,6 +21,9 @@ const routes = {
 
   'GET /api/userinfo': 'User.info',
   'GET /api/clientinfo': 'Client.info',
+
+  'GET /auth/oauth2-example': 'OAuth2.example',
+  'GET /auth/oauth2-example/callback': 'OAuth2.callback',
 };
 
 export default routes;

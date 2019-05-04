@@ -5,15 +5,13 @@ import Login from 'connect-ensure-login';
 const Auth = () => {
   const error = (req, res) => res.status(401).send('Não conseguiu logar');
 
-  const login = (req, res) => {
-    passport.authenticate('local', {
-      successReturnToOrRedirect: '/', failureRedirect: '/error',
-    });
-  };
+  const login = passport.authenticate('local', {
+    successRedirect: 'success', failureRedirect: 'error',
+  });
 
   const logout = (req, res) => {
     req.logout();
-    res.redirect('/');
+    res.redirect('success');
   };
 
   const loginTemp = (req, res) => {

@@ -167,7 +167,7 @@ const OAuth2 = () => {
   // authorization). We accomplish that here by routing through `ensureLoggedIn()`
   // first, and rendering the `dialog` view.
   const authorization = [
-    login.ensureLoggedIn({ redirectTo: '/loginTemp' }),
+    login.ensureLoggedIn({ redirectTo: 'v1/loginTemp' }),
     server.authorization((clientId, redirectUri, done) => {
       // WARNING: For security purposes, it is highly advisable to check that
       //          redirectUri provided by the client matches one registered with
@@ -183,7 +183,7 @@ const OAuth2 = () => {
         return done(null, true); // Auto-approve
       }
 
-      accessTokens.findByUserAndClient(user.id, client.clientId)
+      return accessTokens.findByUserAndClient(user.id, client.clientId)
         .then((token) => {
         // Auto-approve
           if (!token) {
@@ -203,12 +203,6 @@ const OAuth2 = () => {
       Send a POST to v1/auth/oauth2/authorize/decision
       with transaction_id = ${req.oauth2.transactionID}
       `);
-
-      res.render('dialog', {
-        transactionId: req.oauth2.transactionID,
-        user: req.user,
-        client: req.oauth2.client,
-      });
     },
   ];
 
@@ -219,7 +213,7 @@ const OAuth2 = () => {
   // client, the above grant middleware configured above will be invoked to send
   // a response.
   const decision = [
-    login.ensureLoggedIn({ redirectTo: '/loginTemp' }),
+    login.ensureLoggedIn({ redirectTo: 'v1/loginTemp' }),
     server.decision(),
   ];
 
@@ -235,10 +229,19 @@ const OAuth2 = () => {
     server.errorHandler(),
   ];
 
+  const example = passport.authenticate('oauth2-example');
+
+  const callback = (req, res) => {
+    console.log('aloa');
+    res.redirect('success');
+  };
+
   return {
     authorization,
     decision,
     token,
+    example,
+    callback,
   };
 };
 
