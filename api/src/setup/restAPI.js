@@ -7,7 +7,6 @@ import fs from 'fs';
 import routes from '../routes';
 import swaggerDefinition from '../../docs/definition';
 
-
 // Setup RestAPI
 export default function (server) {
   console.info('SETUP - RestAPI & Routes...');
@@ -16,7 +15,7 @@ export default function (server) {
   const mappedRoutes = mapRoutes(routes, 'src/controllers/');
 
   // Map our rotes to the /rest endpoint
-  server.use('/rest', mappedRoutes);
+  server.use('/v1', mappedRoutes);
 
   // Options for the swagger docs
   const options = {

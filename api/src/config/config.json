@@ -4,5 +4,6 @@
   "graphql": {
     "ide": true,
     "pretty": true
-  }
+  },
+  "secret": "m3g4 s3cr3t"
 }

@@ -3,6 +3,11 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
+import passport from 'passport';
+import session from 'express-session';
+
+// App Imports
+import { secret } from '../config/config.json';
 
 // Load express modules
 export default function (server) {
@@ -17,6 +22,17 @@ export default function (server) {
 
   // Request body cookie parser
   server.use(cookieParser());
+
+  // Use sessions as middleware
+  server.use(session({
+    secret,
+    resave: false,
+    saveUninitialized: false,
+  }));
+
+  // Use Passport
+  server.use(passport.initialize());
+  server.use(passport.session());
 
   // HTTP logger
   server.use(morgan('tiny'));

@@ -1,6 +1,6 @@
-// User
+// Client
 export default function (sequelize, DataTypes) {
-  const user = sequelize.define('user', {
+  const client = sequelize.define('client', {
     id: {
       type: DataTypes.UUID,
       defaultValue: sequelize.UUIDV1,
@@ -10,23 +10,19 @@ export default function (sequelize, DataTypes) {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    username: {
+    secret: {
       type: DataTypes.STRING,
       allowNull: false,
       unique: true,
     },
-    password: {
-      type: DataTypes.STRING,
+    trusted: {
+      type: DataTypes.BOOLEAN,
       allowNull: false,
     },
   }, {
     underscored: true,
-    tableName: 'user',
+    tableName: 'client',
   });
 
-  user.associate = (models) => {
-    user.hasMany(models.conta_bancaria, { primaryKey: { name: 'user_id' } });
-  };
-
-  return user;
+  return client;
 }

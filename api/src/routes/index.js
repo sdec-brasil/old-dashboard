@@ -8,7 +8,19 @@ const routes = {
    *       200:
    *         description: hello world
    */
-  'GET /test': 'RestExample.test',
+  'GET /': 'RestExample.test',
+  'GET /login': 'Auth.loginTemp',
+  'POST /login': 'Auth.login',
+  'GET /error': 'Auth.error',
+  'GET /logout': 'Auth.logout',
+  'GET /account': 'Auth.account',
+
+  'GET /auth/oauth2/authorize': 'OAuth2.authorization',
+  'POST /auth/oauth2/authorize/decision': 'OAuth2.decision',
+  'POST /auth/oauth2/token': 'OAuth2.token',
+
+  'GET /api/userinfo': 'User.info',
+  'GET /api/clientinfo': 'Client.info',
 };
 
 export default routes;
