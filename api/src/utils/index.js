@@ -13,7 +13,7 @@ export const users = {
     },
   }),
 
-  findById: id => models.user.findAll({
+  findById: id => models.user.findOne({
     raw: true,
     where: {
       id,
@@ -22,7 +22,7 @@ export const users = {
 };
 
 export const clients = {
-  findById: id => models.client.findAll({
+  findById: id => models.client.findOne({
     raw: true,
     where: {
       id,
@@ -31,14 +31,14 @@ export const clients = {
 };
 
 export const accessTokens = {
-  findByToken: token => models.token.findAll({
+  findByToken: token => models.token.findOne({
     raw: true,
     where: {
       id: token,
     },
   }),
 
-  findByUserAndClient: (userId, clientId) => models.token.findAll({
+  findByUserAndClient: (userId, clientId) => models.token.findOne({
     raw: true,
     where: {
       user_id: userId,
@@ -54,7 +54,7 @@ export const accessTokens = {
 };
 
 export const authoCode = {
-  findByCode: code => models.authorization_code.findAll({
+  findByCode: code => models.authorization_code.findOne({
     raw: true,
     where: {
       code,
@@ -62,7 +62,8 @@ export const authoCode = {
   }),
 
   save: (code, clientId, redirectUri, userId) => {
-    models.authorization_code.create({
+    console.log(code);
+    return models.authorization_code.create({
       code,
       client_id: clientId,
       user_id: userId,
@@ -81,6 +82,6 @@ export const uid = {
       token += chars[getRandomInt(0, charsLength - 1)];
     }
 
-    return uid;
+    return token;
   },
 };

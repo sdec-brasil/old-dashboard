@@ -59,7 +59,7 @@ server.grant(oauth2orize.grant.code((client, redirectUri, user, ares, done) => {
 
 server.grant(oauth2orize.grant.token((client, user, ares, done) => {
   const token = uid.generate(256);
-  accessTokens.save(token, user.id, client.clientId)
+  accessTokens.save(token, user.id, client.id)
     .then(() => done(null, token))
     .catch(error => done(error));
 }));
@@ -97,7 +97,7 @@ server.exchange(oauth2orize.exchange.code((client, code, redirectUri, done) => {
 
 server.exchange(oauth2orize.exchange.password((client, username, password, scope, done) => {
   // Validate the client
-  clients.findById(client.clientId)
+  clients.findById(client.id)
     .then((localClient) => {
       if (!localClient) {
         return done(null, false);
@@ -116,7 +116,7 @@ server.exchange(oauth2orize.exchange.password((client, username, password, scope
           }
           // Everything validated, return the token
           const token = uid.generate(256);
-          return accessTokens.save(token, user.id, client.clientId)
+          return accessTokens.save(token, user.id, client.id)
             .then(() => done(null, token))
             .catch(error => done(error));
         })
@@ -132,7 +132,7 @@ server.exchange(oauth2orize.exchange.password((client, username, password, scope
 
 server.exchange(oauth2orize.exchange.clientCredentials((client, scope, done) => {
   // Validate the client
-  clients.findById(client.clientId)
+  clients.findById(client.id)
     .then((localClient) => {
       if (!localClient) {
         return done(null, false);
@@ -167,7 +167,7 @@ const OAuth2 = () => {
   // authorization). We accomplish that here by routing through `ensureLoggedIn()`
   // first, and rendering the `dialog` view.
   const authorization = [
-    login.ensureLoggedIn({ redirectTo: '../../success' }),
+    login.ensureLoggedIn({ redirectTo: '../../login' }),
     server.authorization((clientId, redirectUri, done) => {
       // WARNING: For security purposes, it is highly advisable to check that
       //          redirectUri provided by the client matches one registered with
@@ -178,12 +178,15 @@ const OAuth2 = () => {
         .catch(error => done(error));
     },
     (client, user, done) => {
+      console.log(client);
+      console.log(user);
+      console.log(done);
       // Check if grant request qualifies for immediate approval
-      if (client.isTrusted) {
+      if (client.trusted) {
         return done(null, true); // Auto-approve
       }
 
-      return accessTokens.findByUserAndClient(user.id, client.clientId)
+      return accessTokens.findByUserAndClient(user.id, client.id)
         .then((token) => {
         // Auto-approve
           if (!token) {
