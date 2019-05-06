@@ -167,7 +167,7 @@ const OAuth2 = () => {
   // authorization). We accomplish that here by routing through `ensureLoggedIn()`
   // first, and rendering the `dialog` view.
   const authorization = [
-    login.ensureLoggedIn({ redirectTo: 'v1/loginTemp' }),
+    login.ensureLoggedIn({ redirectTo: '../../success' }),
     server.authorization((clientId, redirectUri, done) => {
       // WARNING: For security purposes, it is highly advisable to check that
       //          redirectUri provided by the client matches one registered with

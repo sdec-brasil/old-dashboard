@@ -122,11 +122,11 @@ export default function () {
   ));
 
   passport.use('oauth2-example', new OAuth2Strategy({
-    authorizationURL: oauth2.oauth2ServerBaseUrl + oauth2.authorizationURL,
-    tokenURL: oauth2.oauth2ServerBaseUrl + oauth2.tokenURL,
+    authorizationURL: oauth2.oauth2ServerBaseUrl + oauth2.authorizationUrl,
+    tokenURL: oauth2.oauth2ServerBaseUrl + oauth2.tokenUrl,
     clientID: oauth2.clientId,
     clientSecret: oauth2.clientSecret,
-    callbackURL: oauth2.callbackURL,
+    callbackURL: oauth2.callbackUrl,
   }, (acToken, refToken, profile, cb) => {
     console.log(acToken);
     console.log(refToken);
