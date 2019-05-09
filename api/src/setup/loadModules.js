@@ -7,7 +7,7 @@ import passport from 'passport';
 import session from 'express-session';
 
 // App Imports
-import { secret } from '../config/config.json';
+import { sessions } from '../config/config';
 
 // Load express modules
 export default function (server) {
@@ -25,9 +25,11 @@ export default function (server) {
 
   // Use sessions as middleware
   server.use(session({
-    secret,
-    resave: false,
-    saveUninitialized: false,
+    saveUninitialized: true,
+    resave: true,
+    secret: sessions.secret,
+    key: 'authorization.sid',
+    cookie: { maxAge: sessions.maxAge },
   }));
 
   // Use Passport

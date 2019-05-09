@@ -7,11 +7,10 @@ import { Strategy as BearerStrategy } from 'passport-http-bearer';
 import { OAuth2Strategy } from 'passport-oauth';
 
 // App Imports
-import { users, clients, accessTokens } from '../../utils';
-import { oauth2 } from '../../config/config.json';
+import { query, validate } from '../../utils';
+import { oauth2 } from '../../config/config';
 
 export default function () {
-  console.log('Calling this!!');
   /**
    * LocalStrategy
    *
@@ -21,105 +20,86 @@ export default function () {
    */
   passport.use(new LocalStrategy(
     (username, password, done) => {
-      console.log('#123');
-      users.findByUsername(username).then((user) => {
-        console.log(user);
-        if (!user) {
-          return done(null, false);
-        }
-        if (user.password !== password) {
-          return done(null, false);
-        }
-        return done(null, user);
-      }).catch(error => done(error));
+      query.users.findByUsername(username)
+        .then(user => validate.user(user, password))
+        .then(user => done(null, user))
+        .catch(() => done(null, false));
     },
   ));
 
-  passport.serializeUser((user, done) => {
-    console.log('#425');
-    done(null, user.id);
-  });
-
-  passport.deserializeUser((id, done) => {
-    console.log('#324');
-    users.findById(id)
-      .then(user => done(null, user))
-      .catch(error => done(error));
-  });
 
   /**
    * BasicStrategy & ClientPasswordStrategy
    *
-   * These strategies are used to authenticate registered OAuth clients. They are
+   * These strategies are used to authenticate registered OAuth clients.  They are
    * employed to protect the `token` endpoint, which consumers use to obtain
-   * access tokens. The OAuth 2.0 specification suggests that clients use the
-   * HTTP Basic scheme to authenticate. Use of the client password strategy
+   * access tokens.  The OAuth 2.0 specification suggests that clients use the
+   * HTTP Basic scheme to authenticate.  Use of the client password strategy
    * allows clients to send the same credentials in the request body (as opposed
-   * to the `Authorization` header). While this approach is not recommended by
+   * to the `Authorization` header).  While this approach is not recommended by
    * the specification, in practice it is quite common.
    */
-  function verifyClient(clientId, clientSecret, done) {
-    console.log('#743');
-    clients.findById(clientId)
-      .then((client) => {
-        if (!client) {
-          return done(null, false);
-        }
-        if (client.secret !== clientSecret) {
-          return done(null, false);
-        }
-        return done(null, client);
-      }).catch(error => done(error));
-  }
+  passport.use(new BasicStrategy((clientId, clientSecret, done) => {
+    query.clients.findById(clientId)
+      .then(client => validate.client(client, clientSecret))
+      .then(client => done(null, client))
+      .catch(() => done(null, false));
+  }));
 
-  passport.use(new BasicStrategy(verifyClient));
-
-  passport.use(new ClientPasswordStrategy(verifyClient));
+  /**
+   * Client Password strategy
+   *
+   * The OAuth 2.0 client password authentication strategy authenticates clients
+   * using a client ID and client secret. The strategy requires a verify callback,
+   * which accepts those credentials and calls done providing a client.
+   */
+  passport.use(new ClientPasswordStrategy((clientId, clientSecret, done) => {
+    query.clients.findById(clientId)
+      .then(client => validate.client(client, clientSecret))
+      .then(client => done(null, client))
+      .catch(() => done(null, false));
+  }));
 
   /**
    * BearerStrategy
    *
    * This strategy is used to authenticate either users or clients based on an access token
-   * (aka a bearer token). If a user, they must have previously authorized a client
+   * (aka a bearer token).  If a user, they must have previously authorized a client
    * application, which is issued an access token to make requests on behalf of
    * the authorizing user.
+   *
+   * To keep this example simple, restricted scopes are not implemented, and this is just for
+   * illustrative purposes
    */
-  passport.use(new BearerStrategy(
-    (accessToken, done) => {
-      console.log('#732');
-      accessTokens.findByToken(accessToken)
-        .then((token) => {
-          if (!token) {
-            return done(null, false);
-          }
-          if (token.user_id) {
-            users.findByClientId(token.user_id)
-              .then((user) => {
-                if (!user) {
-                  return done(null, false);
-                }
-                // To keep this code simple, restricted scopes are not implemented,
-                // and this is just for illustrative purposes.
-                return done(null, user, { scope: '*' });
-              })
-              .catch(error => done(error));
-          } else {
-            // The request came from a client only since userId is null,
-            // therefore the client is passed back instead of a user.
-            clients.findById(token.client_id)
-              .then((client) => {
-                if (!client) {
-                  return done(null, false);
-                }
-                // To keep this example simple, restricted scopes are not implemented,
-                // and this is just for illustrative purposes.
-                return done(null, client, { scope: '*' });
-              })
-              .catch(error => done(error));
-          }
-        }).catch(error => done(error));
-    },
-  ));
+  passport.use(new BearerStrategy((accessToken, done) => {
+    query.accessTokens.findByToken(accessToken)
+      .then(token => validate.token(token, accessToken))
+      .then(token => done(null, token, { scope: '*' }))
+      .catch(() => done(null, false));
+  }));
+
+  // Register serialialization and deserialization functions.
+  //
+  // When a client redirects a user to user authorization endpoint, an
+  // authorization transaction is initiated.  To complete the transaction, the
+  // user must authenticate and approve the authorization request.  Because this
+  // may involve multiple HTTPS request/response exchanges, the transaction is
+  // stored in the session.
+  //
+  // An application must supply serialization functions, which determine how the
+  // client object is serialized into the session.  Typically this will be a
+  // simple matter of serializing the client's ID, and deserializing by finding
+  // the client by ID from the database.
+
+  passport.serializeUser((user, done) => {
+    done(null, user.id);
+  });
+
+  passport.deserializeUser((id, done) => {
+    db.users.find(id)
+      .then(user => done(null, user))
+      .catch(err => done(err));
+  });
 
   passport.use('oauth2-example', new OAuth2Strategy({
     authorizationURL: oauth2.oauth2ServerBaseUrl + oauth2.authorizationUrl,
