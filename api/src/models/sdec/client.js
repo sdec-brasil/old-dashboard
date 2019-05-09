@@ -10,10 +10,16 @@ export default function (sequelize, DataTypes) {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    username: {
+        // clientID of the FrankHassanabad example
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true,
+      },
     secret: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true,
+      unique: false,
     },
     trusted: {
       type: DataTypes.BOOLEAN,

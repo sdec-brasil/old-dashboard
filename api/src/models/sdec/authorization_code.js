@@ -1,20 +1,22 @@
 // Authorization Code
 export default function (sequelize, DataTypes) {
   const authorization_code = sequelize.define('authorization_code', {
-    code: {
+    id: {
       type: DataTypes.STRING,
       primaryKey: true,
     },
-    redirectUris: {
+    redirect_uri: {
       type: DataTypes.STRING,
       allowNull: false,
-      /* We have to support an Array of URI's, but later
-      get() {
-        return this.getDataValue('redirectUris').split(';');
-      },
-      set(val) {
-        this.setDataValue('redirectUris', val.join(';'));
-      }, */
+    //   lets start with only one uri for now ;)
+
+                    /* We have to support an Array of URI's, but later
+                    get() {
+                        return this.getDataValue('redirectUris').split(';');
+                    },
+                    set(val) {
+                        this.setDataValue('redirectUris', val.join(';'));
+                    }, */
     },
   }, {
     underscored: true,

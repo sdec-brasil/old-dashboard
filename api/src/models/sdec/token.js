@@ -1,11 +1,18 @@
 // Token
 export default function (sequelize, DataTypes) {
   const token = sequelize.define('token', {
-    token: {
-      type: DataTypes.UUID,
-      defaultValue: sequelize.UUIDV1,
+    id: {
+      type: DataTypes.String,
       primaryKey: true,
     },
+    exp_date: {
+        type: DataTypes.DATE,
+        allowNull: false,
+    },
+    scope: {
+        type: DataTypes.String,
+        allowNull: true,
+    }
   }, {
     underscored: true,
     tableName: 'token',
