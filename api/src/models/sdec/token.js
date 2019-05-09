@@ -2,7 +2,7 @@
 export default function (sequelize, DataTypes) {
   const token = sequelize.define('token', {
     id: {
-      type: DataTypes.String,
+      type: DataTypes.STRING,
       primaryKey: true,
     },
     exp_date: {
@@ -10,7 +10,7 @@ export default function (sequelize, DataTypes) {
         allowNull: false,
     },
     scope: {
-        type: DataTypes.String,
+        type: DataTypes.STRING,
         allowNull: true,
     }
   }, {
