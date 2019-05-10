@@ -179,6 +179,8 @@ const authorization = [
   server.authorization((clientID, redirectURI, scope, done) => {
     db.clients.findById(clientID)
       .then((client) => {
+        console.log('1234');
+        console.log(client);
         if (client) {
           client.scope = scope; // eslint-disable-line no-param-reassign
         }
@@ -196,9 +198,14 @@ const authorization = [
     // the clients then they will have to re-consent.
     db.clients.findById(req.query.client_id)
       .then((client) => {
-        if (client != null && client.trustedClient && client.trustedClient === true) {
+        console.log('1634');
+        console.log(client);
+        if (client != null && client.trusted && client.trusted === 1) {
+          console.log('entrou aqui');
           // This is how we short call the decision like the dialog below does
           server.decision({ loadTransaction: false }, (serverReq, callback) => {
+            console.log('entrou aqui2');
+            console.log(callback.toString());
             callback(null, { allow: true });
           })(req, res, next);
         } else {
