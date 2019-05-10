@@ -177,7 +177,7 @@ server.deserializeClient((id, done) => {
 const authorization = [
   login.ensureLoggedIn(),
   server.authorization((clientID, redirectURI, scope, done) => {
-    db.clients.findByClientId(clientID)
+    db.clients.findById(clientID)
       .then((client) => {
         if (client) {
           client.scope = scope; // eslint-disable-line no-param-reassign
@@ -194,7 +194,7 @@ const authorization = [
     // TODO:  Make a mechanism so that if this isn't a trusted client, the user can record that
     // they have consented but also make a mechanism so that if the user revokes access to any of
     // the clients then they will have to re-consent.
-    db.clients.findByClientId(req.query.client_id)
+    db.clients.findById(req.query.client_id)
       .then((client) => {
         if (client != null && client.trustedClient && client.trustedClient === true) {
           // This is how we short call the decision like the dialog below does
@@ -202,10 +202,10 @@ const authorization = [
             callback(null, { allow: true });
           })(req, res, next);
         } else {
-          res.render('dialog', { transactionID: req.oauth2.transactionID, user: req.user, client: req.oauth2.client });
+          res.status(200).send(`transactionID: ${req.oauth2.transactionID}, user: ${req.user}, client: ${req.oauth2.client}`);
         }
       })
-      .catch(() => res.render('dialog', { transactionID: req.oauth2.transactionID, user: req.user, client: req.oauth2.client }));
+      .catch(() => res.status(555).send(`transactionID: ${req.oauth2.transactionID}, user: ${req.user}, client: ${req.oauth2.client}`));
   }];
 
 /**

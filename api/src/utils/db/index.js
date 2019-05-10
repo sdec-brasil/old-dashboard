@@ -153,7 +153,7 @@ export const authorizationCode = {
    */
   save: (code, client_id, redirect_uri, user_id, scope) => {
     const id = jwt.decode(code).jti;
-    return Promise.resolve(models.authorization_code.crete({
+    return Promise.resolve(models.authorization_code.create({
       id,
       client_id,
       redirect_uri,
