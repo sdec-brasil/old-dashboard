@@ -36,7 +36,7 @@ export const tokens = {
    */
   accesstoken: {
     expiresIn: 60 * 60,
-    calculateExpirationDate: () => new Date(Date.now() + (this.token.expiresIn * 1000)),
+    calculateExpirationDate: (token) => new Date(Date.now() + (token.expiresIn * 1000)),
   },
 
   /**

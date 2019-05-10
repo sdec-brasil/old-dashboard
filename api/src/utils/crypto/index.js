@@ -33,14 +33,16 @@ export const uid = {
  * @return {String} The JWT Token
  */
 export const createToken = ({ exp = 3600, sub = '' } = {}) => {
+  const id = uid.generate();
   const token = jwt.sign({
-    jti: uid.generate(),
+    jti: id,
     sub,
     exp: Math.floor(Date.now() / 1000) + exp,
   }, privateKey, {
     algorithm: 'RS256',
   });
-
+  console.log('new token generated:', JSON.stringify(token));
+  console.log('new token id:', id);
   return token;
 };
 

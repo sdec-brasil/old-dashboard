@@ -63,6 +63,7 @@ export const accessTokens = {
     console.log('5973');
     try {
       const decoded = jwt.decode(token).jti;
+      console.log(`finding acess token by id: ${decoded}.`);
       return models.access_token.findOne({
         raw: true,
         where: {
@@ -169,10 +170,13 @@ export const authorizationCode = {
    */
   save: (code, client_id, redirect_uri, user_id, scope) => {
     console.log('71693');
-    const id = jwt.decode(code).jti;
+    const tk = jwt.decode(code);
+    const id = tk.jti;
     console.log(code);
     console.log('#');
-    console.log(id);
+    console.log('id:', id);
+    console.log('payload:', tk.payload);
+    console.log('head', tk.header);
     console.log('#');
     console.log(client_id);
     console.log(redirect_uri);
