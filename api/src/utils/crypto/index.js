@@ -3,10 +3,10 @@ import path from 'path';
 import jwt from 'jsonwebtoken';
 
 /** Private certificate used for signing JSON WebTokens */
-const privateKey = fs.readFileSync(path.join(__dirname, 'certs/privatekey.pem'));
+const privateKey = fs.readFileSync(path.join(__dirname, '../../../certs/privatekey.pem'));
 
 /** Public certificate used for verification.  Note: you could also use the private key */
-const publicKey = fs.readFileSync(path.join(__dirname, 'certs/certificate.pem'));
+const publicKey = fs.readFileSync(path.join(__dirname, '../../../certs/certificate.pem'));
 
 export const uid = {
   generate: (length) => {

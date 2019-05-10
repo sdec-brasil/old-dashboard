@@ -45,7 +45,7 @@ validate.user = (user, password) => {
  * @returns {Object} The user if valid
  */
 validate.userExists = (user) => {
-  if (user === undefined) {
+  if (user == null) {
     validate.logAndThrow('User does not exist');
   }
   return user;
@@ -59,9 +59,9 @@ validate.userExists = (user) => {
  * @throws  {Error}  If the client or the client secret does not match
  * @returns {Object} The client if valid
  */
-validate.client = (client, clientSecret) => {
+validate.client = (client, supposedSecret) => {
   validate.clientExists(client);
-  if (client.secret !== clientSecret) {
+  if (client.secret !== supposedSecret) {
     validate.logAndThrow('Client secret does not match');
   }
   return client;
@@ -74,7 +74,7 @@ validate.client = (client, clientSecret) => {
  * @returns {Object} The client if valid
  */
 validate.clientExists = (client) => {
-  if (client === undefined) {
+  if (client == null) {
     validate.logAndThrow('Client does not exist');
   }
   return client;
@@ -92,13 +92,13 @@ validate.token = (token, accessToken) => {
   crypto.verifyToken(accessToken);
 
   // token is a user token
-  if (token.userID != null) {
-    return db.users.find(token.userID)
+  if (token.user_id != null) {
+    return db.users.findById(token.user_id)
       .then(user => validate.userExists(user))
       .then(user => user);
   }
   // token is a client token
-  return db.clients.find(token.clientID)
+  return db.clients.findById(token.client_id)
     .then(client => validate.clientExists(client))
     .then(client => client);
 };
@@ -115,7 +115,7 @@ validate.token = (token, accessToken) => {
  */
 validate.refreshToken = (token, refreshToken, client) => {
   crypto.verifyToken(refreshToken);
-  if (client.id !== token.clientID) {
+  if (client.id !== token.client_id) {
     validate.logAndThrow('RefreshToken clientID does not match client id given');
   }
   return token;
@@ -135,10 +135,10 @@ validate.refreshToken = (token, refreshToken, client) => {
  */
 validate.authCode = (code, authCode, client, redirectURI) => {
   crypto.verifyToken(code);
-  if (client.id !== authCode.clientID) {
+  if (client.id !== authCode.client_id) {
     validate.logAndThrow('AuthCode clientID does not match client id given');
   }
-  if (redirectURI !== authCode.redirectURI) {
+  if (redirectURI !== authCode.redirect_uri) {
     validate.logAndThrow('AuthCode redirectURI does not match redirectURI given');
   }
   return authCode;
@@ -172,8 +172,8 @@ validate.generateRefreshToken = ({ userId, clientID, scope }) => {
  * @returns {Promise}  The resolved refresh token after saved
  */
 validate.generateToken = ({ userID, clientID, scope }) => {
-  const token = crypto.createToken({ sub: userID, exp: tokens.accesstoken.expiresIn });
-  const expiration = tokens.accesstoken.calculateExpirationDate();
+  const token = crypto.createToken({ sub: userID, exp: tokens.token.expiresIn });
+  const expiration = tokens.token.calculateExpirationDate();
   return db.accessTokens.save(token, expiration, userID, clientID, scope)
     .then(() => token);
 };
@@ -220,7 +220,7 @@ validate.tokenForHttp = token => new Promise((resolve, reject) => {
  * @returns {Object} The client if it is a valid client
  */
 validate.tokenExistsForHttp = (token) => {
-  if (token === undefined) {
+  if (token == null) {
     const error = new Error('invalid_token');
     error.status = 400;
     throw error;
@@ -237,7 +237,7 @@ validate.tokenExistsForHttp = (token) => {
  * @returns {Object} The client if it is a valid client
  */
 validate.clientExistsForHttp = (client) => {
-  if (client === undefined) {
+  if (client == null) {
     const error = new Error('invalid_token');
     error.status = 400;
     throw error;

@@ -7,18 +7,7 @@
     "host": "localhost:8000",
     "basePath": "/",
     "swagger": "2.0",
-    "paths": {
-        "/": {
-            "get": {
-                "description": "Returns the homepage",
-                "responses": {
-                    "200": {
-                        "description": "hello world"
-                    }
-                }
-            }
-        }
-    },
+    "paths": {},
     "definitions": {},
     "responses": {},
     "parameters": {},

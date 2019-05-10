@@ -2,34 +2,42 @@
 import passport from 'passport';
 import Login from 'connect-ensure-login';
 
-const Auth = () => {
-  const error = (req, res) => res.status(401).send('Não conseguiu logar');
+const error = (req, res) => res.status(401).send('Não conseguiu logar');
 
-  const login = passport.authenticate('local', {
-    successRedirect: 'success', failureRedirect: 'error',
-  });
+/**
+  * Authenticate normal login page using strategy of authenticate
+  */
+const login = [
+  passport.authenticate('local', {
+    successReturnToOrRedirect: '/',
+    failureRedirect: '/error',
+  }),
+];
 
-  const logout = (req, res) => {
-    req.logout();
-    res.redirect('success');
-  };
-
-  const loginTemp = (req, res) => {
-    res.status(200).send('Dá um POST pra cá pra fazer login');
-  };
-
-  const account = [
-    Login.ensureLoggedIn({ redirectTo: '/loginTemp' }),
-    (req, res) => res.status(200).send(req.user),
-  ];
-
-  return {
-    login,
-    error,
-    logout,
-    account,
-    loginTemp,
-  };
+/**
+   * Logout of the system and redirect to root
+   * @param   {Object}   req - The request
+   * @param   {Object}   res - The response
+   * @returns {undefined}
+   */
+const logout = (req, res) => {
+  req.logout();
+  res.redirect('/');
 };
 
-export default Auth;
+const loginTemp = (req, res) => {
+  res.status(200).send('Dá um POST pra cá pra fazer login');
+};
+
+const account = [
+  Login.ensureLoggedIn({ redirectTo: '/' }),
+  (req, res) => res.status(200).send(req.user),
+];
+
+export default {
+  error,
+  login,
+  logout,
+  loginTemp,
+  account,
+};

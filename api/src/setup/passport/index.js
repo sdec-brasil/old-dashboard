@@ -10,7 +10,7 @@ import { OAuth2Strategy } from 'passport-oauth';
 import { query, validate } from '../../utils';
 import { oauth2 } from '../../config/config';
 
-export default function () {
+export default (() => {
   /**
    * LocalStrategy
    *
@@ -96,7 +96,7 @@ export default function () {
   });
 
   passport.deserializeUser((id, done) => {
-    db.users.find(id)
+    query.users.findById(id)
       .then(user => done(null, user))
       .catch(err => done(err));
   });
@@ -112,4 +112,4 @@ export default function () {
     console.log(refToken);
     console.log(profile);
   }));
-}
+})();

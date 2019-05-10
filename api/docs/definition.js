@@ -1,4 +1,4 @@
-import { port } from '../src/config/config.json';
+import { general } from '../src/config/config';
 
 const swaggerDefinition = {
   info: {
@@ -7,7 +7,7 @@ const swaggerDefinition = {
     version: '1.0.0', // Version (required)
     description: 'API Pública do Sistema', // Description (optional)
   },
-  host: `localhost:${port}`, // Host (optional)
+  host: `localhost:${general.port}`, // Host (optional)
   basePath: '/', // Base path (optional)
 };
 

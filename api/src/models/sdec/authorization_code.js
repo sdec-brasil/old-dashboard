@@ -8,15 +8,20 @@ export default function (sequelize, DataTypes) {
     redirect_uri: {
       type: DataTypes.STRING,
       allowNull: false,
-    //   lets start with only one uri for now ;)
+      //   lets start with only one uri for now ;)
 
-                    /* We have to support an Array of URI's, but later
+      /* We have to support an Array of URI's, but later
                     get() {
                         return this.getDataValue('redirectUris').split(';');
                     },
                     set(val) {
                         this.setDataValue('redirectUris', val.join(';'));
                     }, */
+    },
+    scope: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      defaultValue: '*',
     },
   }, {
     underscored: true,
