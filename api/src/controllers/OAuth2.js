@@ -33,7 +33,7 @@ const expiresIn = { expires_in: config.accesstoken.expiresIn };
  */
 server.grant(oauth2orize.grant.code((client, redirectURI, user, ares, done) => {
   const code = crypto.createToken({ sub: user.id, exp: config.codeToken.expiresIn });
-  console.log(`Granted new token, id: ${code}.`)
+  console.log(`Granted new token, id: ${code}.`);
   db.authorizationCode.save(code, client.id, redirectURI, user.id, client.scope)
     .then(() => done(null, code))
     .catch(err => done(err));
@@ -49,7 +49,8 @@ server.grant(oauth2orize.grant.code((client, redirectURI, user, ares, done) => {
  */
 server.grant(oauth2orize.grant.token((client, user, ares, done) => {
   const token = crypto.createToken({ sub: user.id, exp: config.accesstoken.expiresIn });
-  const expiration = config.accesstoken.calculateExpirationDate(token);
+  const expiration = config.accesstoken.calculateExpirationDate();
+  console.log('calculated expiration date:', expiration);
 
   db.accessTokens.save(token, expiration, user.id, client.id, client.scope)
     .then(() => done(null, token, expiresIn))

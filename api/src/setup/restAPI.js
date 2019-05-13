@@ -36,6 +36,8 @@ export default function (server) {
   server.get('/api/clientinfo', Client.info);
   server.get('/api/tokeninfo', Token.info);
   server.get('/api/revoke', Token.revoke);
+  server.get('/test', Token.test);
+
 
   // Options for the swagger docs
   const options = {

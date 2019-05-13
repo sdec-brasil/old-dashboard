@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon --ignore docs/swagger.json --exec babel-node -- src/index.js",
+    "debug": "nodemon --ignore docs/swagger.json --inspect --exec babel-node -- src/index.js",
     "doc": "graphdoc",
     "test": "mocha --require @babel/register src/tests"
   },

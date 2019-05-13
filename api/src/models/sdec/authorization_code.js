@@ -1,9 +1,8 @@
 // Authorization Code
 export default function (sequelize, DataTypes) {
   const authorization_code = sequelize.define('authorization_code', {
-    id: {
-      type: DataTypes.STRING,
-      primaryKey: true,
+    code_secret: {
+      type: DataTypes.TEXT('long'),
     },
     redirect_uri: {
       type: DataTypes.STRING,

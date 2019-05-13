@@ -4,9 +4,8 @@ export default function (sequelize, DataTypes) {
 // in the RFC The OAuth 2.0 Authorization Framework: Bearer Token Usage
 // (http://tools.ietf.org/html/rfc6750)
   const refresh_token = sequelize.define('refresh_token', {
-    id: {
-      type: DataTypes.STRING,
-      primaryKey: true,
+    token_secret: {
+      type: DataTypes.TEXT('long'),
     },
     scope: {
       type: DataTypes.STRING,

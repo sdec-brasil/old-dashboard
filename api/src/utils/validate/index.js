@@ -174,6 +174,7 @@ validate.generateRefreshToken = ({ userId, clientID, scope }) => {
 validate.generateToken = ({ userID, clientID, scope }) => {
   const token = crypto.createToken({ sub: userID, exp: tokens.token.expiresIn });
   const expiration = tokens.token.calculateExpirationDate();
+  console.log('calculated expiration date:', expiration);
   return db.accessTokens.save(token, expiration, userID, clientID, scope)
     .then(() => token);
 };

@@ -67,7 +67,7 @@ export const accessTokens = {
       return models.access_token.findOne({
         raw: true,
         where: {
-          id: decoded,
+          token_secret: decoded,
         },
       });
     } catch (e) {
@@ -89,8 +89,14 @@ export const accessTokens = {
 
   save: (token, exp_date, user_id, client_id, scope) => {
     console.log('87593');
+    console.log(`about to create token with:
+    token: ${token},
+    exp_date: ${exp_date},
+    user_id: ${user_id},
+    client_id: ${client_id},
+    scope: ${scope}`);
     return models.access_token.create({
-      id: token,
+      token_secret: token,
       exp_date,
       user_id,
       client_id,
@@ -110,7 +116,7 @@ export const accessTokens = {
       const id = jwt.decode(token).jti;
       return Promise.resolve(models.access_token.findOne({
         where: {
-          id,
+          token_secret: id,
         },
       }).then((obj) => {
         obj.destroy()
@@ -149,7 +155,7 @@ export const authorizationCode = {
       const id = jwt.decode(token).jti;
       return Promise.resolve(models.authorization_code.findOne({
         where: {
-          id,
+          code_secret: id,
         },
       }));
     } catch (error) {
@@ -183,7 +189,7 @@ export const authorizationCode = {
     console.log(user_id);
     console.log(scope);
     return Promise.resolve(models.authorization_code.create({
-      id,
+      code_secret: id,
       client_id,
       redirect_uri,
       user_id,
@@ -202,7 +208,7 @@ export const authorizationCode = {
       const id = jwt.decode(token).jti;
       return Promise.resolve(models.authorization_code.findOne({
         where: {
-          id,
+          code_secret: id,
         },
       }).then((obj) => {
         obj.destroy()
@@ -228,7 +234,7 @@ export const refreshToken = {
       return models.refresh_token.findOne({
         raw: true,
         where: {
-          id: decoded,
+          token_secret: decoded,
         },
       });
     } catch (e) {
@@ -251,7 +257,7 @@ export const refreshToken = {
     console.log('7633');
     const id = jwt.decode(token).jti;
     models.refresh_token.create({
-      id,
+      token_secret: id,
       user_id,
       client_id,
       scope,
@@ -270,7 +276,7 @@ export const refreshToken = {
       const id = jwt.decode(token).jti;
       return Promise.resolve(models.refresh_token.findOne({
         where: {
-          id,
+          token_secret: id,
         },
       }).then((obj) => {
         obj.destroy()

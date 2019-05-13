@@ -2,6 +2,8 @@
 import { db } from '../utils/db';
 import validate from '../utils/validate';
 
+import models from '../models';
+
 /**
    * This endpoint is for verifying a token.  This has the same signature to
    * Google's token verification system from:
@@ -76,7 +78,16 @@ const revoke = (req, res) => validate.tokenForHttp(req.query.token)
     res.json({ error: err.message });
   });
 
+const test = (req, res) => {
+  const a = models;
+  models.client.findAll().then((clients) => {
+    console.log(clients);
+    res.json({});
+  });
+};
+
 export default {
   info,
   revoke,
+  test,
 };

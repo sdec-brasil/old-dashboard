@@ -14,10 +14,10 @@ export const uid = {
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     const charsLength = chars.length;
 
-    for (let i = 0; i < length; ++i) {
+    for (let i = 0; i < length; i += 1) {
       token += chars[Math.floor(Math.random() * (charsLength)) + 0];
     }
-
+    console.log(`uid generated new uid ${token}`);
     return token;
   },
 };
@@ -33,7 +33,7 @@ export const uid = {
  * @return {String} The JWT Token
  */
 export const createToken = ({ exp = 3600, sub = '' } = {}) => {
-  const id = uid.generate();
+  const id = uid.generate(25);
   const token = jwt.sign({
     jti: id,
     sub,
