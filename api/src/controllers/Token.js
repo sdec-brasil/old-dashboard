@@ -27,8 +27,8 @@ import models from '../models';
    */
 const info = (req, res) => {
   let tk;
-  validate.tokenForHttp(req.query.access_token)
-    .then(() => db.accessTokens.findByToken(req.query.access_token))
+  validate.tokenForHttp(req.query.token)
+    .then(() => db.accessTokens.findByToken(req.query.token))
     .then(token => validate.tokenExistsForHttp(token))
     .then((token) => {
       tk = token;
@@ -88,7 +88,6 @@ const revoke = (req, res) => validate.tokenForHttp(req.query.token)
   });
 
 const test = (req, res) => {
-  const a = models;
   models.client.findAll().then((clients) => {
     console.log(clients);
     res.json(req.query);
