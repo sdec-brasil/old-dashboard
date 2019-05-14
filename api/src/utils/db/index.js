@@ -60,7 +60,7 @@ export const accessTokens = {
    * @returns {Promise} resolved with the token if found, otherwise resolved with undefined
    */
   findByToken: (token) => {
-    console.log('5973');
+    console.log('5973', token);
     try {
       const decoded = jwt.decode(token).jti;
       console.log(`finding acess token by id: ${decoded}.`);
@@ -89,14 +89,15 @@ export const accessTokens = {
 
   save: (token, exp_date, user_id, client_id, scope) => {
     console.log('87593');
+    const decoded = jwt.decode(token).jti;
     console.log(`about to create token with:
-    token: ${token},
+    token_id: ${decoded},
     exp_date: ${exp_date},
     user_id: ${user_id},
     client_id: ${client_id},
     scope: ${scope}`);
     return models.access_token.create({
-      token_secret: token,
+      token_secret: decoded,
       exp_date,
       user_id,
       client_id,

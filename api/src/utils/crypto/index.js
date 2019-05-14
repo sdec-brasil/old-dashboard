@@ -52,7 +52,13 @@ export const createToken = ({ exp = 3600, sub = '' } = {}) => {
  * @throws  {Error} Error if the token could not be verified
  * @returns {Object} The token decoded and verified
  */
-export const verifyToken = token => jwt.verify(token, publicKey);
+export const verifyToken = token => jwt.verify(token, publicKey, (err, decoded) => {
+  if (err) {
+    console.log('!! Error !! verifiying token', err);
+  } else {
+    console.log('Token decoded successfully:', decoded);
+  }
+});
 
 export const crypto = {
   createToken,

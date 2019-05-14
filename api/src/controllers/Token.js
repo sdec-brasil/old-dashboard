@@ -25,21 +25,30 @@ import models from '../models';
    * @param   {Object}  res - The response
    * @returns {Promise} Returns the promise for testing only
    */
-const info = (req, res) => validate.tokenForHttp(req.query.access_token)
-  .then(() => db.accessTokens.find(req.query.access_token))
-  .then(token => validate.tokenExistsForHttp(token))
-  .then(token => db.clients.find(token.clientID)
+const info = (req, res) => {
+  let tk;
+  validate.tokenForHttp(req.query.access_token)
+    .then(() => db.accessTokens.findByToken(req.query.access_token))
+    .then(token => validate.tokenExistsForHttp(token))
+    .then((token) => {
+      tk = token;
+      return db.clients.findById(token.client_id);
+    })
     .then(client => validate.clientExistsForHttp(client))
-    .then(client => ({ client, token })))
-  .then(({ client, token }) => {
-    const expirationLeft = Math.floor((token.expirationDate.getTime() - Date.now()) / 1000);
-    res.json({ audience: client.clientId, expires_in: expirationLeft });
-  })
-  .catch((err) => {
-    res.status(err.status);
-    res.json({ error: err.message });
-  });
-
+    .then((client) => {
+      const expirationLeft = Math.floor((tk.exp_date.getTime() - Date.now()) / 1000);
+      let valid = true;
+      if (expirationLeft <= 0) {
+        valid = false;
+      }
+      res.json({ audience: client.id, expires_in: expirationLeft, valid });
+    })
+    .catch((err) => {
+      res.status(404);
+      console.log(`!! Error !! ${err.message}`);
+      res.json({ error: err.message });
+    });
+};
 /**
    * This endpoint is for revoking a token.  This has the same signature to
    * Google's token revocation system from:
@@ -82,7 +91,7 @@ const test = (req, res) => {
   const a = models;
   models.client.findAll().then((clients) => {
     console.log(clients);
-    res.json({});
+    res.json(req.query);
   });
 };
 
