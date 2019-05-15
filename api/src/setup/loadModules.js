@@ -23,7 +23,7 @@ export default function (server) {
 
   // Enable CORS
   server.use(cors());
-  server.set('views', path.join(__dirname, '../views'));
+  server.set('views', path.join(__dirname, '../public/views'));
   server.set('view engine', 'ejs');
 
   // Request body parser
