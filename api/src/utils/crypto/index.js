@@ -17,7 +17,7 @@ export const uid = {
     for (let i = 0; i < length; i += 1) {
       token += chars[Math.floor(Math.random() * (charsLength)) + 0];
     }
-    console.log(`uid generated new uid ${token}`);
+
     return token;
   },
 };
@@ -41,8 +41,8 @@ export const createToken = ({ exp = 3600, sub = '' } = {}) => {
   }, privateKey, {
     algorithm: 'RS256',
   });
-  console.log('new token generated:', JSON.stringify(token));
-  console.log('new token id:', id);
+
+
   return token;
 };
 
@@ -52,13 +52,7 @@ export const createToken = ({ exp = 3600, sub = '' } = {}) => {
  * @throws  {Error} Error if the token could not be verified
  * @returns {Object} The token decoded and verified
  */
-export const verifyToken = token => jwt.verify(token, publicKey, (err, decoded) => {
-  if (err) {
-    console.log('!! Error !! verifiying token', err);
-  } else {
-    console.log('Token decoded successfully:', decoded);
-  }
-});
+export const verifyToken = token => jwt.verify(token, publicKey);
 
 export const crypto = {
   createToken,

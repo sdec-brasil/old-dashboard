@@ -135,19 +135,14 @@ validate.refreshToken = (token, refreshToken, client) => {
  * @returns {Object} The auth code token if valid
  */
 validate.authCode = (code, authCode, client, redirectURI) => {
-  console.log('verificando authcode');
   crypto.verifyToken(code);
   if (client.id !== authCode.client_id) {
-    console.log('different client id');
-    console.log('client', client);
-    console.log('authcode', authCode);
     validate.logAndThrow('AuthCode clientID does not match client id given');
   }
   if (redirectURI !== authCode.redirect_uri) {
-    console.log('different redirect uri');
     validate.logAndThrow('AuthCode redirectURI does not match redirectURI given');
   }
-  console.log('passou o codigo');
+
   return authCode;
 };
 
@@ -166,7 +161,6 @@ validate.isRefreshToken = ({ scope }) => scope != null && scope.indexOf('offline
  * @returns {Promise} The resolved refresh token after saved
  */
 validate.generateRefreshToken = ({ user_id, client_id, scope }) => {
-  console.log('generating refresh token...');
   const refreshToken = crypto.createToken({ sub: user_id, exp: tokens.refreshToken.expiresIn });
   return db.refreshTokens.save(refreshToken, user_id, client_id, scope)
     .then(() => refreshToken);
@@ -180,10 +174,9 @@ validate.generateRefreshToken = ({ user_id, client_id, scope }) => {
  * @returns {Promise}  The resolved refresh token after saved
  */
 validate.generateToken = ({ user_id, client_id, scope }) => {
-  console.log(`generating acess token... user_id: ${user_id}, client_id: ${client_id}, scope: ${scope} `);
   const token = crypto.createToken({ sub: user_id, exp: tokens.accesstoken.expiresIn });
   const expiration = tokens.accesstoken.calculateExpirationDate();
-  console.log('calculated expiration date:', expiration);
+
   return db.accessTokens.save(token, expiration, user_id, client_id, scope)
     .then(() => token);
 };
@@ -196,8 +189,6 @@ validate.generateToken = ({ user_id, client_id, scope }) => {
  * @returns {Promise} The resolved refresh and access tokens as an array
  */
 validate.generateTokens = (authCode) => {
-  console.log('generating tokens for authcode');
-  console.log('authcode', JSON.stringify(authCode));
   if (validate.isRefreshToken(authCode)) {
     return Promise.all([
       validate.generateToken(authCode),

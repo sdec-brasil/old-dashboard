@@ -8,15 +8,12 @@ export const users = {
   * @returns {Promise} resolved user if found, otherwise resolves null
   */
 
-  findByUsername: (username) => {
-    console.log('59073');
-    return models.user.findOne({
-      raw: true,
-      where: {
-        username,
-      },
-    });
-  },
+  findByUsername: username => models.user.findOne({
+    raw: true,
+    where: {
+      username,
+    },
+  }),
 
   /**
   * Returns a user if it finds one, otherwise returns null if a user is not found.
@@ -24,15 +21,12 @@ export const users = {
   * @returns {Promise} resolved user if found, otherwise resolves null
   */
 
-  findById: (id) => {
-    console.log('59073');
-    return models.user.findOne({
-      raw: true,
-      where: {
-        id,
-      },
-    });
-  },
+  findById: id => models.user.findOne({
+    raw: true,
+    where: {
+      id,
+    },
+  }),
 };
 
 export const clients = {
@@ -42,15 +36,12 @@ export const clients = {
    * @returns {Promise} resolved promise with the client if found, otherwise null
    */
 
-  findById: (id) => {
-    console.log('5973');
-    return models.client.findOne({
-      raw: true,
-      where: {
-        id,
-      },
-    });
-  },
+  findById: id => models.client.findOne({
+    raw: true,
+    where: {
+      id,
+    },
+  }),
 };
 
 export const accessTokens = {
@@ -60,10 +51,9 @@ export const accessTokens = {
    * @returns {Promise} resolved with the token if found, otherwise resolved with undefined
    */
   findByToken: (token) => {
-    console.log('5973', token);
     try {
       const decoded = jwt.decode(token).jti;
-      console.log(`finding acess token by id: ${decoded}.`);
+
       return models.access_token.findOne({
         raw: true,
         where: {
@@ -88,14 +78,7 @@ export const accessTokens = {
    */
 
   save: (token, exp_date, user_id, client_id, scope) => {
-    console.log('87593');
     const decoded = jwt.decode(token).jti;
-    console.log(`about to create token with:
-    token_id: ${decoded},
-    exp_date: ${exp_date},
-    user_id: ${user_id},
-    client_id: ${client_id},
-    scope: ${scope}`);
     return models.access_token.create({
       token_secret: decoded,
       exp_date,
@@ -112,7 +95,6 @@ export const accessTokens = {
    * @returns {Promise} resolved with the deleted token, or null if it fails
    */
   delete: (token) => {
-    console.log('8593');
     try {
       const id = jwt.decode(token).jti;
       return Promise.resolve(models.access_token.findOne({
@@ -132,7 +114,6 @@ export const accessTokens = {
   * @returns {Promise} resolved with the # of tokens that were expired
   */
   removeExpired: () => {
-    console.log('1893');
     const now = Date.now();
     return models.access_token.findAll({
       where: {
@@ -151,7 +132,6 @@ export const authorizationCode = {
    * @returns {Promise} resolved with the authorization code if found, otherwise null
    */
   findByToken: (token) => {
-    console.log('1693');
     try {
       const id = jwt.decode(token).jti;
       return Promise.resolve(models.authorization_code.findOne({
@@ -176,19 +156,10 @@ export const authorizationCode = {
    * @returns {Promise} resolved with the saved token //TODO: What if it fails?
    */
   save: (code, client_id, redirect_uri, user_id, scope) => {
-    console.log('71693');
     const tk = jwt.decode(code);
     const id = tk.jti;
-    console.log(code);
-    console.log('#');
-    console.log('id:', id);
-    console.log('payload:', tk.payload);
-    console.log('head', tk.header);
-    console.log('#');
-    console.log(client_id);
-    console.log(redirect_uri);
-    console.log(user_id);
-    console.log(scope);
+
+
     return Promise.resolve(models.authorization_code.create({
       code_secret: id,
       client_id,
@@ -204,7 +175,6 @@ export const authorizationCode = {
    * @returns {Promise} resolved with the deleted value, or null, we think
    */
   delete: (token) => {
-    console.log('71663');
     try {
       const id = jwt.decode(token).jti;
       return Promise.resolve(models.authorization_code.findOne({
@@ -218,10 +188,7 @@ export const authorizationCode = {
             code_secret: id,
           },
         })
-          .then((a) => {
-            console.log('returning', obj.toJSON());
-            return obj;
-          })));
+          .then(a => obj)));
     } catch (error) {
       return Promise.resolve(null);
     }
@@ -236,7 +203,6 @@ export const refreshToken = {
    * @returns {Promise} resolved with the token, or null
    */
   findByToken: (token) => {
-    console.log('7163');
     try {
       const decoded = jwt.decode(token).jti;
       return models.refresh_token.findOne({
@@ -262,7 +228,6 @@ export const refreshToken = {
    */
 
   save: (token, user_id, client_id, scope) => {
-    console.log('7633');
     const id = jwt.decode(token).jti;
     models.refresh_token.create({
       token_secret: id,
@@ -279,7 +244,6 @@ export const refreshToken = {
    * @returns {Promise} resolved with the deleted token
    */
   delete: (token) => {
-    console.log('763');
     try {
       const id = jwt.decode(token).jti;
       return Promise.resolve(models.refresh_token.findOne({

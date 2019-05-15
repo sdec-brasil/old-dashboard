@@ -33,7 +33,7 @@ const expiresIn = { expires_in: config.accesstoken.expiresIn };
  */
 server.grant(oauth2orize.grant.code((client, redirectURI, user, ares, done) => {
   const code = crypto.createToken({ sub: user.id, exp: config.codeToken.expiresIn });
-  console.log(`Granted new token, id: ${code}.`);
+
   db.authorizationCode.save(code, client.id, redirectURI, user.id, client.scope)
     .then(() => done(null, code))
     .catch(err => done(err));
@@ -50,7 +50,7 @@ server.grant(oauth2orize.grant.code((client, redirectURI, user, ares, done) => {
 server.grant(oauth2orize.grant.token((client, user, ares, done) => {
   const token = crypto.createToken({ sub: user.id, exp: config.accesstoken.expiresIn });
   const expiration = config.accesstoken.calculateExpirationDate();
-  console.log('calculated expiration date:', expiration);
+
 
   db.accessTokens.save(token, expiration, user.id, client.id, client.scope)
     .then(() => done(null, token, expiresIn))
@@ -66,16 +66,11 @@ server.grant(oauth2orize.grant.token((client, user, ares, done) => {
  * authorized the code.
  */
 server.exchange(oauth2orize.exchange.code((client, code, redirectURI, done) => {
-  console.log('exchanging token');
   db.authorizationCode.delete(code)
-    .then((authCode) => {
-      console.log('deleted code:', authCode.toJSON());
-      return Promise.resolve(authCode.toJSON());
-    })
+    .then(authCode => Promise.resolve(authCode.toJSON()))
     .then(authCode => validate.authCode(code, authCode, client, redirectURI))
     .then(authCode => validate.generateTokens(authCode))
     .then((tokens) => {
-      console.log(`generated ${tokens.length} tokens: ${tokens}`);
       if (tokens.length === 1) {
         return done(null, tokens[0], null, expiresIn);
       }
@@ -187,8 +182,6 @@ const authorization = [
   server.authorization((clientID, redirectURI, scope, done) => {
     db.clients.findById(clientID)
       .then((client) => {
-        console.log('1234');
-        console.log(client);
         if (client) {
           client.scope = scope; // eslint-disable-line no-param-reassign
         }
@@ -206,14 +199,9 @@ const authorization = [
     // the clients then they will have to re-consent.
     db.clients.findById(req.query.client_id)
       .then((client) => {
-        console.log('1634');
-        console.log(client);
         if (client != null && client.trusted && client.trusted === 1) {
-          console.log('entrou aqui');
           // This is how we short call the decision like the dialog below does
           server.decision({ loadTransaction: false }, (serverReq, callback) => {
-            console.log('entrou aqui2');
-            console.log(callback.toString());
             callback(null, { allow: true });
           })(req, res, next);
         } else {
