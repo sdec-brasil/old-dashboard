@@ -66,10 +66,16 @@ server.grant(oauth2orize.grant.token((client, user, ares, done) => {
  * authorized the code.
  */
 server.exchange(oauth2orize.exchange.code((client, code, redirectURI, done) => {
+  console.log('exchanging token');
   db.authorizationCode.delete(code)
+    .then((authCode) => {
+      console.log('deleted code:', authCode.toJSON());
+      return Promise.resolve(authCode.toJSON());
+    })
     .then(authCode => validate.authCode(code, authCode, client, redirectURI))
     .then(authCode => validate.generateTokens(authCode))
     .then((tokens) => {
+      console.log(`generated ${tokens.length} tokens: ${tokens}`);
       if (tokens.length === 1) {
         return done(null, tokens[0], null, expiresIn);
       }
@@ -211,10 +217,16 @@ const authorization = [
             callback(null, { allow: true });
           })(req, res, next);
         } else {
-          res.status(200).send(`transactionID: ${req.oauth2.transactionID}, user: ${req.user}, client: ${req.oauth2.client}`);
+          res.render('dialog', {
+            transactionID: req.oauth2.transactionID, user: req.user, client: req.oauth2.client, comment: 'oi',
+          });
+          // res.status(200).send(`transactionID: ${req.oauth2.transactionID}, user: ${req.user}, client: ${req.oauth2.client}`);
         }
       })
-      .catch(() => res.status(555).send(`transactionID: ${req.oauth2.transactionID}, user: ${req.user}, client: ${req.oauth2.client}`));
+      .catch((err) => {
+        console.log(err);
+        return res.status(555).send(`transactionID: ${req.oauth2.transactionID}, user: ${req.user}, client: ${req.oauth2.client}`);
+      });
   }];
 
 /**
@@ -241,6 +253,9 @@ const decision = [
 const token = [
   passport.authenticate(['basic', 'oauth2-client-password'], { session: false }),
   server.token(),
+  (res, req) => {
+    res.send(200).message('oi');
+  },
   server.errorHandler(),
 ];
 

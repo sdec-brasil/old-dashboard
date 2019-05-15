@@ -134,7 +134,7 @@ export const accessTokens = {
   removeExpired: () => {
     console.log('1893');
     const now = Date.now();
-    models.access_token.findAll({
+    return models.access_token.findAll({
       where: {
         exp_date: {
           [models.Sequelize.Op.lt]: now,
@@ -211,10 +211,17 @@ export const authorizationCode = {
         where: {
           code_secret: id,
         },
-      }).then((obj) => {
-        obj.destroy()
-          .then(() => obj);
-      }));
+      }).then(obj =>
+        // obj.destroy()
+        models.authorization_code.destroy({
+          where: {
+            code_secret: id,
+          },
+        })
+          .then((a) => {
+            console.log('returning', obj.toJSON());
+            return obj;
+          })));
     } catch (error) {
       return Promise.resolve(null);
     }

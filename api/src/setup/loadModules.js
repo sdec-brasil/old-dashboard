@@ -5,8 +5,10 @@ import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
 import passport from 'passport';
 import session from 'express-session';
+import path from 'path';
 import setupPassport from './passport';
 import sequelizeConnection from './databaseConnection';
+
 
 // App Imports
 import { accessTokens } from '../utils/db';
@@ -21,6 +23,8 @@ export default function (server) {
 
   // Enable CORS
   server.use(cors());
+  server.set('views', path.join(__dirname, '../views'));
+  server.set('view engine', 'ejs');
 
   // Request body parser
   server.use(bodyParser.json());

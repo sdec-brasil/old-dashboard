@@ -26,6 +26,7 @@ export default function (server) {
   // For demonstrations
   server.get('/', RestExample.index);
   server.get('/success', RestExample.test);
+  server.get('/login', Auth.loginPage);
   server.post('/login', Auth.login);
   server.get('/logout', Auth.logout);
   server.get('/account', Auth.account);

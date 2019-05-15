@@ -17,6 +17,7 @@ const suppressTrace = process.env.OAUTHRECIPES_SURPRESS_TRACE === 'true';
  */
 validate.logAndThrow = (msg) => {
   if (!suppressTrace) {
+    console.error(`!! Error !! ${msg}`);
     console.trace(msg);
   }
   throw new Error(msg);
@@ -134,13 +135,19 @@ validate.refreshToken = (token, refreshToken, client) => {
  * @returns {Object} The auth code token if valid
  */
 validate.authCode = (code, authCode, client, redirectURI) => {
+  console.log('verificando authcode');
   crypto.verifyToken(code);
   if (client.id !== authCode.client_id) {
+    console.log('different client id');
+    console.log('client', client);
+    console.log('authcode', authCode);
     validate.logAndThrow('AuthCode clientID does not match client id given');
   }
   if (redirectURI !== authCode.redirect_uri) {
+    console.log('different redirect uri');
     validate.logAndThrow('AuthCode redirectURI does not match redirectURI given');
   }
+  console.log('passou o codigo');
   return authCode;
 };
 
@@ -153,29 +160,31 @@ validate.isRefreshToken = ({ scope }) => scope != null && scope.indexOf('offline
 
 /**
  * Given a userId, clientID, and scope this will generate a refresh token, save it, and return it
- * @param   {Object}  userId   - The user profile
- * @throws  {Object}  clientID - the client profile
+ * @param   {Object}  user_id   - The user profile
+ * @throws  {Object}  client_id - the client profile
  * @throws  {Object}  scope    - the scope
  * @returns {Promise} The resolved refresh token after saved
  */
-validate.generateRefreshToken = ({ userId, clientID, scope }) => {
-  const refreshToken = crypto.createToken({ sub: userId, exp: tokens.refreshToken.expiresIn });
-  return db.refreshTokens.save(refreshToken, userId, clientID, scope)
+validate.generateRefreshToken = ({ user_id, client_id, scope }) => {
+  console.log('generating refresh token...');
+  const refreshToken = crypto.createToken({ sub: user_id, exp: tokens.refreshToken.expiresIn });
+  return db.refreshTokens.save(refreshToken, user_id, client_id, scope)
     .then(() => refreshToken);
 };
 
 /**
  * Given an auth code this will generate a access token, save that token and then return it.
- * @param   {userID}   userID   - The user profile
- * @param   {clientID} clientID - The client profile
+ * @param   {user_id}   user_id   - The user profile
+ * @param   {client_id} client_id - The client profile
  * @param   {scope}    scope    - The scope
  * @returns {Promise}  The resolved refresh token after saved
  */
-validate.generateToken = ({ userID, clientID, scope }) => {
-  const token = crypto.createToken({ sub: userID, exp: tokens.token.expiresIn });
-  const expiration = tokens.token.calculateExpirationDate();
+validate.generateToken = ({ user_id, client_id, scope }) => {
+  console.log(`generating acess token... user_id: ${user_id}, client_id: ${client_id}, scope: ${scope} `);
+  const token = crypto.createToken({ sub: user_id, exp: tokens.accesstoken.expiresIn });
+  const expiration = tokens.accesstoken.calculateExpirationDate();
   console.log('calculated expiration date:', expiration);
-  return db.accessTokens.save(token, expiration, userID, clientID, scope)
+  return db.accessTokens.save(token, expiration, user_id, client_id, scope)
     .then(() => token);
 };
 
@@ -187,6 +196,8 @@ validate.generateToken = ({ userID, clientID, scope }) => {
  * @returns {Promise} The resolved refresh and access tokens as an array
  */
 validate.generateTokens = (authCode) => {
+  console.log('generating tokens for authcode');
+  console.log('authcode', JSON.stringify(authCode));
   if (validate.isRefreshToken(authCode)) {
     return Promise.all([
       validate.generateToken(authCode),

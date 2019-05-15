@@ -34,10 +34,15 @@ const account = [
   (req, res) => res.status(200).send(req.user),
 ];
 
+const loginPage = (req, res) => {
+  res.render('login');
+};
+
 export default {
   error,
   login,
   logout,
   loginTemp,
   account,
+  loginPage,
 };

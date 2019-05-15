@@ -54,6 +54,7 @@ export default (() => {
    * which accepts those credentials and calls done providing a client.
    */
   passport.use(new ClientPasswordStrategy((clientId, clientSecret, done) => {
+    console.log(`activated clientpasswordstrategy with client_id = ${clientId}`);
     query.clients.findById(clientId)
       .then(client => validate.client(client, clientSecret))
       .then(client => done(null, client))
