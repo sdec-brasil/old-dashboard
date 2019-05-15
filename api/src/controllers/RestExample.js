@@ -1,9 +1,7 @@
-const RestExample = () => {
-  const test = (req, res) => res.status(200).send('Hello World, Deploy!');
+const test = (req, res) => res.status(200).send('Hello World, Deploy!');
+const index = (req, res) => res.status(200).send('Home');
 
-  return {
-    test,
-  };
+export default {
+  test,
+  index,
 };
-
-export default RestExample;

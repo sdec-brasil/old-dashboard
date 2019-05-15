@@ -3,7 +3,7 @@ import express from 'express';
 
 // App Imports
 import setupLoadModules from './setup/loadModules';
-import setupGraphQL from './setup/graphql';
+// import setupGraphQL from './setup/graphql';
 import setupRestAPI from './setup/restAPI';
 import setupStartServer from './setup/startServer';
 import syncDatabase from './setup/syncDatabase';
@@ -18,7 +18,7 @@ setupLoadModules(server);
 setupRestAPI(server);
 
 // Setup GraphQL
-setupGraphQL(server);
+// setupGraphQL(server);
 
 // Sync Database
 syncDatabase();
