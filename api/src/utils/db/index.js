@@ -101,10 +101,11 @@ export const accessTokens = {
         where: {
           token_secret: id,
         },
-      }).then((obj) => {
-        obj.destroy()
-          .then(() => obj);
-      }));
+      }).then(obj => models.access_token.destroy({
+        where: {
+          token_secret: id,
+        },
+      }).then(() => obj)));
     } catch (error) {
       return Promise.resolve(null);
     }
@@ -115,7 +116,7 @@ export const accessTokens = {
   */
   removeExpired: () => {
     const now = Date.now();
-    return models.access_token.findAll({
+    return models.access_token.destroy({
       where: {
         exp_date: {
           [models.Sequelize.Op.lt]: now,
@@ -181,14 +182,11 @@ export const authorizationCode = {
         where: {
           code_secret: id,
         },
-      }).then(obj =>
-        // obj.destroy()
-        models.authorization_code.destroy({
-          where: {
-            code_secret: id,
-          },
-        })
-          .then(a => obj)));
+      }).then(obj => models.authorization_code.destroy({
+        where: {
+          code_secret: id,
+        },
+      }).then(() => obj)));
     } catch (error) {
       return Promise.resolve(null);
     }
@@ -251,7 +249,11 @@ export const refreshToken = {
           token_secret: id,
         },
       }).then((obj) => {
-        obj.destroy()
+        models.refresh_token.destroy({
+          where: {
+            token_secret: id,
+          },
+        })
           .then(() => obj);
       }));
     } catch (error) {

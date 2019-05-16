@@ -74,11 +74,13 @@ const revoke = (req, res) => validate.tokenForHttp(req.query.token)
   .then(() => db.accessTokens.delete(req.query.token))
   .then((token) => {
     if (token == null) {
-      return db.refreshTokens.delete(req.query.token);
+      return db.refreshToken.delete(req.query.token);
     }
     return token;
   })
-  .then(tokenDeleted => validate.tokenExistsForHttp(tokenDeleted))
+  .then((tokenDeleted) => {
+    validate.tokenExistsForHttp(tokenDeleted);
+  })
   .then(() => {
     res.json({});
   })
@@ -87,15 +89,7 @@ const revoke = (req, res) => validate.tokenForHttp(req.query.token)
     res.json({ error: err.message });
   });
 
-const test = (req, res) => {
-  models.client.findAll().then((clients) => {
-    console.log(clients);
-    res.json(req.query);
-  });
-};
-
 export default {
   info,
   revoke,
-  test,
 };
