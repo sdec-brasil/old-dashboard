@@ -192,7 +192,7 @@ validate.generateTokens = (authCode) => {
   if (validate.isRefreshToken(authCode)) {
     return Promise.all([
       validate.generateToken(authCode),
-      validate.generateRefreshToken(authCode),
+      // validate.generateRefreshToken(authCode),
     ]);
   }
   return Promise.all([validate.generateToken(authCode)]);

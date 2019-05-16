@@ -35,7 +35,8 @@ export const tokens = {
    *                           going to expire in.
    */
   accesstoken: {
-    expiresIn: 60 * 60,
+    // expires in 100 years
+    expiresIn: 3153600000,
     calculateExpirationDate() {
       return new Date(Date.now() + (this.expiresIn * 1000));
     },

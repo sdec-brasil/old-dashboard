@@ -131,13 +131,14 @@ server.exchange(oauth2orize.exchange.clientCredentials((client, scope, done) => 
  * request for verification.  If this value is validated, the application issues an access
  * token on behalf of the client who authorized the code
  */
-server.exchange(oauth2orize.exchange.refreshToken((client, refreshToken, scope, done) => {
-  db.refreshToken.findByToken(refreshToken)
-    .then(foundRefreshToken => validate.refreshToken(foundRefreshToken, refreshToken, client))
-    .then(foundRefreshToken => validate.generateToken(foundRefreshToken))
-    .then(token => done(null, token, null, expiresIn))
-    .catch(() => done(null, false));
-}));
+// commented since we are not using refresh tokens
+// server.exchange(oauth2orize.exchange.refreshToken((client, refreshToken, scope, done) => {
+//   db.refreshToken.findByToken(refreshToken)
+//     .then(foundRefreshToken => validate.refreshToken(foundRefreshToken, refreshToken, client))
+//     .then(foundRefreshToken => validate.generateToken(foundRefreshToken))
+//     .then(token => done(null, token, null, expiresIn))
+//     .catch(() => done(null, false));
+// }));
 
 // Register serialialization and deserialization functions.
 //
