@@ -3,6 +3,15 @@
 ###### JSON
   - Enviamos e recebemos JSON
 
+###### Tipos
+  - Tipos bem definidos para data, tempo e outros valores
+  - Data:  RFC 3339, section 5.6
+  - DataHora: RFC 3339, section 5.6
+  - Hora: ISO8601 Extended Format, em UTC
+  - Reais: Todos os valores da API serão sempre inteiros, representados em centavos de reais, R$1 = 100.
+
+
+
 ###### Resposta bem sucedida
   - Todo dado vai ser encapsulado dentro de um objeto que contém metainformações sobre a query
 
@@ -13,9 +22,23 @@
   }
   cursor: {
     ... referente à paginação e navegação
+    since: DateTime
+    offset: Number
+    limite: Number
+    next: URL || null
+    before: URL || null
   }
   err: {
     ... err se houver
+    "type": "srn:error:target_account_not_found",
+    "errors": [
+        {
+            "error": "is invalid",
+            "path": [
+                "tax_id"
+            ]
+        }
+    ],
   }
   data: {
     ... resultado efetivo da query
