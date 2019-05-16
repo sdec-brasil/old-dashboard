@@ -1,0 +1,45 @@
+#Invoices (Nota Fiscal) 
+  #GET /invoices - Retorna uma lista das últimas notas fiscais emitidas 
+    #GET /invoices?addr=<> 
+    #GET /invoices?cnpj=<> 
+    #GET /invoices?cpf=<>
+    #GET /invoices?block=<>
+  #POST * /invoices - Emite uma nota fiscal (* necessita autenticação)
+  #GET /invoices/txid - Retorna a nota fiscal com o txid 
+  
+  #PATCH * /invoices/:txid - Altera a nota fiscal com txid, reemitindo uma nova.
+
+#Users (Usuário que emitiu nota fiscal) 
+  #GET * /user - Retorna informações do usuário autenticado
+  #GET /users - Retorna informações públicas dos usuários do sistema (o próprio Registry)
+  #POST /users - Submete informações para criação de um novo usuário e registra na Blockchain
+  #GET /users/:ent - Retorna informações sobre um usuário, onde ent pode ser Endereço Público || CPF || GUID || CNPJ (contem o registry)
+
+#Clients ( Aplicação de 3o utilizando o sistema)
+  #GET * /client - Retorna informações sobre o cliente logado.
+  #POST /clients - Registra um novo client no banco.
+  #PATCH * /clients/:id - Altera informações de um client. Cada client só pode alterar suas próprias informações.
+  #DELETE * /clients/:id - Deleta um client. Cada client só pode deletar seu próprio registro. 
+  
+#Blocks ( Um bloco da nossa rede) 
+  #GET /blocks - Retorna uma lista com os últimos blocos
+  #GET /blocks/:id - Retorna informações sobre o block id = [Altura || TxID]
+
+#Blockchain (Informações gerais da rede)
+  #GET /blockchain - Retorna informações gerais sobre o estado da Blockchain
+  
+#Wallet/Address (Endereço da blockchain) 
+  #GET /addresses - Retorna informações gerais sobre os endereços públicos da rede
+  #GET /addresses/:addr - Retorna informações gerais sobre um endereço específico da rede
+
+#Towns ( Prefeitura Cadastrada no Sistema)
+  #GET /towns - Retorna informações das prefeituras do sistema.
+  #GET /towns/:id - Retorna informações sobre uma prefeitura, onde id pode ser o GUID || Código do município IBGE || CNPJ 
+
+#Balance (saldo de um endereço)
+  #GET /balances - Retorna lista de saldos e endereços públicos
+  #GET /balances/:ent - Retorna o saldo de uma entidade = GUID || Endereço Publico || CNPJ || CPF
+
+#Transaction ( Transação na Blockchain: pode ser multiplas coisas)      
+  #GET /transactions - Retorna lista das últimas transações da rede e suas classificações
+  #GET /transactions/:ent  - Retorna uma lista das transações de uma entidade = GUID || CNPJ || CPF || Endereço Público

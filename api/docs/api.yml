@@ -1,0 +1,170 @@
+openapi: 3.0.0
+# Added by API Auto Mocking Plugin
+servers:
+  - description: Swagger Mocking Server
+    url: https://virtserver.swaggerhub.com/tloriato/SDEC-API/1.0.0
+info:
+  version: "1.0.0"
+  title: SDEC API
+  description: >-
+    This is an example of using OAuth2 Application Flow in a specification to
+    describe security to your API.
+security:
+  - application:
+      - read
+      - write
+tags: 
+  - name: Authentication
+    description: Endpoints related to your authentication and authorization inside the system.
+  - name: Public Data
+    description: Endpoints to retrive public information
+  - name: User Emitter Related
+    description: Endpoints related exclusively to the user emitter information and operation
+  - name: Client Related
+    description: Endpoints related exclusively to the client information and operation
+    
+paths:
+  /invoices:
+    get:
+      summary: Retorna uma lista das últimas notas fiscais emitidas
+      security: []
+      tags: [Public Data]
+      description: >-
+        Retorna uma lista das últimas notas fiscais emitidas.
+      parameters:
+        - in: query
+          name: offset
+          schema:
+            type: integer
+            minimum: 0
+            default: 0
+          required: false
+          description: >-
+            The number of items to skip before starting to collect the result set.
+      responses:
+        '200':
+          description: OK
+    post:
+      summary: Emite uma nota fiscal
+      tags: [User Emitter Related]
+      description: >-
+        Emite uma nota fiscal
+      responses:
+        '200':
+          description: OK
+  /invoices/{txid}:
+    get:
+      summary: Retorna uma nota fiscal com a TxID correspondente
+      security: []
+      parameters:
+        - in: path
+          name: txid
+          schema:
+            $ref: '#/components/schemas/TxID'
+          required: true
+          description: TxID da Nota Fiscal
+      responses:
+        '200':
+          description: OK
+    post:
+      summary: >-
+        Cria uma nova nota fiscal na blockchain que substitui a nota
+        referenciada em txid
+      parameters:
+        - in: path
+          name: txid
+          schema:
+            $ref: '#/components/schemas/TxID'
+          required: true
+          description: TxID da Nota Fiscal
+      responses:
+        '200':
+          description: OK
+  /user:
+    get:
+      summary: Retorna informações do usuário autenticado
+      description: >-
+        Retorna informações do usuário autenticado
+      responses:
+        '200':
+          description: OK
+  /users:
+    get:
+      summary: Retorna informações públicas dos usuários do sistema
+      description: >- 
+        Retorna informações públicas dos usuários do sistema
+        (as informações de registros e estatísticas?)
+      security: []
+      responses:
+        '200':
+          description: OK
+    post:
+      summary: Submete informações para criação de um novo usuário
+      description: >- 
+        Submete informações para criação de um novo usuário no sistema
+        e na blockchain
+      security: []
+      responses:
+        '200':
+          description: OK
+  /users/id:
+    get:
+      summary: Retorna informações sobre um usuário
+      description: >-
+        Retorna informações sobre um usuário
+      security: []
+      parameters:
+        - in: path
+          name: id
+          schema:
+            oneOf:
+              - $ref: '#/components/schemas/CPF'
+              - $ref: '#/components/schemas/CNPJ'
+              - $ref: '#/components/schemas/GUID'
+              - $ref: '#/components/schemas/EnderecoPublico'
+          required: true
+      responses:
+        '200':
+          description: OK
+
+
+components:
+  schemas:
+    TxID:
+      description: >-
+        String alfanumérica que representa o SHA256 de uma transação na blockchain,
+        comumente chamada de Transaction ID (TxId).
+      type: string
+      pattern: '[A-Fa-f0-9]{64}'
+      minLength: 64
+      maxLength: 64
+      example: 998d1c901447c87698ff7a1c5cab64ad7372d49c71c88446f83e21d54ae7d637
+    CPF:
+      description: >-
+        CPF
+      type: string
+    CNPJ:
+      description: >-
+        CNPJ
+      type: string
+    GUID:
+      description: >-
+        GUID
+      type: string
+      formart: uuid
+    EnderecoPublico:
+      description: >-
+        Endereço Público na Blockchain
+      type: string
+  securitySchemes:
+    application:
+      type: oauth2
+      flows:
+        authorizationCode:
+          tokenUrl: 'http://example.com/oauth/token'
+          authorizationUrl: 'http://example.com/oauth/token'
+        clientCredentials:
+          tokenUrl: 'http://example.com/oauth/token'
+          scopes:
+            write: allows modifying resources
+            read: allows reading resources
