@@ -247,14 +247,12 @@ export const refreshToken = {
         where: {
           token_secret: id,
         },
-      }).then((obj) => {
-        models.refresh_token.destroy({
-          where: {
-            token_secret: id,
-          },
-        })
-          .then(() => obj);
-      }));
+      }).then(obj => models.refresh_token.destroy({
+        where: {
+          token_secret: id,
+        },
+      })
+        .then(() => obj)));
     } catch (error) {
       return Promise.resolve(null);
     }

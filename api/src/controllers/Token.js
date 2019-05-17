@@ -74,11 +74,12 @@ const revoke = (req, res) => validate.tokenForHttp(req.query.token)
   .then(() => db.accessTokens.delete(req.query.token))
   .then((token) => {
     if (token == null) {
-      db.refreshToken.delete(req.query.token).then(refreshToken => refreshToken);
+      return db.refreshToken.delete(req.query.token);
     }
     return token;
   })
   .then((tokenDeleted) => {
+    console.log('deleted', tokenDeleted);
     validate.tokenExistsForHttp(tokenDeleted);
   })
   .then(() => {
