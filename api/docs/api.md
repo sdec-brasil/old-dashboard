@@ -54,15 +54,17 @@
 ##### Invoices (Nota Fiscal) 
   - GET /invoices - Retorna uma lista das últimas notas fiscais emitidas 
     - Path Pamaters:
-      - /invoices?from=ent    | String, Retorna lista das notas fiscais que foram emitidas pela entidade (CPF || CNPJ || GUID || Address)
-      - /invoices?town=ent    | String, Retorna lista das notas fiscais emitidas para a prefeitura entidade (CPNJ || IBGE)
-      - /invoices?to=ent      | String, Retorna lista das notas fiscais onde o tomador do serviço foi a entidade (CNPJ || CNPJ)
-      - /invoices?sort=srt    | Enum, Retorna lista das notas fiscais ordenadas pelo srt ( valorISS, Data, valorTotal, etc? )
-      - /invoices?expired=d   | Date, Retorna lista das notas fiscais que estavam expiradas na data N < NOW
-      - /invoices?expiring=d  | Date, Retorna lista das notas fiscais que irão expirar em NOW e N, N > NOW
-      - /invoices?block=e     | Enum [Int Altura, String TxID], Retorna lista das notas fiscais emitidas no bloco e
-      - /invoices?since=d     | Date, Obrigatório, Retorna lista das notas fiscais emitidas anterior à N
-      - /invoices?offset=k    | Integer, Obrigatório, Retorna lista das notas fiscais pulando as N primeiros entradas
+      - /invoices?from=ent       | String, Retorna lista das notas fiscais que foram emitidas pela entidade (CPF || CNPJ || GUID || Address)
+      - /invoices?town=ent       | String, Retorna lista das notas fiscais emitidas para a prefeitura entidade (CPNJ || IBGE)
+      - /invoices?to=ent         | String, Retorna lista das notas fiscais onde o tomador do serviço foi a entidade (CNPJ || CNPJ)
+      - /invoices?sort=srt       | Enum, Retorna lista das notas fiscais ordenadas pelo srt ( valorISS, Data, valorTotal, etc? )
+      - /invoices?expired=d      | Date, Retorna lista das notas fiscais que estavam expiradas na data N < NOW
+      - /invoices?expiring=d     | Date, Retorna lista das notas fiscais que irão expirar em NOW e N, N > NOW
+      - /invoices?block=e        | Enum [Int Altura, String TxID], Retorna lista das notas fiscais emitidas no bloco e
+      - /invoices?since=d        | Date, Obrigatório, Retorna lista das notas fiscais emitidas anterior à N
+      - /invoices?offset=k       | Integer, Obrigatório, Retorna lista das notas fiscais pulando as N primeiros entradas
+      - /invoices?emissao_from=d | Date, Retorna lista das notas fiscais com data de emissão > emissão_from
+      - /invoices?emissão_to=d   | Date, Retorna lista das notas fiscais com data de emissão < emissão_to
   - POST * /invoices - Emite uma nota fiscal (* necessita autenticação)
   - GET /invoices/txid - Retorna a nota fiscal com o txid 
   - POST * /invoices/:txid - Altera a nota fiscal com txid, reemitindo uma nova.
@@ -79,7 +81,7 @@
   - PATCH * /clients/:id - Altera informações de um client. Cada client só pode alterar suas próprias informações.
   - DELETE * /clients/:id - Deleta um client. Cada client só pode deletar seu próprio registro. 
   
-##### Clocks ( Um bloco da nossa rede) 
+##### Blocks ( Um bloco da nossa rede) 
   - GET /blocks - Retorna uma lista com os últimos blocos
   - GET /blocks/:id - Retorna informações sobre o block id = [Altura || TxID]
 
