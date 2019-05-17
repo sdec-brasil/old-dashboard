@@ -160,14 +160,13 @@ export const authorizationCode = {
     const tk = jwt.decode(code);
     const id = tk.jti;
 
-
-    return Promise.resolve(models.authorization_code.create({
+    return models.authorization_code.create({
       code_secret: id,
       client_id,
       redirect_uri,
       user_id,
       scope,
-    }));
+    });
   },
 
   /**
@@ -227,7 +226,7 @@ export const refreshToken = {
 
   save: (token, user_id, client_id, scope) => {
     const id = jwt.decode(token).jti;
-    models.refresh_token.create({
+    return models.refresh_token.create({
       token_secret: id,
       user_id,
       client_id,

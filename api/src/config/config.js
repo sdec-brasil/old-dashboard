@@ -27,19 +27,20 @@ export const general = {
 
 export const tokens = {
   /**
+   * calculateExpirationDate - A simple function to calculate the absolute time that the token is
+   *                          going to expire in.
+   */
+  calculateExpirationDate(expiresIn) {
+    return new Date(Date.now() + (expiresIn * 1000));
+  },
+  /**
    * Configuration of access tokens.
    *
    * expiresIn               - The time in minutes before the access token expires. Default is 60
    *                           minutes
-   * calculateExpirationDate - A simple function to calculate the absolute time that the token is
-   *                           going to expire in.
    */
   accesstoken: {
-    // expires in 100 years
-    expiresIn: 3153600000,
-    calculateExpirationDate() {
-      return new Date(Date.now() + (this.expiresIn * 1000));
-    },
+    expiresIn: 60 * 60,
   },
 
   /**
@@ -58,7 +59,6 @@ export const tokens = {
   refreshToken: {
     expiresIn: 52560000,
   },
-
 };
 
 /**

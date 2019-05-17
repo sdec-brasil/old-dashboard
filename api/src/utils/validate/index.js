@@ -162,7 +162,7 @@ validate.isRefreshToken = ({ scope }) => scope != null && scope.indexOf('offline
  */
 validate.generateRefreshToken = ({ user_id, client_id, scope }) => {
   const refreshToken = crypto.createToken({ sub: user_id, exp: tokens.refreshToken.expiresIn });
-  return db.refreshTokens.save(refreshToken, user_id, client_id, scope)
+  return db.refreshToken.save(refreshToken, user_id, client_id, scope)
     .then(() => refreshToken);
 };
 
@@ -175,7 +175,7 @@ validate.generateRefreshToken = ({ user_id, client_id, scope }) => {
  */
 validate.generateToken = ({ user_id, client_id, scope }) => {
   const token = crypto.createToken({ sub: user_id, exp: tokens.accesstoken.expiresIn });
-  const expiration = tokens.accesstoken.calculateExpirationDate();
+  const expiration = tokens.calculateExpirationDate(tokens.accesstoken.expiresIn);
 
   return db.accessTokens.save(token, expiration, user_id, client_id, scope)
     .then(() => token);
@@ -189,10 +189,11 @@ validate.generateToken = ({ user_id, client_id, scope }) => {
  * @returns {Promise} The resolved refresh and access tokens as an array
  */
 validate.generateTokens = (authCode) => {
-  if (validate.isRefreshToken(authCode)) {
+  if (!validate.isRefreshToken(authCode)) {
+    console.log('Generating access token and refresh token...');
     return Promise.all([
       validate.generateToken(authCode),
-      // validate.generateRefreshToken(authCode),
+      validate.generateRefreshToken(authCode),
     ]);
   }
   return Promise.all([validate.generateToken(authCode)]);
