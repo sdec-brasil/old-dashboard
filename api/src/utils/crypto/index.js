@@ -32,8 +32,8 @@ export const uid = {
  * @param  {String} sub - The subject or identity of the token.
  * @return {String} The JWT Token
  */
-export const createToken = ({ exp = 3600, sub = '' } = {}) => {
-  const id = uid.generate(25);
+export const createToken = ({ exp = 3600, sub = '', length = 25 } = {}) => {
+  const id = uid.generate(length);
   const token = jwt.sign({
     jti: id,
     sub,

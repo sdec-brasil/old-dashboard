@@ -101,10 +101,11 @@ export const accessTokens = {
         where: {
           token_secret: id,
         },
-      }).then((obj) => {
-        obj.destroy()
-          .then(() => obj);
-      }));
+      }).then(obj => models.access_token.destroy({
+        where: {
+          token_secret: id,
+        },
+      }).then(() => obj)));
     } catch (error) {
       return Promise.resolve(null);
     }
@@ -115,7 +116,7 @@ export const accessTokens = {
   */
   removeExpired: () => {
     const now = Date.now();
-    return models.access_token.findAll({
+    return models.access_token.destroy({
       where: {
         exp_date: {
           [models.Sequelize.Op.lt]: now,
@@ -159,14 +160,13 @@ export const authorizationCode = {
     const tk = jwt.decode(code);
     const id = tk.jti;
 
-
-    return Promise.resolve(models.authorization_code.create({
+    return models.authorization_code.create({
       code_secret: id,
       client_id,
       redirect_uri,
       user_id,
       scope,
-    }));
+    });
   },
 
   /**
@@ -181,14 +181,11 @@ export const authorizationCode = {
         where: {
           code_secret: id,
         },
-      }).then(obj =>
-        // obj.destroy()
-        models.authorization_code.destroy({
-          where: {
-            code_secret: id,
-          },
-        })
-          .then(a => obj)));
+      }).then(obj => models.authorization_code.destroy({
+        where: {
+          code_secret: id,
+        },
+      }).then(() => obj)));
     } catch (error) {
       return Promise.resolve(null);
     }
@@ -229,7 +226,7 @@ export const refreshToken = {
 
   save: (token, user_id, client_id, scope) => {
     const id = jwt.decode(token).jti;
-    models.refresh_token.create({
+    return models.refresh_token.create({
       token_secret: id,
       user_id,
       client_id,
@@ -250,10 +247,12 @@ export const refreshToken = {
         where: {
           token_secret: id,
         },
-      }).then((obj) => {
-        obj.destroy()
-          .then(() => obj);
-      }));
+      }).then(obj => models.refresh_token.destroy({
+        where: {
+          token_secret: id,
+        },
+      })
+        .then(() => obj)));
     } catch (error) {
       return Promise.resolve(null);
     }
