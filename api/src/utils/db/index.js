@@ -54,7 +54,7 @@ export const accessTokens = {
     try {
       const decoded = jwt.decode(token).jti;
 
-      return models.access_token.findOne({
+      return models.accessToken.findOne({
         raw: true,
         where: {
           token_secret: decoded,
@@ -79,7 +79,7 @@ export const accessTokens = {
 
   save: (token, exp_date, user_id, client_id, scope) => {
     const decoded = jwt.decode(token).jti;
-    return models.access_token.create({
+    return models.accessToken.create({
       token_secret: decoded,
       exp_date,
       user_id,
@@ -97,11 +97,11 @@ export const accessTokens = {
   delete: (token) => {
     try {
       const id = jwt.decode(token).jti;
-      return Promise.resolve(models.access_token.findOne({
+      return Promise.resolve(models.accessToken.findOne({
         where: {
           token_secret: id,
         },
-      }).then(obj => models.access_token.destroy({
+      }).then(obj => models.accessToken.destroy({
         where: {
           token_secret: id,
         },
@@ -116,7 +116,7 @@ export const accessTokens = {
   */
   removeExpired: () => {
     const now = Date.now();
-    return models.access_token.destroy({
+    return models.accessToken.destroy({
       where: {
         exp_date: {
           [models.Sequelize.Op.lt]: now,
