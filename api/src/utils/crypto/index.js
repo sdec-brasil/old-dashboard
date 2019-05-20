@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import jwt from 'jsonwebtoken';
+import uuid from 'uuid/v4';
 
 /** Private certificate used for signing JSON WebTokens */
 const privateKey = fs.readFileSync(path.join(__dirname, '../../../certs/privatekey.pem'));
@@ -9,17 +10,7 @@ const privateKey = fs.readFileSync(path.join(__dirname, '../../../certs/privatek
 const publicKey = fs.readFileSync(path.join(__dirname, '../../../certs/certificate.pem'));
 
 export const uid = {
-  generate: (length) => {
-    let token = '';
-    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    const charsLength = chars.length;
-
-    for (let i = 0; i < length; i += 1) {
-      token += chars[Math.floor(Math.random() * (charsLength)) + 0];
-    }
-
-    return token;
-  },
+  generate: () => uuid(),
 };
 
 /**
@@ -32,8 +23,8 @@ export const uid = {
  * @param  {String} sub - The subject or identity of the token.
  * @return {String} The JWT Token
  */
-export const createToken = ({ exp = 3600, sub = '', length = 25 } = {}) => {
-  const id = uid.generate(length);
+export const createToken = ({ exp = 3600, sub = '' } = {}) => {
+  const id = uid.generate();
   const token = jwt.sign({
     jti: id,
     sub,
