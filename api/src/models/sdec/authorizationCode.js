@@ -1,6 +1,6 @@
 // Authorization Code
 export default function (sequelize, DataTypes) {
-  const authorization_code = sequelize.define('authorization_code', {
+  const authorizationCode = sequelize.define('authorizationCode', {
     code_secret: {
       type: DataTypes.TEXT('long'),
     },
@@ -24,13 +24,13 @@ export default function (sequelize, DataTypes) {
     },
   }, {
     underscored: true,
-    tableName: 'authorization_code',
+    tableName: 'authorizationCode',
   });
 
-  authorization_code.associate = (models) => {
-    authorization_code.belongsTo(models.client, { targetKey: 'id', foreignKey: { name: 'client_id', allowNull: false } });
-    authorization_code.belongsTo(models.user, { targetKey: 'id', foreignKey: { name: 'user_id', allowNull: false } });
+  authorizationCode.associate = (models) => {
+    authorizationCode.belongsTo(models.client, { targetKey: 'id', foreignKey: { name: 'client_id', allowNull: false } });
+    authorizationCode.belongsTo(models.user, { targetKey: 'id', foreignKey: { name: 'user_id', allowNull: false } });
   };
 
-  return authorization_code;
+  return authorizationCode;
 }

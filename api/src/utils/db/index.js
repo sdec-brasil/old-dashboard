@@ -135,7 +135,7 @@ export const authorizationCode = {
   findByToken: (token) => {
     try {
       const id = jwt.decode(token).jti;
-      return Promise.resolve(models.authorization_code.findOne({
+      return Promise.resolve(models.authorizationCode.findOne({
         where: {
           code_secret: id,
         },
@@ -160,7 +160,7 @@ export const authorizationCode = {
     const tk = jwt.decode(code);
     const id = tk.jti;
 
-    return models.authorization_code.create({
+    return models.authorizationCode.create({
       code_secret: id,
       client_id,
       redirect_uri,
@@ -177,11 +177,11 @@ export const authorizationCode = {
   delete: (token) => {
     try {
       const id = jwt.decode(token).jti;
-      return Promise.resolve(models.authorization_code.findOne({
+      return Promise.resolve(models.authorizationCode.findOne({
         where: {
           code_secret: id,
         },
-      }).then(obj => models.authorization_code.destroy({
+      }).then(obj => models.authorizationCode.destroy({
         where: {
           code_secret: id,
         },

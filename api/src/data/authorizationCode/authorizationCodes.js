@@ -1,6 +1,6 @@
 module.exports = [
   {
-    model: 'authorization_code',
+    model: 'authorizationCode',
     data: {
       code_secret: 'oi',
       redirect_uri: 'oi.com',
