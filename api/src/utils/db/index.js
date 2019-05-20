@@ -202,7 +202,7 @@ export const refreshToken = {
   findByToken: (token) => {
     try {
       const decoded = jwt.decode(token).jti;
-      return models.refresh_token.findOne({
+      return models.refreshToken.findOne({
         raw: true,
         where: {
           token_secret: decoded,
@@ -226,7 +226,7 @@ export const refreshToken = {
 
   save: (token, user_id, client_id, scope) => {
     const id = jwt.decode(token).jti;
-    return models.refresh_token.create({
+    return models.refreshToken.create({
       token_secret: id,
       user_id,
       client_id,
@@ -243,11 +243,11 @@ export const refreshToken = {
   delete: (token) => {
     try {
       const id = jwt.decode(token).jti;
-      return Promise.resolve(models.refresh_token.findOne({
+      return Promise.resolve(models.refreshToken.findOne({
         where: {
           token_secret: id,
         },
-      }).then(obj => models.refresh_token.destroy({
+      }).then(obj => models.refreshToken.destroy({
         where: {
           token_secret: id,
         },
