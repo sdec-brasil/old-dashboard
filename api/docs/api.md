@@ -22,9 +22,9 @@
   }
   cursor: {
     ... referente à paginação e navegação
-    since: DateTime
+    until: DateTime
     offset: Number
-    limite: Number
+    limit: Number
     next: URL || null
     before: URL || null
   }
@@ -56,8 +56,7 @@
     - Path Pamaters:
       - /invoices?from=ent       | String, Retorna lista das notas fiscais que foram emitidas pela entidade (CPF || CNPJ || GUID || Address)
       - /invoices?town=ent       | String, Retorna lista das notas fiscais emitidas para a prefeitura entidade (CPNJ || IBGE)
-      - /invoices?to=ent         | String, Retorna lista das notas fiscais onde o tomador do serviço foi a entidade (CNPJ || CNPJ)
-      - /invoices?sort=srt       | Enum, Retorna lista das notas fiscais ordenadas pelo srt ( valorISS, Data, valorTotal, etc? )
+      - /invoices?sort=srt       | Enum, Retorna lista das notas fiscais ordenadas pelo srt (valor ou data)
       - /invoices?expired=d      | Date, Retorna lista das notas fiscais que estavam expiradas na data N < NOW
       - /invoices?expiring=d     | Date, Retorna lista das notas fiscais que irão expirar em NOW e N, N > NOW
       - /invoices?block=e        | Enum [Int Altura, String TxID], Retorna lista das notas fiscais emitidas no bloco e
@@ -68,6 +67,8 @@
   - POST * /invoices - Emite uma nota fiscal (* necessita autenticação)
   - GET /invoices/txid - Retorna a nota fiscal com o txid 
   - POST * /invoices/:txid - Altera a nota fiscal com txid, reemitindo uma nova.
+  - POST /invoices/search
+  - GET /invoices/search/:id
 
 ##### Users (Usuário que emitiu nota fiscal) 
   - GET * /user - Retorna informações do usuário autenticado
