@@ -18,10 +18,10 @@ export default function (server) {
   console.info('SETUP - RestAPI & Routes...');
 
   // Get all our routes and pair them with our controllers
-  // const mappedRoutes = mapRoutes(routes, 'src/controllers/');
+  const mappedRoutes = mapRoutes(routes, 'src/controllers/');
 
-  // Map our rotes to the /rest endpoint
-  // server.use('/v1', mappedRoutes);
+  // Map our rotes to the /v1 endpoint
+  server.use('/v1', mappedRoutes);
 
   // For demonstrations
   server.get('/', RestExample.index);
@@ -43,7 +43,7 @@ export default function (server) {
   // Options for the swagger docs
   const options = {
     swaggerDefinition,
-    apis: ['./src/routes/index.js'],
+    apis: ['./src/routes/**/*.js', './src/models/sdec/**/*.js'],
   };
 
   const swaggerSpec = swaggerJSDoc(options);
@@ -52,4 +52,6 @@ export default function (server) {
     if (err) console.log(`SETUP - Failed to create docs: ${err}`);
     else console.log('SETUP - Docs created');
   });
+
+  server.get('/docs', (req, res) => res.send(swaggerSpec));
 }

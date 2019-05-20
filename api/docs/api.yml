@@ -32,15 +32,11 @@ paths:
       description: >-
         Retorna uma lista das últimas notas fiscais emitidas.
       parameters:
-        - in: query
-          name: offset
-          schema:
-            type: integer
-            minimum: 0
-            default: 0
-          required: false
-          description: >-
-            The number of items to skip before starting to collect the result set.
+        - $ref: '#/components/parameters/EntParam'
+        - $ref: '#/components/parameters/EntToParam'
+        - $ref: '#/components/parameters/untilParam'
+        - $ref: '#/components/parameters/offsetParam'
+
       responses:
         '200':
           description: OK
@@ -49,9 +45,24 @@ paths:
       tags: [User Emitter Related]
       description: >-
         Emite uma nota fiscal
+      parameters:
+        - in: body
+          name: user
+          description: The user to create.
+          schema:
+            type: object
+            required:
+              - userName
+            properties:
+              userName:
+                type: string
+              firstName:
+                type: string
+              lastName:
+                type: string
       responses:
-        '200':
-          description: OK
+        '201':
+          description: Created
   /invoices/{txid}:
     get:
       summary: Retorna uma nota fiscal com a TxID correspondente
@@ -104,6 +115,121 @@ paths:
         Submete informações para criação de um novo usuário no sistema
         e na blockchain
       security: []
+      parameters:
+        - in: body
+          name: razao
+          description: The user to create.
+          schema:
+            type: string
+            required: true
+        - in: body
+          name: fantasia
+          description: Nome Fantasia do prestador do serviço.
+          schema:
+            type: string
+            required: false
+        - in: body
+          name: logEnd
+          description: Tipo e nome do logradouro (Av.., Rua..., ...).
+          schema:
+            type: string
+            required: true
+        - in: body
+          name: numEnd
+          description: Número do imóvel.
+          schema:
+            type: string
+            required: true
+        - in: body
+          name: compEnd
+          description: Complemento do endereço do prestador.
+          schema:
+            type: string
+            required: false
+        - in: body
+          name: bairroEnd
+          description: Bairro do prestador.
+          schema:
+            type: string
+            required: true
+        - in: body
+          name: cidadeEnd
+          description: Código do município do estabelecimento prestador do serviço (Tabela do IBGE).
+          schema:
+            type: integer
+            required: true
+            example: 3304557
+        - in: body
+          name: estadoEnd
+          description: Sigla da unidade da federação do prestador.
+          schema:
+            type: string
+            required: true
+            pattern: '[A-F]{2}'
+            minLength: 2
+            maxLength: 2
+            example: RJ
+        - in: body
+          name: estadoEnd
+          description: Sigla da unidade da federação do prestador.
+          schema:
+            type: string
+            required: true
+            pattern: '[A-F]{2}'
+            minLength: 2
+            maxLength: 2
+            example: RJ
+        - in: body
+          name: paisEnd
+          description: Código do país onde o tomador está estabelecido (Tabela do BACEN). Preencher somente se CidadePrestador igual 9999999.
+          schema:
+            type: integer
+            required: false
+            minimum: 0
+            maximum: 9999
+            example: 1058
+        - in: body
+          name: cepEnd
+          description: Número do CEP.
+          schema:
+            type: string
+            required: true
+            pattern: '[0-9]{8}'
+            minLength: 8
+            maxLength: 8
+            example: 22040010
+        - in: body
+          name: email
+          description: E-mail do prestador.
+          schema:
+            type: string
+            required: false
+            example: example@email.com
+        - in: body
+          name: tel
+          description: Número do telefone do prestador, no formato \<cod pais>\<DDD>\<numero>.
+          schema:
+            type: string
+            required: false
+            maxLength: 20
+            example: 552122357792
+        - in: body
+          name: tipoId
+          schema:
+            type: integer
+            enum: [1, 2]
+          description: >
+            Tipo da identificação enviada:
+             * `1` - CPF
+             * `2` - CNPJ
+        - in: body
+          name: id
+          description: Número do CPF/CNPJ do Prestador do Serviço.
+          schema:
+            type: string
+            required: true
+            maxLength: 14
+            example: 13892838278
       responses:
         '200':
           description: OK
@@ -120,7 +246,7 @@ paths:
             oneOf:
               - $ref: '#/components/schemas/CPF'
               - $ref: '#/components/schemas/CNPJ'
-              - $ref: '#/components/schemas/GUID'
+              - $ref: '#/components/schemas/UUID'
               - $ref: '#/components/schemas/EnderecoPublico'
           required: true
       responses:
@@ -129,7 +255,70 @@ paths:
 
 
 components:
+  parameters:
+
+    EntParam:
+      in: query
+      name: from
+      description: >-
+        Filtrar por esse ```CNPJ || CPF || GUID || Endereço Público```  como emissor da Nota Fiscal. Se mais de um parâmetro
+        "from" for enviado, será feito a união entre eles.
+      schema:
+        type: string
+
+    EntToParam:
+      in: query
+      name: to
+      description: >-
+        Filtrar por esse ```CPNJ || Código IBGE``` como município de 
+        incidência.
+      schema:
+        type: string
+      
+
+    untilParam:
+      in: query
+      name: until
+      description: >-
+        Resultados após essa data não serão retornados.
+      schema:
+        type: string
+        format: date-time
+        example: "2017-07-21T17:32:28Z"
+
+    offsetParam:
+      in: query
+      name: offset
+      required: false
+      schema:
+        type: integer
+        minimum: 0
+        example: 15
+      description: >-
+        Número de itens para pular da busca antes de retornar o resultado.
+
+    
+    limitParam:
+      in: query
+      name: limit
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 250
+        default: 50
+        example: 50
+      description: The numbers of items to return.
+
   schemas:
+    Address:
+      description: >-
+        Endereço Público da Blockchain
+      type: string
+      minLength: 26
+      maxLength: 35
+      pattern: ^[13][a-km-zA-HJ-NP-Z0-9]{26,33}$
+      example: 1HB5XMLmzFVj8ALj6mfBsbifRoD4miY36v
     TxID:
       description: >-
         String alfanumérica que representa o SHA256 de uma transação na blockchain,
@@ -147,15 +336,16 @@ components:
       description: >-
         CNPJ
       type: string
-    GUID:
+    UUID:
       description: >-
-        GUID
+        UUID
       type: string
-      formart: uuid
+      format: uuid
     EnderecoPublico:
       description: >-
         Endereço Público na Blockchain
       type: string
+
   securitySchemes:
     application:
       type: oauth2
