@@ -60,6 +60,7 @@
     "sequelize-fixtures": "^0.10.0",
     "sequelize-import": "^1.2.1",
     "sinon-chai": "^3.3.0",
-    "swagger-jsdoc": "^3.2.9"
+    "swagger-jsdoc": "^3.2.9",
+    "uuid": "^3.3.2"
   }
 }
