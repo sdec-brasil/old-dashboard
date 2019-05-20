@@ -3,7 +3,7 @@ export default function (sequelize, DataTypes) {
   // You will use these to access your end point data through the means outlined
   // in the RFC The OAuth 2.0 Authorization Framework: Bearer Token Usage
   // (http://tools.ietf.org/html/rfc6750)
-  const access_token = sequelize.define('access_token', {
+  const accessToken = sequelize.define('accessToken', {
     token_secret: {
       type: DataTypes.TEXT('long'),
     },
@@ -17,13 +17,13 @@ export default function (sequelize, DataTypes) {
     },
   }, {
     underscored: true,
-    tableName: 'access_token',
+    tableName: 'accessToken',
   });
 
-  access_token.associate = (models) => {
-    access_token.belongsTo(models.user, { targetKey: 'id', foreignKey: { name: 'user_id', allowNull: true } });
-    access_token.belongsTo(models.client, { targetKey: 'id', foreignKey: { name: 'client_id', allowNull: false } });
+  accessToken.associate = (models) => {
+    accessToken.belongsTo(models.user, { targetKey: 'id', foreignKey: { name: 'user_id', allowNull: true } });
+    accessToken.belongsTo(models.client, { targetKey: 'id', foreignKey: { name: 'client_id', allowNull: false } });
   };
 
-  return access_token;
+  return accessToken;
 }
