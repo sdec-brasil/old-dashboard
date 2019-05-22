@@ -344,6 +344,7 @@ components:
           description: >
             Tipo da identificação enviada no campo identidade:
              * `1` - CPF
+
              * `2` - CNPJ
         identificacao:
           description: Número do CPF/CNPJ do Prestador do Serviço.
@@ -368,37 +369,235 @@ components:
       type: object
       required:
         - baseCalculo
+        - competencia
+        - valServicos
+        - issRetido
+        - itemLista
+        - discriminacao
+        - exigibilidadeISS
+        - OptanteSimplesNacional
+        - IncentivoFiscal
       properties:
         baseCalculo:
           description: (ValorServicos - ValorDeducoes - DescontoIncondicionado)
           type: integer
           format: int64
           minimum: 0
-          maximum: 99999999999999999
-        aliqServicos:
-          description: Alíquota do serviço prestado.
-          type: integer
-          minimum: 0
-          maximum: 999999
-        valIss:
-          description: Valor do ISS devido.
-          type: integer
-          format: int64
-          minimum: 0
-          maximum: 99999999999999999
         valLiquiNfse:
           description: (ValorServicos - ValorPIS – ValorCOFINS – ValorINSS – ValorIR – ValorCSLL – OutrasRetençoes – ValorISSRetido – DescontoIncondicionado – DescontoCondicionado)
           type: integer
           format: int64
           minimum: 0
-          maximum: 99999999999999999
+        competencia:
+          description: Dia, mês e ano da prestação de serviço (AAAAMMDD).
+          type: string
+          format: date
+        valServicos:
+          description: Valor dos serviços em R$.
+          type: integer
+          format: int64
+          minimum: 0
+        valDeduções:
+          description: Valor das deduções para Redução da Base de Cálculo em R$.
+          type: integer
+          format: int64
+          minimum: 0
+        valPis:
+          descrciption: Valor da retenção do PIS em R$ Informação declaratória.
+          format: int64
+          minimum: 0
+        valCofins:
+          description: Valor da retenção do COFINS em R$ Informação declaratória.
+          type: integer
+          format: int64
+          minimum: 0
+        valInss:
+          description: Valor da retenção do INSS em R$ Informação declaratória.
+          type: integer
+          format: int64
+          minimum: 0
+        valIr:
+          description: Valor da retenção do IR em R$ Informação declaratória.
+          type: integer
+          format: int64
+          minimum: 0
+        valCsll:
+          description: Valor da retenção do CSLL em R$ Informação declaratória.
+          type: integer
+          format: int64
+          minimum: 0
+        outrasRetencoes:
+          description: Outras retenções na Fonte. Informação declaratória.
+          type: integer
+          format: int64
+          minimum: 0
+        valTotalTributos:
+          description: Valor total aproximado dos tributos federais, estaduais e municipais, em conformidade com o artigo 1o da Lei no 12.741/2012.
+          type: integer
+          format: int64
+          minimum: 0
+        valIss:
+          description: Valor do ISS devido em R$.
+          type: integer
+          format: int64
+          minimum: 0
+        aliqServicos:
+          description: Alíquota do serviço prestado.
+          type: integer
+          format: int64
+          minimum: 0
+        descontoIncond:
+          description: Valor do desconto incondicionado.
+          type: integer
+          format: int64
+          minimum: 0
+        descontoCond:
+          description: Valor do desconto condicionado.
+          type: integer
+          format: int64
+          minimum: 0
+        issRetido:
+          enum: [1, 2]
+          description: >
+            Tipo da identificação enviada no campo identidade:
+            * `1` - Sim
+
+            * `2` - Não
+        respRetencao:
+          enum: [1, 2]
+          description: >
+            Informado somente se IssRetido igual a “1 – Sim” A opção “2 – Intermediário” somente poderá ser selecionada se “CpfCnpjIntermediario” informado.
+            * `1` - Tomador
+
+            * `2` - Intermediário
+        itemLista:
+          description: Código do serviço prestado Item da LC 116/2003.
+          type: string
+          maxLength: 5
+        codCnae:
+          description: CNAE
+          type: integer
+        codServico:
+          description: Código do serviço prestado próprio do município.
+          type: string
+          maxLength: 20
+        codNBS:
+          description: Código NBS.
+          type: string
+          maxLength: 9
+        discrimincacao:
+          description: Discriminação dos serviços.
+          type: string
+          maxLength: 2000
+        exibigilidadeISS:
+          enum: [1, 2, 3, 4, 5, 6, 7]
+          description: >
+            * `1` - Exigível
+
+            * `2` - Não incidência
+
+            * `3` - Isenção
+            
+            * `4` - Exportação
+            
+            * `5` - Imunidade
+            
+            * `6` - Exigibilidade Suspensa por Decisão Judicial
+            
+            * `7` - Exigibilidade Suspensa por Processo Administrativo
+        codTributMunicipio:
+          description: Código do município onde é a incidência do imposto (Tabela do IBGE).
+          type: integer
+          minimum: 0
+          maximum: 9999999
+        numProcecsso:
+          description: Número do processo judicial ou administrativo de suspensão da exigibilidade. Obrigatório e informado somente quando declarada a suspensão da exigibilidade do tributo.
+          type: string
+          maxLength: 30
+        regimeEspTribut:
+          enum: [1, 2, 3, 4, 5, 6]
+          description: >
+            * `1` – Microempresa Municipal
+            
+            * `2` – Estimativa
+            
+            * `3` – Sociedade de Profissionais
+            
+            * `4` – Cooperativa
+            
+            * `5` – Microempresário Individual (MEI)
+            
+            * `6` – Microempresário e Empresa de Pequeno Porte (ME EPP).
+        OptanteSimplesNacional:
+          enum: [1, 2]
+          description: >
+            * `1` – Sim
+            
+            * `2` – Não
+        IncentivoFiscal:
+          enum: [1, 2]
+          description: >
+            * `1` – Sim
+            
+            * `2` – Não
     Tomador:
       title: Tomador
       type: object
       properties:
-        id_tomador:
-          description: The user to create.
+        identificacao:
+          description: PF/CNPJ do tomador do serviço. Obrigatório para CNPJ.
           type: string
+          maxLength: 14
+        nif:
+          description: Este elemento só deverá ser preenchido para tomadores não residentes no Brasil.
+          maxLength: 40
+        nomeRazao:
+          description: Nome / Razão Social do tomador.
+          type: string
+          maxLength: 150
+        logEnd:
+          description: Tipo e nome do logradouro (Av.., Rua..., ...).
+          type: string
+          maxLength: 125
+        numEnd:
+          description: Número do Imóvel.
+          type: string
+          maxLength: 10
+        compEnd:
+          description: Complemento do endereço do tomador.
+          type: string
+          maxLength: 60
+        bairroEnd:
+          description: Bairro do tomador.
+          type: string
+          maxLength: 60
+        cidadeEnd:
+          description: Código do município onde o tomador está estabelecido (Tabela do IBGE).
+          type: integer
+          format: int32
+          minimum: 0
+          maximum: 9999999
+        estadoEnd:
+          description: Sigla da unidade da federação do tomador.
+          type: string
+          maxLength: 2
+        paisEnd:
+          description: Código do país onde o tomador está estabelecido (Tabela do BACEN). Preencher somente se CidadeTomador igual 9999999.
+          type: integer
+          minimum: 0
+          maximum: 9999
+        cepEnd:
+          description: Número do CEP.
+          type: string
+          maxLength: 8
+        email:
+          description: E-mail do tomador.
+          type: string
+          maxLength: 80
+        tel:
+          description: Número do telefone do tomador.
+          type: string
+          maxLength: 20
     Intermediario:
       title: Intermediário
       type: object
@@ -431,9 +630,14 @@ components:
     NewInvoice:
       title: New Invoice
       type: object
+      required:
+        - emissor
+        - prestacao
       properties:
           emissor:
-            $ref: '#/components/schemas/User'
+            type: string
+            description: Endereço Público da Empresa que está emitindo a nota.
+            maxLength: 38
           prestacao:
             $ref: '#/components/schemas/Prestacao'
           tomador:
@@ -442,69 +646,21 @@ components:
             $ref: '#/components/schemas/Intermediario'
           constCivil:
             $ref: '#/components/schemas/ConstrucaoCivil'
-
-        # razao:
-        #   description: The user to create.
-        #   type: string
-        # fantasia:
-        #   description: Nome Fantasia do prestador do serviço.
-        #   type: string
-        # logEnd:
-        #   description: Tipo e nome do logradouro (Av.., Rua..., ...).
-        #   type: string
-        # numEnd:
-        #   description: Número do imóvel.
-        #   type: string
-        # compEnd:
-        #   description: Complemento do endereço do prestador.
-        #   type: string
-        # bairroEnd:
-        #   description: Bairro do prestador.
-        #   type: string
-        # cidadeEnd:
-        #   description: Código do município do estabelecimento prestador do serviço (Tabela do IBGE).
-        #   type: integer
-        #   example: 3304557
-        # estadoEnd:
-        #   description: Sigla da unidade da federação do prestador.
-        #   type: string
-        #   pattern: '[A-F]{2}'
-        #   minLength: 2
-        #   maxLength: 2
-        #   example: RJ
-        # paisEnd:
-        #   description: Código do país onde o tomador está estabelecido (Tabela do BACEN). Preencher somente se CidadePrestador igual 9999999.
-        #   type: integer
-        #   minimum: 0
-        #   maximum: 9999
-        #   example: 1058
-        # cepEnd:
-        #   description: Número do CEP.
-        #   type: string
-        #   pattern: '[0-9]{8}'
-        #   minLength: 8
-        #   maxLength: 8
-        #   example: 22040010
-        # email:
-        #   description: E-mail do prestador.
-        #   type: string
-        #   example: example@email.com
-        # tel:
-        #   description: Número do telefone do prestador, no formato \<cod pais>\<DDD>\<numero>.
-        #   type: string
-        #   maxLength: 20
-        #   example: 552122357792
-        # tipoIdentificacao:
-        #   enum: [1, 2]
-        #   description: >
-        #     Tipo da identificação enviada no campo identidade:
-        #     * `1` - CPF
-        #     * `2` - CNPJ
-        # identificacao:
-        #   description: Número do CPF/CNPJ do Prestador do Serviço.
-        #   type: string
-        #   maxLength: 14
-        #   example: 13892838278
+    Invoice:
+      title: Invoice
+      allOf:
+        - $ref: '#/components/schemas/NewInvoice'
+        - type: object
+          properties:
+            NumeroNFSD:
+              description: Diz respeito à identificação única da transação na Blockchain que originou a nota.
+              type: string
+            NumeroBlocoNFSD:
+              description: Diz respeito ao número do bloco onde a transação foi incluída.
+              type: string
+            DataEmissaoNFSD:
+              description: Data/Hora da emissão da NFS-e (AAAA-MM-DDTHH:mm:ss), segundo consta na Blockchain.
+              type: string
 
   securitySchemes:
     application:
