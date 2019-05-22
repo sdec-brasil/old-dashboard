@@ -40,31 +40,28 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                  $ref: '#/components/schemas/Invoice'
     post:
       summary: Emite uma nota fiscal
       tags: [User Emitter Related]
       description: >-
         Emite uma nota fiscal
-      produces:
-        - application/json
-      parameters:
-        - in: body
-          name: user
-          description: The user to create.
-          schema:
-            type: object
-            required:
-              - userName
-            properties:
-              userName:
-                type: string
-              firstName:
-                type: string
-              lastName:
-                type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Invoice'
       responses:
         '201':
           description: Created
+          content:
+            application/json:
+              schema:
+                  $ref: '#/components/schemas/Invoice'
   /invoices/{txid}:
     get:
       summary: Retorna uma nota fiscal com a TxID correspondente
@@ -104,8 +101,6 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
                   $ref: '#/components/schemas/User'
   /users:
     get:
@@ -151,7 +146,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/NewUser'
+              $ref: '#/components/schemas/User'
       responses:
         '200':
           description: OK
@@ -274,8 +269,8 @@ components:
       description: >-
         Endereço Público na Blockchain
       type: string
-    NewUser:
-      title: New User
+    User:
+      title: User
       type: object
       required:
         - razao
@@ -351,19 +346,12 @@ components:
           type: string
           maxLength: 14
           example: 13892838278
-    User:
-      title: User
-      allOf:
-        - $ref: '#/components/schemas/NewUser'
-        - type: object
-          required:
-            - endBlock
-          properties:
-            endBlock:
-              description: Endereço Público da Empresa no Sistema para emissão de NFSD.
-              type: string
-              maxLength: 38
-              example: 1K31KZXjcochXpRhjH9g5MxFFTHPi2zEXb
+        endBlock:
+          description: Endereço Público da Empresa no Sistema para emissão de NFSD.
+          type: string
+          maxLength: 38
+          example: 1K31KZXjcochXpRhjH9g5MxFFTHPi2zEXb
+          readOnly: true
     Prestacao:
       title: Prestação
       type: object
@@ -404,6 +392,7 @@ components:
           minimum: 0
         valPis:
           descrciption: Valor da retenção do PIS em R$ Informação declaratória.
+          type: integer
           format: int64
           minimum: 0
         valCofins:
@@ -538,7 +527,7 @@ components:
           enum: [1, 2]
           description: >
             * `1` – Sim
-            
+
             * `2` – Não
     Tomador:
       title: Tomador
@@ -627,40 +616,37 @@ components:
           description: Número da ART.
           type: string
           maxLength: 30
-    NewInvoice:
-      title: New Invoice
+    Invoice:
+      title: Invoice
       type: object
       required:
         - emissor
         - prestacao
       properties:
-          emissor:
-            type: string
-            description: Endereço Público da Empresa que está emitindo a nota.
-            maxLength: 38
-          prestacao:
-            $ref: '#/components/schemas/Prestacao'
-          tomador:
-            $ref: '#/components/schemas/Tomador'
-          intermediario:
-            $ref: '#/components/schemas/Intermediario'
-          constCivil:
-            $ref: '#/components/schemas/ConstrucaoCivil'
-    Invoice:
-      title: Invoice
-      allOf:
-        - $ref: '#/components/schemas/NewInvoice'
-        - type: object
-          properties:
-            NumeroNFSD:
-              description: Diz respeito à identificação única da transação na Blockchain que originou a nota.
-              type: string
-            NumeroBlocoNFSD:
-              description: Diz respeito ao número do bloco onde a transação foi incluída.
-              type: string
-            DataEmissaoNFSD:
-              description: Data/Hora da emissão da NFS-e (AAAA-MM-DDTHH:mm:ss), segundo consta na Blockchain.
-              type: string
+        emissor:
+          type: string
+          description: Endereço Público da Empresa que está emitindo a nota.
+          maxLength: 38
+        prestacao:
+          $ref: '#/components/schemas/Prestacao'
+        tomador:
+          $ref: '#/components/schemas/Tomador'
+        intermediario:
+          $ref: '#/components/schemas/Intermediario'
+        constCivil:
+          $ref: '#/components/schemas/ConstrucaoCivil'
+        NumeroNFSD:
+          description: Diz respeito à identificação única da transação na Blockchain que originou a nota.
+          type: string
+          readyOnly: true
+        NumeroBlocoNFSD:
+          description: Diz respeito ao número do bloco onde a transação foi incluída.
+          type: string
+          readyOnly: true
+        DataEmissaoNFSD:
+          description: Data/Hora da emissão da NFS-e (AAAA-MM-DDTHH:mm:ss), segundo consta na Blockchain.
+          type: string
+          readyOnly: true
 
   securitySchemes:
     application:
