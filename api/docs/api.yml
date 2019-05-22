@@ -45,6 +45,8 @@ paths:
       tags: [User Emitter Related]
       description: >-
         Emite uma nota fiscal
+      produces:
+        - application/json
       parameters:
         - in: body
           name: user
@@ -115,121 +117,12 @@ paths:
         Submete informações para criação de um novo usuário no sistema
         e na blockchain
       security: []
-      parameters:
-        - in: body
-          name: razao
-          description: The user to create.
-          schema:
-            type: string
-            required: true
-        - in: body
-          name: fantasia
-          description: Nome Fantasia do prestador do serviço.
-          schema:
-            type: string
-            required: false
-        - in: body
-          name: logEnd
-          description: Tipo e nome do logradouro (Av.., Rua..., ...).
-          schema:
-            type: string
-            required: true
-        - in: body
-          name: numEnd
-          description: Número do imóvel.
-          schema:
-            type: string
-            required: true
-        - in: body
-          name: compEnd
-          description: Complemento do endereço do prestador.
-          schema:
-            type: string
-            required: false
-        - in: body
-          name: bairroEnd
-          description: Bairro do prestador.
-          schema:
-            type: string
-            required: true
-        - in: body
-          name: cidadeEnd
-          description: Código do município do estabelecimento prestador do serviço (Tabela do IBGE).
-          schema:
-            type: integer
-            required: true
-            example: 3304557
-        - in: body
-          name: estadoEnd
-          description: Sigla da unidade da federação do prestador.
-          schema:
-            type: string
-            required: true
-            pattern: '[A-F]{2}'
-            minLength: 2
-            maxLength: 2
-            example: RJ
-        - in: body
-          name: estadoEnd
-          description: Sigla da unidade da federação do prestador.
-          schema:
-            type: string
-            required: true
-            pattern: '[A-F]{2}'
-            minLength: 2
-            maxLength: 2
-            example: RJ
-        - in: body
-          name: paisEnd
-          description: Código do país onde o tomador está estabelecido (Tabela do BACEN). Preencher somente se CidadePrestador igual 9999999.
-          schema:
-            type: integer
-            required: false
-            minimum: 0
-            maximum: 9999
-            example: 1058
-        - in: body
-          name: cepEnd
-          description: Número do CEP.
-          schema:
-            type: string
-            required: true
-            pattern: '[0-9]{8}'
-            minLength: 8
-            maxLength: 8
-            example: 22040010
-        - in: body
-          name: email
-          description: E-mail do prestador.
-          schema:
-            type: string
-            required: false
-            example: example@email.com
-        - in: body
-          name: tel
-          description: Número do telefone do prestador, no formato \<cod pais>\<DDD>\<numero>.
-          schema:
-            type: string
-            required: false
-            maxLength: 20
-            example: 552122357792
-        - in: body
-          name: tipoId
-          schema:
-            type: integer
-            enum: [1, 2]
-          description: >
-            Tipo da identificação enviada:
-             * `1` - CPF
-             * `2` - CNPJ
-        - in: body
-          name: id
-          description: Número do CPF/CNPJ do Prestador do Serviço.
-          schema:
-            type: string
-            required: true
-            maxLength: 14
-            example: 13892838278
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewUser'
       responses:
         '200':
           description: OK
@@ -345,6 +238,81 @@ components:
       description: >-
         Endereço Público na Blockchain
       type: string
+    NewUser:
+      title: A New User
+      type: object
+      required:
+        - razao
+        - logEnd
+        - numEnd
+        - bairroEnd
+        - cidadeEnd
+        - estadoEnd
+        - cepEnd
+        - id
+      properties:
+        razao:
+          description: The user to create.
+          type: string
+        fantasia:
+          description: Nome Fantasia do prestador do serviço.
+          type: string
+        logEnd:
+          description: Tipo e nome do logradouro (Av.., Rua..., ...).
+          type: string
+        numEnd:
+          description: Número do imóvel.
+          type: string
+        compEnd:
+          description: Complemento do endereço do prestador.
+          type: string
+        bairroEnd:
+          description: Bairro do prestador.
+          type: string
+        cidadeEnd:
+          description: Código do município do estabelecimento prestador do serviço (Tabela do IBGE).
+          type: integer
+          example: 3304557
+        estadoEnd:
+          description: Sigla da unidade da federação do prestador.
+          type: string
+          pattern: '[A-F]{2}'
+          minLength: 2
+          maxLength: 2
+          example: RJ
+        paisEnd:
+          description: Código do país onde o tomador está estabelecido (Tabela do BACEN). Preencher somente se CidadePrestador igual 9999999.
+          type: integer
+          minimum: 0
+          maximum: 9999
+          example: 1058
+        cepEnd:
+          description: Número do CEP.
+          type: string
+          pattern: '[0-9]{8}'
+          minLength: 8
+          maxLength: 8
+          example: 22040010
+        email:
+          description: E-mail do prestador.
+          type: string
+          example: example@email.com
+        tel:
+          description: Número do telefone do prestador, no formato \<cod pais>\<DDD>\<numero>.
+          type: string
+          maxLength: 20
+          example: 552122357792
+        identificacao:
+          enum: [1, 2]
+          description: >
+            Tipo da identificação enviada no campo identidade:
+             * `1` - CPF
+             * `2` - CNPJ
+        identificacao:
+          description: Número do CPF/CNPJ do Prestador do Serviço.
+          type: string
+          maxLength: 14
+          example: 13892838278
 
   securitySchemes:
     application:

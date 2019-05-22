@@ -15,7 +15,7 @@ export default function (models) {
               .then(() => {
                 fixtures.loadFile(`${__dirname}/client/clients.js`, models, { log: () => {} })
                   .then(() => {
-                    fixtures.loadFile(`${__dirname}/authorization_codes/authorization_codes.js`, models, { log: () => {} })
+                    fixtures.loadFile(`${__dirname}/authorization_code/authorization_codes.js`, models, { log: () => {} })
                       .then(() => {
                         resolve();
                       });
