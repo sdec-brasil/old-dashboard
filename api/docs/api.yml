@@ -108,9 +108,32 @@ paths:
         Retorna informações públicas dos usuários do sistema
         (as informações de registros e estatísticas?)
       security: []
+      parameters:
+        - name: tags
+          in: query
+          description: tags to filter by
+          required: false
+          style: form
+          schema:
+            type: array
+            items:
+              type: string
+        - name: limit
+          in: query
+          description: maximum number of results to return
+          required: false
+          schema:
+            type: integer
+            format: int32
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
     post:
       summary: Submete informações para criação de um novo usuário
       description: >- 
@@ -126,6 +149,10 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
   /users/id:
     get:
       summary: Retorna informações sobre um usuário
@@ -145,7 +172,10 @@ paths:
       responses:
         '200':
           description: OK
-
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
 
 components:
   parameters:
@@ -249,7 +279,8 @@ components:
         - cidadeEnd
         - estadoEnd
         - cepEnd
-        - id
+        - tipoIdentificacao
+        - identificacao
       properties:
         razao:
           description: The user to create.
@@ -302,7 +333,7 @@ components:
           type: string
           maxLength: 20
           example: 552122357792
-        identificacao:
+        tipoIdentificacao:
           enum: [1, 2]
           description: >
             Tipo da identificação enviada no campo identidade:
@@ -313,6 +344,19 @@ components:
           type: string
           maxLength: 14
           example: 13892838278
+    User:
+      title: A New User
+      allOf:
+        - $ref: '#/components/schemas/NewUser'
+        - type: object
+          required:
+            - endBlock
+          properties:
+            endBlock:
+              description: Endereço Público da Empresa no Sistema para emissão de NFSD.
+              type: string
+              maxLength: 38
+              example: 1K31KZXjcochXpRhjH9g5MxFFTHPi2zEXb
 
   securitySchemes:
     application:
