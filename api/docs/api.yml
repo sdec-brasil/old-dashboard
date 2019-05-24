@@ -512,7 +512,7 @@ components:
       description: Número de itens que serão retornados.
 
   schemas:
-    Address:
+    EnderecoPublico:
       description: >-
         Endereço Público da Blockchain
       type: string
@@ -542,10 +542,6 @@ components:
         UUID
       type: string
       format: uuid
-    EnderecoPublico:
-      description: >-
-        Endereço Público na Blockchain
-      type: string
     User:
       title: User
       type: object
@@ -925,56 +921,51 @@ components:
           maxLength: 30
     Invoice:
       title: Invoice
-      allOf:
-        - type: object
-          required:
-            - emissor
-            - prestacao
-          properties:
-            txId:
-              type: string
-              format: uuid
-              description: Transaction Id da nota Fiscal.
-              readOnly: true
-            emissor:
-              type: string
-              description: Endereço Público da Empresa que está emitindo a nota.
-              maxLength: 38
-            prestacao:
-              $ref: '#/components/schemas/Prestacao'
-            tomador:
-              $ref: '#/components/schemas/Tomador'
-            intermediario:
-              $ref: '#/components/schemas/Intermediario'
-            constCivil:
-              $ref: '#/components/schemas/ConstrucaoCivil'
-            numeroNFSD:
-              description: Diz respeito à identificação única da transação na Blockchain que originou a nota.
-              type: string
-              readOnly: true
-            numeroBlocoNFSD:
-              description: Diz respeito ao número do bloco onde a transação foi incluída.
-              type: string
-              readOnly: true
-            dataEmissaoNFSD:
-              description: Data/Hora da emissão da NFS-e (AAAA-MM-DDTHH:mm:ss), segundo consta na Blockchain.
-              type: string
-              readOnly: true
-            cancelsTxid:
-              description: TransactionId da invoice cancelada por esta.
-              $ref: '#/components/schemas/TxID'
-            cancelsUri:
-              description: URI da invoice cancelada por esta.
-              $ref: '#/components/schemas/TxID'
-              readOnly: true
-            canceledByTxid:
-              description: TransactionId da invoice que cancela esta.
-              $ref: '#/components/schemas/TxID'
-              readOnly: true
-            canceledByUri:
-              description: URI da invoice que cancela esta.
-              $ref: '#/components/schemas/TxID'
-              readOnly: true
+      type: object
+      required:
+        - emissor
+        - prestacao
+      properties:
+        txId:
+          type: string
+          format: uuid
+          description: Transaction Id da nota Fiscal.
+          readOnly: true
+        emissor:
+          type: string
+          description: Endereço Público da Empresa que está emitindo a nota.
+          maxLength: 38
+        prestacao:
+          $ref: '#/components/schemas/Prestacao'
+        tomador:
+          $ref: '#/components/schemas/Tomador'
+        intermediario:
+          $ref: '#/components/schemas/Intermediario'
+        constCivil:
+          $ref: '#/components/schemas/ConstrucaoCivil'
+        numeroNFSD:
+          description: Diz respeito à identificação única da transação na Blockchain que originou a nota.
+          type: string
+          readOnly: true
+        numeroBlocoNFSD:
+          description: Diz respeito ao número do bloco onde a transação foi incluída.
+          type: string
+          readOnly: true
+        dataEmissaoNFSD:
+          description: Data/Hora da emissão da NFS-e (AAAA-MM-DDTHH:mm:ss), segundo consta na Blockchain.
+          type: string
+          readOnly: true
+        cancelsTxid:
+          $ref: '#/components/schemas/TxID'
+        cancelsUri:
+          $ref: '#/components/schemas/TxID'
+          readOnly: true
+        canceledByTxid:
+          $ref: '#/components/schemas/TxID'
+          readOnly: true
+        canceledByUri:
+          $ref: '#/components/schemas/TxID'
+          readOnly: true
 
     Client:
       title: Client
@@ -1192,4 +1183,4 @@ components:
     bearer:
       type: http
       scheme: bearer
-      bearerFormat: JWT 
+      bearerFormat: JWT
