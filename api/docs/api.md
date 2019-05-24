@@ -96,6 +96,8 @@
 ##### CTowns ( Prefeitura Cadastrada no Sistema)
   - GET /towns - Retorna informações das prefeituras do sistema.
   - GET /towns/:id - Retorna informações sobre uma prefeitura, onde id pode ser o GUID || Código do município IBGE || CNPJ 
+  /towns/{id}/financial/pending 
+/towns/{id}/financial/overdue
 
 ##### CBalance (saldo de um endereço)
   - GET /balances - Retorna lista de saldos e endereços públicos

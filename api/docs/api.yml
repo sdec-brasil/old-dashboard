@@ -36,7 +36,17 @@ paths:
         - $ref: '#/components/parameters/EntToParam'
         - $ref: '#/components/parameters/untilParam'
         - $ref: '#/components/parameters/offsetParam'
-
+        - $ref: '#/components/parameters/limitParam'
+        - name: town
+          in: query
+          required: false
+          description: Filtrar por notas ficais emitidas para a prefeitura entidade (CNPJ || IBGE)
+          schema:
+            type: array
+            items:
+              type: string
+          style: form
+          explode: false
       responses:
         '200':
           description: OK
@@ -48,6 +58,8 @@ paths:
                   $ref: '#/components/schemas/Invoice'
     post:
       summary: Emite uma nota fiscal
+      security:
+        - bearer: []
       tags: [User Emitter Related]
       description: >-
         Emite uma nota fiscal
@@ -83,6 +95,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/Invoice'
     post:
+      security:
+        - bearer: []
       summary: >-
         Cria uma nova nota fiscal na blockchain que substitui a nota
         referenciada em txid
@@ -188,10 +202,42 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
+    post:
+      summary: Submete informações para a edição de um usuário
+      description: >- 
+        Submete informações para edição de usuário no sistema
+        e na blockchain. Cada usuário só pode editar seu próprio registro.
+      security:
+        - bearer: []
+      parameters:
+        - in: path
+          name: id
+          description: Endereço Público || CPF || GUID || CNPJ (contem o registry).
+          schema:
+            oneOf:
+              - $ref: '#/components/schemas/CPF'
+              - $ref: '#/components/schemas/CNPJ'
+              - $ref: '#/components/schemas/UUID'
+              - $ref: '#/components/schemas/EnderecoPublico'
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
   /client:
     get:
       tags: ['Client Related']
-      security: []
+      security:
+        - bearer: []
       summary: Retorna informações do client autenticado
       responses:
         '200':
@@ -200,29 +246,30 @@ paths:
             application/json:
               schema:
                   $ref: '#/components/schemas/Client'
-  /clients:
-    post:
-      tags: [Client Related]      
-      summary: Submete informações para criação de um novo client
-      security: []
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Client'
-      responses:
-        '201':
-          description: CREATED
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Client'
+  # /clients:
+  #   post:
+  #     tags: [Client Related]      
+  #     summary: Submete informações para criação de um novo client
+  #     security: []
+  #     requestBody:
+  #       required: true
+  #       content:
+  #         application/json:
+  #           schema:
+  #             $ref: '#/components/schemas/Client'
+  #     responses:
+  #       '201':
+  #         description: CREATED
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: '#/components/schemas/Client'
   /clients/{id}:
     patch:
       tags: [Client Related]
       summary: Edita informações do client
-      security: []
+      security:
+        - bearer: []
       parameters:
         - in: path
           name: id
@@ -249,7 +296,8 @@ paths:
       tags: [Client Related]
       summary: Exclui o client com o id enviado
       description: Cada client pode exlcuir apenas seu próprio registro no banco
-      security: []
+      security:
+        - bearer: []
       parameters:
         - in: path
           name: id
@@ -267,6 +315,9 @@ paths:
       summary: Retorna informações públicas dos blocos da Chain.
       tags: [Public Data]
       security: []
+      parameters:
+        - $ref: '#/components/parameters/offsetParam'
+        - $ref: '#/components/parameters/limitParam'
       responses:
         '200':
           description: OK
@@ -323,7 +374,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Wallet'
+                  $ref: '#/components/schemas/PublicAddress'
   /addresses/{id}:
     get:
       tags: [Public Data]
@@ -344,12 +395,35 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Wallet'
+                $ref: '#/components/schemas/PublicAddress'
   /towns:
     get:
       summary: Retorna informações das prefeituras do sistema.
       tags: [Public Data]
       security: []
+      parameters:
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/offsetParam'
+        - name: mesoregiao
+          in: query
+          required: false
+          description: Filtrar prefeituras por meso região.
+          schema:
+            type: array
+            items:
+              type: string
+          style: form
+          explode: false
+        - name: estado
+          in: query
+          required: false
+          description: Filtro de prefeituras por estado. Enviar a sigla dos estados desejados.
+          schema:
+            type: array
+            items:
+              type: string
+          style: form
+          explode: false
       responses:
         '200':
           description: OK
@@ -407,7 +481,7 @@ components:
       in: query
       name: until
       description: >-
-        Resultados após essa data não serão retornados.
+        Só serão retornados resultados até essa data.
       schema:
         type: string
         format: date-time
@@ -422,7 +496,7 @@ components:
         minimum: 0
         example: 15
       description: >-
-        Número de itens para pular da busca antes de retornar o resultado.
+        Número de itens da busca para pular antes de retornar o resultado.
 
     
     limitParam:
@@ -435,7 +509,7 @@ components:
         maximum: 250
         default: 50
         example: 50
-      description: The numbers of items to return.
+      description: Número de itens que serão retornados.
 
   schemas:
     Address:
@@ -486,8 +560,19 @@ components:
         - tipoIdentificacao
         - identificacao
       properties:
+        id:
+          description: ID do usuário no banco.
+          type: string
+          format: uuid
+          readOnly: true
+        password:
+          description: senha do usuário em nosso sistema 
+            ela fica guardada na blockchain?? TODO
+          type: string
+          format: password
+          writeOnly: true
         razao:
-          description: The user to create.
+          description: Razão social do prestador de serviço.
           type: string
         fantasia:
           description: Nome Fantasia do prestador do serviço.
@@ -552,9 +637,26 @@ components:
           example: 13892838278
         endBlock:
           description: Endereço Público da Empresa no Sistema para emissão de NFSD.
+          $ref: '#/components/schemas/TxID'
+          readOnly: true
+        cancelsId:
+          description: UUID do usuário cancelado por este.
           type: string
-          maxLength: 38
-          example: 1K31KZXjcochXpRhjH9g5MxFFTHPi2zEXb
+          format: uuid
+        cancelsUri:
+          description: URI do usuário cancelado por este.
+          type: string
+          format: uri
+          readOnly: true
+        canceledById:
+          description: UUID do usuário que cancelou este.
+          format: uuid
+          type: string
+          readOnly: true
+        canceledByUri:
+          description: URI do usuário que cancelou este.
+          type: string
+          format: uri
           readOnly: true
     Prestacao:
       title: Prestação
@@ -829,6 +931,11 @@ components:
             - emissor
             - prestacao
           properties:
+            txId:
+              type: string
+              format: uuid
+              description: Transaction Id da nota Fiscal.
+              readOnly: true
             emissor:
               type: string
               description: Endereço Público da Empresa que está emitindo a nota.
@@ -841,18 +948,34 @@ components:
               $ref: '#/components/schemas/Intermediario'
             constCivil:
               $ref: '#/components/schemas/ConstrucaoCivil'
-            NumeroNFSD:
+            numeroNFSD:
               description: Diz respeito à identificação única da transação na Blockchain que originou a nota.
               type: string
               readOnly: true
-            NumeroBlocoNFSD:
+            numeroBlocoNFSD:
               description: Diz respeito ao número do bloco onde a transação foi incluída.
               type: string
               readOnly: true
-            DataEmissaoNFSD:
+            dataEmissaoNFSD:
               description: Data/Hora da emissão da NFS-e (AAAA-MM-DDTHH:mm:ss), segundo consta na Blockchain.
               type: string
               readOnly: true
+            cancelsTxid:
+              description: TransactionId da invoice cancelada por esta.
+              $ref: '#/components/schemas/TxID'
+            cancelsUri:
+              description: URI da invoice cancelada por esta.
+              $ref: '#/components/schemas/TxID'
+              readOnly: true
+            canceledByTxid:
+              description: TransactionId da invoice que cancela esta.
+              $ref: '#/components/schemas/TxID'
+              readOnly: true
+            canceledByUri:
+              description: URI da invoice que cancela esta.
+              $ref: '#/components/schemas/TxID'
+              readOnly: true
+
     Client:
       title: Client
       type: object
@@ -874,63 +997,100 @@ components:
       title: Chain Block
       type: object
       properties:
-        block_id:
-          description: ???
-          type: integer
-        block_hash:
+        blockHash:
           description: ???
           type: string
           format: uuid
-        block_nTime:
+        blockTimestamp:
           description: ???
           type: integer
-        block_nBits:
-          description: ???
-          type: integer
-        prevBlockId:
+        previousBlockHash:
           description: id of the previous block on the Chain
           type: integer
-        block_num_tx:
+        blockHeight:
+          description: ???
           type: integer
-        TODO:
+        blockNumTx:
+          type: integer
+        minerAddress:
           type: string
+        transactions:
+          type: array
+          description: Lista de TxID das transações desse bloco.
+          items:
+            type: string
+            format: uuid
     BlockChain:
       title: Blockchain State
       type: object
       description: Informações sobre o estado atual da blockchain.
       properties:
-        block_id:
-          description: ???
+        totalTransactions:
           type: integer
-        block_hash:
-          description: ???
+          readOnly: true
+          description: Número total de transações confirmadas na blockchain.
+        currentHeight:
+          type: integer
+          readOnly: true
+          description: Altura da blockchain.
+        lastBlockHash:
           type: string
+          readOnly: true
           format: uuid
-        block_nTime:
-          description: ???
+          description: hash do último bloco confirmado na blockchain.
+        nUniqueAddresses:
           type: integer
-        block_nBits:
-          description: ???
+          readOnly: true
+          description: Número de endereços públicos registrados na blockchain.
+        nRegisteredUsers:
           type: integer
-        prevBlockId:
-          description: id of the previous block on the Chain
+          readOnly: true
+          description: Número de usuário registrados na blockchain.
+        nEmitedInvoices:
           type: integer
-        block_num_tx:
+          readOnly: true
+          description: Número total de notas fiscais emitidas.
+        nUniqueMiners:
           type: integer
-        TODO:
-          type: string
-    Wallet:
-      title: Wallet
+          readOnly: true
+          description: Número de mineradores cadastrados.
+        currentDifficulty:
+          type: integer
+          readOnly: true
+          description: Dificuldade atual da mineração.
+        nMempoolTransactions:
+          type: integer
+          readOnly: true
+          description: Número de transações na Mempool atualmente.
+    PublicAddress:
+      title: Public Address
       type: object
       properties:
-        a????:
-          description: ???
+        publicAddress:
+          type: string
+          format: uuid
+          readOnly: true
+          description: Endereço público em questão.
+        balance:
+          type: number
+          readOnly: true
+          description: Saldo disponível.
+        nTransactions:
           type: integer
-        b????:
-          description: ???
-          type: string
-        TODO:
-          type: string
+          readOnly: true
+          description: Número total de transações feitas por este endereço.         
+        lastEmittedInvoices:
+          type: array
+          description: Últimas notas fiscais emitidas.
+          items:
+            $ref: '#/components/schemas/TxID'
+          readOnly: true
+        lastTransactions:
+          description: Últimas transações realizadas.
+          readOnly: true
+          type: array
+          items:
+            $ref: '#/components/schemas/TxID'
     Town:
       title: Prefeitura
       type: object
@@ -938,15 +1098,84 @@ components:
         codigoMunicipio:
           type: string
           description: Código do município na tabela do IBGE.
-        nome:
+        nomeMunicipio:
           type: string
           description: Nome do município.
         estado:
           type: string
           description: Estado do município.
-        regiao:
+        mesoRegiao:
           type: string
-          description: Região do município.
+          description: Meso região do município.
+        cnpj:
+          $ref: '#/components/schemas/CNPJ'
+        nInvoicesReceived:
+          type: integer
+          description: número de notas fiscais recebidas.
+          readOnly: true
+        totalValueReceived:
+          type: array
+          description: Valor recebido em R$ nas últimas [24h, 7d, 30d, 1y].
+          readOnly: true
+          items:
+            type: number
+        numberTopEmitters:
+          type: object
+          description: 5 maiores emissores de nota fiscal em termos de números de notas.
+          properties:
+            userName:
+              description: Nome do emissor
+              type: string
+              readOnly: true
+            nInvoices:
+              description: Quantidade de notas emitidas
+              readOnly: true
+            userUri:
+              description: URI para as informações do usuário.
+              readOnly: true
+              type: string
+              format: uri
+        valueTopEmitters:
+          type: object
+          description: 5 maiores emissores de nota fiscal em termos de valor das notas.
+          properties:
+            userName:
+              description: Nome do emissor
+              type: string
+              readOnly: true
+            nInvoices:
+              description: Quantidade de notas emitidas
+              readOnly: true
+            userUri:
+              description: URI para as informações do usuário.
+              readOnly: true
+              type: string
+              format: uri
+        financial:
+          type: object
+          description: Informações financeiras sobre a prefeitura.
+          properties:
+            receivableInvoices:
+              description: >
+                Notas Fiscais referentes à uma prefeitura 
+                que devem ser pagas até o final do mês.
+              type: array
+              items:
+                type: string
+                format: uri
+            overdueInvoices:
+              description: >
+                Notas Fiscais vencidas e ainda não recebidas, referentes
+                à uma prefeitura.
+              type: array
+              items:
+                type: string
+                format: uri
+            totalAccumulatedValue:
+              description: Valor total acumulado em BRL, desde o início do sistema.
+              type: number
+              readOnly: true
+              multipleOf: 0.01
 
   securitySchemes:
     application:
@@ -960,3 +1189,7 @@ components:
           scopes:
             write: allows modifying resources
             read: allows reading resources
+    bearer:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT 
