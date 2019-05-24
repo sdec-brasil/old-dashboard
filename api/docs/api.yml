@@ -164,7 +164,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
-  /users/id:
+  /users/{id}:
     get:
       summary: Retorna informações sobre um usuário
       description: >-
@@ -218,7 +218,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Client'
-  /clients/id:
+  /clients/{id}:
     patch:
       tags: [Client Related]
       summary: Edita informações do client
@@ -226,7 +226,7 @@ paths:
       parameters:
         - in: path
           name: id
-          description: id do client no banco ou clientID.
+          description: clientID do client a ser editado.
           schema:
             oneOf:
               - $ref: '#/components/schemas/UUID'
@@ -262,6 +262,124 @@ paths:
       responses:
         '200':
           description: OK
+  /blocks:
+    get:
+      summary: Retorna informações públicas dos blocos da Chain.
+      tags: [Public Data]
+      security: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Block'
+  /blocks/{id}:
+    get:
+      tags: [Public Data]
+      summary: Retorna informações públicas de um bloco da Chain.
+      security: []
+      parameters:
+        - in: path
+          name: id
+          description: Altura ou TxID do bloco.
+          schema:
+            oneOf:
+              - $ref: '#/components/schemas/UUID'
+              - type: string
+              - type: integer
+          required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Block'
+  /blockchain:
+    get:
+      summary: Retorna informações gerais sobre o estado da Blockchain.
+      tags: [Public Data]
+      security: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BlockChain'
+  /addresses:
+    get:
+      summary: Retorna informações gerais sobre os endereços públicos da rede.
+      tags: [Public Data]
+      security: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Wallet'
+  /addresses/{id}:
+    get:
+      tags: [Public Data]
+      summary: Retorna informações gerais sobre um endereço específico da rede.
+      security: []
+      parameters:
+        - in: path
+          name: id
+          description: id do bloco no banco ou block_hash.
+          schema:
+            oneOf:
+              - $ref: '#/components/schemas/UUID'
+              - type: string
+          required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Wallet'
+  /towns:
+    get:
+      summary: Retorna informações das prefeituras do sistema.
+      tags: [Public Data]
+      security: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Town'
+  /towns/{id}:
+    get:
+      tags: [Public Data]
+      summary: Retorna informações sobre uma prefeitura.
+      security: []
+      parameters:
+        - in: path
+          name: id
+          description: GUID || Código do município IBGE || CNPJ
+          schema:
+            oneOf:
+              - $ref: '#/components/schemas/UUID'
+              - type: string
+          required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Town'
 
 components:
   parameters:
@@ -752,7 +870,83 @@ components:
           type: string
           format: password
           writeOnly: true
-
+    Block:
+      title: Chain Block
+      type: object
+      properties:
+        block_id:
+          description: ???
+          type: integer
+        block_hash:
+          description: ???
+          type: string
+          format: uuid
+        block_nTime:
+          description: ???
+          type: integer
+        block_nBits:
+          description: ???
+          type: integer
+        prevBlockId:
+          description: id of the previous block on the Chain
+          type: integer
+        block_num_tx:
+          type: integer
+        TODO:
+          type: string
+    BlockChain:
+      title: Blockchain State
+      type: object
+      description: Informações sobre o estado atual da blockchain.
+      properties:
+        block_id:
+          description: ???
+          type: integer
+        block_hash:
+          description: ???
+          type: string
+          format: uuid
+        block_nTime:
+          description: ???
+          type: integer
+        block_nBits:
+          description: ???
+          type: integer
+        prevBlockId:
+          description: id of the previous block on the Chain
+          type: integer
+        block_num_tx:
+          type: integer
+        TODO:
+          type: string
+    Wallet:
+      title: Wallet
+      type: object
+      properties:
+        a????:
+          description: ???
+          type: integer
+        b????:
+          description: ???
+          type: string
+        TODO:
+          type: string
+    Town:
+      title: Prefeitura
+      type: object
+      properties:
+        codigoMunicipio:
+          type: string
+          description: Código do município na tabela do IBGE.
+        nome:
+          type: string
+          description: Nome do município.
+        estado:
+          type: string
+          description: Estado do município.
+        regiao:
+          type: string
+          description: Região do município.
 
   securitySchemes:
     application:
