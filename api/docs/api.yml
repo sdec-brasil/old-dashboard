@@ -32,11 +32,6 @@ paths:
       description: >-
         Retorna uma lista das últimas notas fiscais emitidas.
       parameters:
-        - $ref: '#/components/parameters/EntParam'
-        - $ref: '#/components/parameters/EntToParam'
-        - $ref: '#/components/parameters/untilParam'
-        - $ref: '#/components/parameters/offsetParam'
-        - $ref: '#/components/parameters/limitParam'
         - name: town
           in: query
           required: false
@@ -47,6 +42,11 @@ paths:
               type: string
           style: form
           explode: false
+        - $ref: '#/components/parameters/EntParam'
+        - $ref: '#/components/parameters/EntToParam'
+        - $ref: '#/components/parameters/untilParam'
+        - $ref: '#/components/parameters/offsetParam'
+        - $ref: '#/components/parameters/limitParam'
       responses:
         '200':
           description: OK
@@ -318,6 +318,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/offsetParam'
         - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/untilParam'
       responses:
         '200':
           description: OK
@@ -366,6 +367,9 @@ paths:
       summary: Retorna informações gerais sobre os endereços públicos da rede.
       tags: [Public Data]
       security: []
+      parameters:
+        - $ref: '#/components/parameters/offsetParam'
+        - $ref: '#/components/parameters/limitParam'
       responses:
         '200':
           description: OK
@@ -375,15 +379,15 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/PublicAddress'
-  /addresses/{id}:
+  /addresses/{publicAddress}:
     get:
       tags: [Public Data]
       summary: Retorna informações gerais sobre um endereço específico da rede.
       security: []
       parameters:
         - in: path
-          name: id
-          description: id do bloco no banco ou block_hash.
+          name: publicAddress
+          description: Endereço público a ter suas informações retornadas.
           schema:
             oneOf:
               - $ref: '#/components/schemas/UUID'
@@ -402,12 +406,10 @@ paths:
       tags: [Public Data]
       security: []
       parameters:
-        - $ref: '#/components/parameters/limitParam'
-        - $ref: '#/components/parameters/offsetParam'
-        - name: mesoregiao
+        - name: mesorregiao
           in: query
           required: false
-          description: Filtrar prefeituras por meso região.
+          description: Filtrar prefeituras por mesorregião.
           schema:
             type: array
             items:
@@ -424,6 +426,8 @@ paths:
               type: string
           style: form
           explode: false
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/offsetParam'
       responses:
         '200':
           description: OK
@@ -842,6 +846,7 @@ components:
         nif:
           description: Este elemento só deverá ser preenchido para tomadores não residentes no Brasil.
           maxLength: 40
+          type: string
         nomeRazao:
           description: Nome / Razão Social do tomador.
           type: string
@@ -931,6 +936,11 @@ components:
           format: uuid
           description: Transaction Id da nota Fiscal.
           readOnly: true
+        substitutes:
+          $ref: '#/components/schemas/TxID'
+        substitutedBy:
+          $ref: '#/components/schemas/TxID'
+          readOnly: true
         emissor:
           type: string
           description: Endereço Público da Empresa que está emitindo a nota.
@@ -955,17 +965,6 @@ components:
           description: Data/Hora da emissão da NFS-e (AAAA-MM-DDTHH:mm:ss), segundo consta na Blockchain.
           type: string
           readOnly: true
-        cancelsTxid:
-          $ref: '#/components/schemas/TxID'
-        cancelsUri:
-          $ref: '#/components/schemas/TxID'
-          readOnly: true
-        canceledByTxid:
-          $ref: '#/components/schemas/TxID'
-          readOnly: true
-        canceledByUri:
-          $ref: '#/components/schemas/TxID'
-          readOnly: true
 
     Client:
       title: Client
@@ -985,34 +984,34 @@ components:
           format: password
           writeOnly: true
     Block:
-      title: Chain Block
+      title: Bloco
       type: object
       properties:
         blockHash:
-          description: ???
-          type: string
-          format: uuid
+          description: hash do bloco.
+          $ref: '#/components/schemas/TxID'
         blockTimestamp:
-          description: ???
-          type: integer
+          description: Timestamp da confirmação do bloco.
+          type: string
+          format: date-time
         previousBlockHash:
           description: id of the previous block on the Chain
-          type: integer
+          $ref: '#/components/schemas/TxID'
         blockHeight:
-          description: ???
+          description: Altura do bloco.
           type: integer
         blockNumTx:
           type: integer
         minerAddress:
-          type: string
+          $ref: '#/components/schemas/TxID'
         transactions:
           type: array
           description: Lista de TxID das transações desse bloco.
           items:
-            type: string
-            format: uuid
+            $ref: '#/components/schemas/TxID'
+
     BlockChain:
-      title: Blockchain State
+      title: Estado da Blockchain
       type: object
       description: Informações sobre o estado atual da blockchain.
       properties:
@@ -1025,9 +1024,9 @@ components:
           readOnly: true
           description: Altura da blockchain.
         lastBlockHash:
+          $ref: '#/components/schemas/TxID'
           type: string
           readOnly: true
-          format: uuid
           description: hash do último bloco confirmado na blockchain.
         nUniqueAddresses:
           type: integer
@@ -1054,7 +1053,7 @@ components:
           readOnly: true
           description: Número de transações na Mempool atualmente.
     PublicAddress:
-      title: Public Address
+      title: Endereço Público
       type: object
       properties:
         publicAddress:
@@ -1095,9 +1094,9 @@ components:
         estado:
           type: string
           description: Estado do município.
-        mesoRegiao:
+        mesorregiao:
           type: string
-          description: Meso região do município.
+          description: Mesorregião do município.
         cnpj:
           $ref: '#/components/schemas/CNPJ'
         nInvoicesReceived:
