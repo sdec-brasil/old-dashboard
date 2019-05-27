@@ -75,7 +75,55 @@ paths:
           content:
             application/json:
               schema:
-                  $ref: '#/components/schemas/Invoice'
+                $ref: '#/components/schemas/Invoice'
+                example:
+                  substitutes: 998d1c901447c87698ff7a1c5cab64ad7372d49c71c88446f83e21d54ae7d637
+                  emissor: 1HB5XMLmzFVj8ALj6mfBsbifRoD4miY36v
+                  prestacao:
+                    baseCalculo: 0
+                    valLiquiNfse: 0
+                    competencia: "2019-05-27"
+                    valServicos: 0
+                    valDeduções: 0
+                    valPis: 0
+                    valCofins: 0
+                    valInss: 0
+                    valIr: 0
+                    valCsll: 0
+                    outrasRetencoes: 0
+                    valTotalTributos: 0
+                    valIss: 0
+                    aliqServicos: 0
+                    descontoIncond: 0
+                    descontoCond: 0
+                    itemLista: string
+                    codCnae: 0
+                    codServico: string
+                    codNBS: string
+                    discrimincacao: string
+                    codTributMunicipio: 0
+                    numProcecsso: string
+                  tomador:
+                    identificacao: string
+                    nif: strin
+                    nomeRazao: string
+                    logEnd: string
+                    numEnd: string
+                    compEnd: string
+                    bairroEnd: string
+                    cidadeEnd: 0,
+                    estadoEnd: string
+                    paisEnd: 0,
+                    cepEnd: string
+                    email: user@example.com
+                    tel: strin
+                  intermediario:
+                    identificacao: 18524387585
+                    nomeRazao: string
+                    cidade: 0
+                  constCivil: 
+                    codObra: string
+                    art: string
   /invoices/{txid}:
     get:
       summary: Retorna uma nota fiscal com a TxID correspondente
@@ -1057,17 +1105,18 @@ components:
       type: object
       properties:
         publicAddress:
-          type: string
-          format: uuid
+          $ref: '#/components/schemas/EnderecoPublico'
           readOnly: true
           description: Endereço público em questão.
         balance:
           type: number
           readOnly: true
           description: Saldo disponível.
+          example: 250,00
         nTransactions:
           type: integer
           readOnly: true
+          example: 708
           description: Número total de transações feitas por este endereço.         
         lastEmittedInvoices:
           type: array
