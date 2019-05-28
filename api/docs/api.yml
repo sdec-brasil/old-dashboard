@@ -76,8 +76,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Invoice'
-          example:
-            hello: world
+              example:
+                hello: world
   /invoices/{txid}:
     get:
       summary: Retorna uma nota fiscal com a TxID correspondente
