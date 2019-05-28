@@ -75,11 +75,11 @@ paths:
           content:
             application/json:
               schema:
-                # $ref: '#/components/schemas/Invoice'
-                type: string
-                example: ha
-              # example:
-                # hello: world
+                $ref: '#/components/schemas/Invoice'
+          $ref: ''
+          examples:
+            hello:
+              hello: world
   /invoices/{txid}:
     get:
       summary: Retorna uma nota fiscal com a TxID correspondente
