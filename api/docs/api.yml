@@ -70,16 +70,15 @@ paths:
             schema:
               $ref: '#/components/schemas/Invoice'
       responses:
-        '201':
-          description: Created
-          content:
+        '200':
+          description: your car appointment has been booked
+          content: 
             application/json:
               schema:
-                $ref: '#/components/schemas/Invoice'
-          $ref: ''
-          examples:
-            exemplo1:
-              hello: world
+                $ref: '#/components/schemas/SuccessResponse'
+            examples:
+              confirmation-success:
+                $ref: '#/components/examples/confirmation-success'
               # examples:
               #   application/json:
               #   substitutes: 998d1c901447c87698ff7a1c5cab64ad7372d49c71c88446f83e21d54ae7d637
