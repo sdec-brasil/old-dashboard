@@ -72,10 +72,10 @@ paths:
       responses:
         '201':
           description: Created
-          # content:
-          #   application/json:
-          #     schema:
-          #       $ref: '#/components/schemas/Invoice'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Invoice'
           examples:
             application/json:
               hello: world
