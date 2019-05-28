@@ -75,10 +75,15 @@ paths:
           content: 
             application/json:
               schema:
-                $ref: '#/components/schemas/SuccessResponse'
-            examples:
-              confirmation-success:
-                $ref: '#/components/examples/confirmation-success'
+                $ref: '#/components/schemas/Invoice'
+              # examples:
+              #   confirmation-success:
+              #     $ref: '#/components/examples/example1'
+              example:
+                ex1:
+                  value:
+                    vamo: la
+                    meu: garoto
               # examples:
               #   application/json:
               #   substitutes: 998d1c901447c87698ff7a1c5cab64ad7372d49c71c88446f83e21d54ae7d637
@@ -1236,3 +1241,9 @@ components:
       type: http
       scheme: bearer
       bearerFormat: JWT
+
+  examples:
+    example1:
+      value:
+        vamo: la
+        meu: garoto
