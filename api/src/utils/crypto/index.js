@@ -3,6 +3,12 @@ import path from 'path';
 import jwt from 'jsonwebtoken';
 import uuid from 'uuid/v4';
 
+
+const bcrypt = require('bcrypt');
+
+export const hashPassword = (password, salt) => bcrypt.hashSync(password, salt);
+export const comparePassword = (password, hash) => bcrypt.compareSync(password, hash);
+export const generateSalt = () => bcrypt.genSaltSync(5);
 /** Private certificate used for signing JSON WebTokens */
 const privateKey = fs.readFileSync(path.join(__dirname, '../../../certs/privatekey.pem'));
 
@@ -48,4 +54,7 @@ export const verifyToken = token => jwt.verify(token, publicKey);
 export const crypto = {
   createToken,
   verifyToken,
+  hashPassword,
+  comparePassword,
+  generateSalt,
 };

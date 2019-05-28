@@ -28,7 +28,7 @@
   },
   "dependencies": {
     "@2fd/graphdoc": "^2.4.0",
-    "bcrypt": "^3.0.5",
+    "bcrypt": "^3.0.6",
     "body-parser": "1.18.3",
     "chai": "^4.2.0",
     "connect-ensure-login": "^0.1.1",

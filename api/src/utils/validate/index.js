@@ -33,7 +33,7 @@ validate.logAndThrow = (msg) => {
  */
 validate.user = (user, password) => {
   validate.userExists(user);
-  if (user.password !== password) {
+  if (!crypto.comparePassword(password, user.password)) {
     validate.logAndThrow('User password does not match');
   }
   return user;
