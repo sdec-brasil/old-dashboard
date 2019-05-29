@@ -1,4 +1,7 @@
+// Imports
 import process from 'process';
+
+// App Imports
 import { tokens } from '../../config/config';
 import { db } from '../db';
 import { crypto } from '../crypto';
@@ -246,6 +249,117 @@ validate.clientExistsForHttp = (client) => {
     throw error;
   }
   return client;
+};
+
+/**
+ * Verifies if a given string is a valid CPF
+ * @param   {String} cpf - Supposedly CPF
+ * @returns {Boolean} True if valid CPF
+ */
+validate.CPF = (cpf) => {
+  // Check CPF format
+  if (/[0-9]{3}\.?[0-9]{3}\.?[0-9]{3}-?[0-9]{2}/.test(cpf)) {
+    return false;
+  }
+
+  // Checking if all digits are equal
+  if (/^(\d)\1+$/.test(cpf)) {
+    return false;
+  }
+
+  const cleanCPF = cpf.replace(/\.|-|\s/g, '');
+  const firstNineDigits = cleanCPF.substring(0, 9);
+  const checker = cleanCPF.substring(9, 11);
+
+  if (cleanCPF.length !== 11) {
+    return false;
+  }
+
+  let sum = 0;
+
+  for (let j = 0; j < 9; ++j) {
+    sum += Number(firstNineDigits.charAt(j)) * (10 - j);
+  }
+
+  const checker1 = sum % 11 < 2 ? 0 : 11 - sum % 11;
+
+  const cpfWithChecker1 = firstNineDigits + String(checker1);
+
+  sum = 0;
+
+  for (let k = 0; k < 10; ++k) {
+    sum += Number(cpfWithChecker1.charAt(k)) * (11 - k);
+  }
+
+  const checker2 = sum % 11 < 2 ? 0 : 11 - sum % 11;
+
+  return checker.toString() === checker1.toString() + checker2.toString();
+};
+
+/**
+ * Verifies if a given string is a valid CNPJ
+ * @param   {String} _cnpj - Supposedly CNPJ
+ * @returns {Boolean} True if valid CNPJ
+ */
+validate.CNPJ = (_cnpj) => {
+  // Check _CNPJ Format
+  if (/[0-9]{2}\.?[0-9]{3}\.?[0-9]{3}\/?[0-9]{4}-?[0-9]{2}/.test(_cnpj)) {
+    return false;
+  }
+  const cnpj = _cnpj.replace(/[^\d]+/g, '');
+
+  // Checking if all digits are equal
+  if (/^(\d)\1+$/.test(cnpj)) {
+    return false;
+  }
+
+  const t = cnpj.length - 2;
+  const d = cnpj.substring(t);
+  const d1 = Number(d.charAt(0));
+  const d2 = Number(d.charAt(1));
+
+  const calc = (x) => {
+    const n = cnpj.substring(0, x);
+    let y = x - 7;
+    let s = 0;
+    let r = 0;
+
+    for (let i = x; i >= 1; i--) {
+      s += n.charAt(x - i) * y--;
+      if (y < 2) { y = 9; }
+    }
+
+    r = 11 - s % 11;
+    return r > 9 ? 0 : r;
+  };
+
+  return calc(t) === d1 && calc(t + 1) === d2;
+};
+
+/**
+ * Verifies if a given string is a valid address on our blockchain
+ * @param   {String} _cnpj - Supposedly Address
+ * @returns {Boolean} True if valid Address
+ */
+validate.Address = (address) => {
+  const re = /^[13n][1-9A-Za-z][^OIl]{20,40}/;
+  if (!re.test(address)) {
+    return false;
+  }
+  return true;
+};
+
+/**
+ * Verifies if a given string is a valid GUID
+ * @param   {String} guid - Supposedly GUID
+ * @returns {Boolean} True if valid GUID
+ */
+validate.GUID = (guid) => {
+  const re = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+  if (!re.test(guid)) {
+    return false;
+  }
+  return true;
 };
 
 export default validate;

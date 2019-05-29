@@ -1,9 +1,9 @@
-import { hello } from '../services/invoices';
+import { InvoiceGet } from '../services/invoices';
 
 const InvoiceController = () => {
   const get = (req, res) => {
-    const string = hello();
-    res.status(200).send(string);
+    const response = InvoiceGet(req);
+    res.status(response.code).send(response.data);
   };
 
   return {

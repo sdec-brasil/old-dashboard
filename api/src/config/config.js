@@ -70,3 +70,9 @@ export const tokens = {
 export const db = {
   timeToCheckExpiredTokens: 3600,
 };
+
+export const limitSettings = {
+  invoice: {
+    get: 100,
+  },
+};
