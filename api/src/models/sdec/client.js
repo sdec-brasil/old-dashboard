@@ -1,4 +1,7 @@
 // Client
+import { crypto } from '../../utils/crypto';
+
+
 export default function (sequelize, DataTypes) {
   /**
    * This is the configuration of the clients that are allowed to connected to your authorization
@@ -41,6 +44,18 @@ export default function (sequelize, DataTypes) {
   }, {
     underscored: true,
     tableName: 'client',
+  });
+
+  client.beforeSave((clientInstance, options) => {
+    // now we only want to re-hash the password if it was changed.
+    // Otherwise we are going to be hashing a hash, and the user will lose its login.
+    if (clientInstance._changed.secret) {
+      // generate a salt
+      const salt = crypto.generateSalt();
+      // hash the password
+      clientInstance.secret = crypto.hashPassword(clientInstance.secret, salt);
+    }
+    return clientInstance;
   });
 
   return client;
