@@ -117,7 +117,7 @@ server.exchange(oauth2orize.exchange.password((client, username, password, scope
  */
 server.exchange(oauth2orize.exchange.clientCredentials((client, scope, done) => {
   const token = crypto.createToken({ sub: client.id, exp: config.accesstoken.expiresIn });
-  const expiration = config.calculateExpirationDate(config.accesstoken.accesstoken);
+  const expiration = config.calculateExpirationDate(config.accesstoken.expiresIn);
   // Pass in a null for user id since there is no user when using this grant type
   db.accessTokens.save(token, expiration, null, client.id, scope)
     .then(() => done(null, token, null, expiresIn))

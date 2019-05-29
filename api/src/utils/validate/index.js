@@ -62,8 +62,8 @@ validate.userExists = (user) => {
  */
 validate.client = (client, supposedSecret) => {
   validate.clientExists(client);
-  if (client.secret !== supposedSecret) {
-    validate.logAndThrow('Client secret does not match');
+  if (!crypto.comparePassword(supposedSecret, client.secret)) {
+    validate.logAndThrow('Client password does not match');
   }
   return client;
 };

@@ -41,9 +41,14 @@ export default function (sequelize, DataTypes) {
   };
 
   user.beforeSave((userInstance, options) => {
-    // generate a salt
-    const salt = crypto.generateSalt();
-    userInstance.password = crypto.hashPassword(userInstance.password, salt);
+    // now we only want to re-hash the password if it was changed.
+    // Otherwise we are going to be hashing a hash, and the user will lose its login.
+    if (userInstance._changed.password) {
+      // generate a salt
+      const salt = crypto.generateSalt();
+      // hash the password
+      userInstance.password = crypto.hashPassword(userInstance.password, salt);
+    }
     return userInstance;
   });
 
