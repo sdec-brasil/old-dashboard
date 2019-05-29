@@ -40,6 +40,22 @@ paths:
                 example:   # Sample object
                   id: 10
                   name: Jessica Smith
+        responses:
+          '200':
+            description: A user object.
+            content:
+              application/json:
+                schema:
+                  type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                example: 
+                  # Properties of the referenced object
+                  id: 10
+                  name: Example
   /invoices:
     get:
       summary: Retorna uma lista das últimas notas fiscais emitidas
