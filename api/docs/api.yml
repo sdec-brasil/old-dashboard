@@ -841,12 +841,12 @@ components:
           format: int64
           minimum: 0
         issRetido:
-          enum: [1, 2]
-          description: >
-            Tipo da identificação enviada no campo identidade:
-            * `1` - Sim
+          type: boolean
+          # enum: [1, 2]
+          # description: >
+          #   * `1` - Sim
 
-            * `2` - Não
+          #   * `2` - Não
         respRetencao:
           enum: [1, 2]
           description: >
@@ -919,16 +919,12 @@ components:
             
             * `2` – Não
         IncentivoFiscal:
-          enum: [1, 2]
-          description: >
-            * `1` – Sim
-
-            * `2` – Não
+          type: boolean
     Tomador:
       title: Tomador
       type: object
       properties:
-        identificacao:
+        identificacaoTomador:
           description: PF/CNPJ do tomador do serviço. Obrigatório para CNPJ.
           type: string
           maxLength: 14
@@ -936,7 +932,7 @@ components:
           description: Este elemento só deverá ser preenchido para tomadores não residentes no Brasil.
           maxLength: 40
           type: string
-        nomeRazao:
+        nomeRazaoTomador:
           description: Nome / Razão Social do tomador.
           type: string
           maxLength: 150
@@ -988,16 +984,16 @@ components:
       title: Intermediário
       type: object
       properties:
-        identificacao:
+        identificacaoIntermed:
           description: Número do CPF/CNPJ do intermediário do serviço.
           type: string
           maxLength: 14
           example: 18524387585
-        nomeRazao:
+        nomeRazaoIntermed:
           description: Nome ou Razão Social de intermediário do Serviço.
           type: string
           maxLength: 150
-        cidade:
+        cidadeIntermed:
           description: Código do município onde o intermediário está estabelecido (Tabela do IBGE).
           type: integer
           maximum: 9999999
