@@ -14,13 +14,6 @@ export default function (sequelize, DataTypes) {
       type: DataTypes.STRING(64),
       allowNull: true,
     },
-    emissor: {
-      // OBS: já existe a foreignKey para endereco_emissor.
-      // precisamos decidir se ela sera usada ao inves desse campo,
-      //  e se ela aponta para uma empresa ou um user.
-      //  Talvez juntar esses modelos em um?
-      type: DataTypes.STRING(38),
-    },
     numeroNFSD: {
       type: DataTypes.STRING,
       allowNull: true,
@@ -175,7 +168,7 @@ export default function (sequelize, DataTypes) {
       allowNull: false,
     },
     // ----- Campos do Tomador:
-    identificacao: {
+    identificacaoTomador: {
       type: DataTypes.STRING(14),
       allowNull: true,
     },
@@ -183,7 +176,7 @@ export default function (sequelize, DataTypes) {
       type: DataTypes.STRING(40),
       allowNull: true,
     },
-    nomeRazao: {
+    nomeRazaoTomador: {
       type: DataTypes.STRING(150),
       allowNull: true,
     },
@@ -271,7 +264,7 @@ export default function (sequelize, DataTypes) {
 
   invoice.associate = (models) => {
     invoice.belongsTo(models.prefeitura, { targetKey: 'codigo_municipio', foreignKey: { name: 'prefeitura_incidencia', allowNull: false } });
-    invoice.belongsTo(models.empresa, { targetKey: 'endereco_blockchain', foreignKey: { name: 'endereco_emissor', allowNull: false } });
+    invoice.belongsTo(models.empresa, { targetKey: 'endereco_blockchain', foreignKey: { name: 'emissor', allowNull: false } });
   };
 
   return invoice;
