@@ -1015,6 +1015,7 @@ components:
       required:
         - emissor
         - prestacao
+        - estado
       properties:
         txId:
           type: string
@@ -1050,6 +1051,20 @@ components:
           description: Data/Hora da emissão da NFS-e (AAAA-MM-DDTHH:mm:ss), segundo consta na Blockchain.
           type: string
           readOnly: true
+        estado:
+          enum: [0, 1, 2, 3, 4]
+          description: >
+            Estado atual da nota fiscal:
+            
+            * `0` - pendente
+
+            * `1` - atrasado
+
+            * `2` - pago
+
+            * `3` - substituida
+
+            * `4` - dados inconsistentes
 
     Client:
       title: Client

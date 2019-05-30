@@ -251,16 +251,16 @@ export default function (sequelize, DataTypes) {
     },
     //
     // ----- Campos que não estão na documentação:
-    // estado: {
-    // 0 - pendente,
-    // 1 - atrasado,
-    // 2 - pago,
-    // 3 - substituida,
-    // 4 - dados inconsistentes
-    //   type: DataTypes.SMALLINT,
-    //   allowNull: false,
-    //   defaultValue: 0,
-    // },
+    estado: {
+      // 0 - pendente,
+      // 1 - atrasado,
+      // 2 - pago,
+      // 3 - substituida,
+      // 4 - dados inconsistentes
+      type: DataTypes.TINYINT({ unsigned: true }),
+      allowNull: false,
+      defaultValue: 0,
+    },
   },
   {
     underscored: true,
