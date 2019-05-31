@@ -7,7 +7,7 @@
     "start": "nodemon --ignore docs/swagger.json --exec babel-node -- src/index.js",
     "debug": "nodemon --ignore docs/swagger.json --inspect --exec babel-node -- src/index.js",
     "doc": "graphdoc",
-    "test": "mocha --require @babel/register src/tests"
+    "test": "mocha --delay --recursive --require @babel/register --require babel-polyfill src/tests/*.test.js "
   },
   "graphdoc": {
     "endpoint": "http://localhost:8000/graphql",
@@ -21,6 +21,7 @@
     "@babel/node": "7.2.2",
     "@babel/preset-env": "7.4.2",
     "babel-loader": "8.0.5",
+    "babel-polyfill": "^6.26.0",
     "babel-plugin-transform-runtime": "^6.23.0",
     "eslint": "^5.16.0",
     "eslint-config-airbnb-base": "^13.1.0",
@@ -60,7 +61,6 @@
     "sequelize": "^5.3.0",
     "sequelize-fixtures": "^0.10.0",
     "sequelize-import": "^1.2.1",
-    "sinon-chai": "^3.3.0",
     "supertest": "^4.0.2",
     "swagger-jsdoc": "^3.2.9"
   }

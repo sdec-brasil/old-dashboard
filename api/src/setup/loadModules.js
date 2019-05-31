@@ -53,7 +53,7 @@ export default function (server) {
   server.use(passport.session());
 
   // HTTP logger
-  server.use(morgan('tiny'));
+  if (process.env.NODE_ENV !== 'test') server.use(morgan('tiny'));
 
   // Catch all for error messages.  Instead of a stack
   // trace, this will log the json of the error message
