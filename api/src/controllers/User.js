@@ -50,14 +50,37 @@ class ListView {
     if (this.model) {
       const filters = {};
       filters.where = {};
+      
       Object.keys(req.query).forEach((field) => {
         if ((this.model.rawAttributes[field] !== undefined)
         && this.filterFields.includes(field)) {
-          console.log(`field: ${field} - ${this.model.rawAttributes[field].type}`);
-          filters.where[field] = req.query[field];
+          console.log(typeof (this.model.rawAttributes[field].type.key));
+          console.log(`field: ${field} - ${this.model.rawAttributes[field].type.key}`);
+          console.log(`${this.model.rawAttributes[field].type}:`, Object.keys(this.model.rawAttributes[field].type));
+          Object.keys(this.model.rawAttributes[field].type).forEach((key) => {
+            console.log(`${key}:`, this.model.rawAttributes[field].type[key]);
+          });
+
+          // checking field type, to parse query string correctly:
+          let filterValue = req.query[field];
+          if (this.model.rawAttributes[field].type.key === 'BOOLEAN') {
+            filterValue = (filterValue === 'true');
+          } else if (this.model.rawAttributes[field].type.key === 'INTEGER') {
+            filterValue = parseInt(filterValue, 10);
+          }
+          filters.where[field] = filterValue;
         }
       });
+      // adding offset
+      if (req.query.offset) {
+        filters.offset = parseInt(req.query.offset, 10);
+      }
+      // adding limit
+      if (req.query.limit) {
+        filters.limit = parseInt(req.query.limit, 10);
+      }
       console.log('query object:', filters);
+
       // console.log(this.model.rawAttributes);
       return this.model.findAll(filters);
     }
