@@ -1043,11 +1043,11 @@ components:
           description: Diz respeito à identificação única da transação na Blockchain que originou a nota.
           type: string
           readOnly: true
-        numeroBlocoNFSD:
+        blocoConfirmacao:
           description: Diz respeito ao número do bloco onde a transação foi incluída.
           type: string
           readOnly: true
-        dataEmissaoNFSD:
+        dataBlocoConfirmacao:
           description: Data/Hora da emissão da NFS-e (AAAA-MM-DDTHH:mm:ss), segundo consta na Blockchain.
           type: string
           readOnly: true

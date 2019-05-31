@@ -14,15 +14,11 @@ export default function (sequelize, DataTypes) {
       type: DataTypes.STRING(64),
       allowNull: true,
     },
-    numeroNFSD: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    numeroBlocoNFSD: {
+    blocoConfirmacao: {
       type: DataTypes.STRING(),
       allowNull: true,
     },
-    dataEmissaoNFSD: {
+    dataBlocoConfirmacao: {
       type: DataTypes.DATEONLY,
       allowNull: true,
     },
