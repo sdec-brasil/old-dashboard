@@ -1,5 +1,6 @@
 // Imports
 import passport from 'passport';
+import models from '../models';
 
 /**
    * Simple informational end point, if you want to get information
@@ -29,6 +30,52 @@ const info = [
   },
 ];
 
+class ListView {
+  constructor() {
+    this.filterFields = [];
+    this.model = null;
+  }
+
+  setFilters(filterFields) {
+    if (Array.isArray(filterFields)) {
+      this.filterFields = filterFields;
+    }
+  }
+
+  setModel(model) {
+    this.model = model;
+  }
+
+  query(req) {
+    if (this.model) {
+      const filters = {};
+      filters.where = {};
+      Object.keys(req.query).forEach((field) => {
+        if ((this.model.rawAttributes[field] !== undefined)
+        && this.filterFields.includes(field)) {
+          console.log(`field: ${field} - ${this.model.rawAttributes[field].type}`);
+          filters.where[field] = req.query[field];
+        }
+      });
+      console.log('query object:', filters);
+      // console.log(this.model.rawAttributes);
+      return this.model.findAll(filters);
+    }
+    return null;
+  }
+}
+const list = [
+  // passport.authenticate('bearer', { session: false }),
+  (req, res) => {
+    const userListView = new ListView();
+    userListView.setFilters(['name', 'username']);
+    userListView.setModel(models.user);
+    userListView.query(req).then(results => res.json(results));
+  },
+];
+
+
 export default {
   info,
+  list,
 };
