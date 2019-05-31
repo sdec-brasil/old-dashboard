@@ -25,3 +25,5 @@ syncDatabase();
 
 // Start server
 setupStartServer(server);
+
+export default server;

@@ -18,6 +18,7 @@ export default function (server) {
     if (error) {
       console.error('ERROR - Unable to start server.');
     } else {
+      server.emit('server_started');
       console.info(`INFO - Server started on port ${general.port}.`);
     }
   });
