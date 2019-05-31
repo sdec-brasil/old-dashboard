@@ -16,42 +16,49 @@ function treatFrom(param) {
     if (validate.CNPJ(param)) {
       return {
         err: null,
+        field: 'from',
         data: formatters.CNPJ(param),
         type: 'CNPJ',
       };
     }
     return {
       err: 400,
+      field: 'from',
       where: 'CNPJ',
     };
   } if (tam.length === 14) {
     if (validate.CPF(param)) {
       return {
         err: null,
+        field: 'from',
         data: formatters.CPF(param),
         type: 'CPF',
       };
     } if (validate.CNPJ(param)) {
       return {
         err: null,
+        field: 'from',
         data: formatters.CNPJ(param),
         type: 'CNPJ',
       };
     }
     return {
       err: 400,
+      field: 'from',
       where: 'CPF/CNPJ',
     };
   } if (tam.length === 11) {
     if (validate.CPF(param)) {
       return {
         err: null,
+        field: 'from',
         data: formatters.CPF(param),
         type: 'CPF',
       };
     }
     return {
       err: 400,
+      field: 'from',
       where: 'CPF',
     };
     // possível GUID nao formatado
@@ -60,11 +67,13 @@ function treatFrom(param) {
       return {
         err: null,
         data: param,
+        field: 'from',
         type: 'GUID',
       };
     }
     return {
       err: 400,
+      field: 'from',
       where: 'GUID',
     };
   } if (tam.length > 25 || tam.length < 36) {
@@ -73,16 +82,19 @@ function treatFrom(param) {
       return {
         err: null,
         data: param,
+        field: 'from',
         type: 'publicAddress',
       };
     }
     return {
       err: 400,
+      field: 'from',
       where: 'publicAddress',
     };
   }
   return {
     err: 400,
+    field: 'from',
     where: null,
   };
 }
@@ -104,11 +116,13 @@ async function treatTown(town) {
       if (queriedTown) {
         return {
           type: 'IBGE',
+          field: 'town',
           data: Number(town),
         };
       }
       return {
         err: 400,
+        field: 'town',
         where: 'IBGE',
       };
     } catch (e) {
@@ -127,11 +141,13 @@ async function treatTown(town) {
         if (queriedTown) {
           return {
             type: 'CNPJ',
+            field: 'town',
             data: formatters.CNPJ(town),
           };
         }
         return {
           err: 400,
+          field: 'town',
           where: 'IBGE',
         };
       } catch (e) {
@@ -140,11 +156,13 @@ async function treatTown(town) {
     }
     return {
       err: 400,
+      field: 'town',
       where: 'CNPJ',
     };
   }
   return {
     err: 400,
+    field: 'town',
     where: null,
   };
 }
@@ -172,6 +190,27 @@ function constructOptions(args) {
 
   for (let i = 1; i < args.length - 1; i += 1) {
     const filter = args[i];
+    if (filter.type === 'CNPJ') {
+      if (filter.field === 'from') {
+        options.where.emissor = {
+          cnpj: filter.data,
+        };
+      } else if (filter.field === 'town') {
+        options.where.prefeitura_incidencia = {
+          cnpj: filter.data,
+        };
+      }
+    } else if (filter.type === 'CPF') {
+      // só pode ser from
+      throw new Error('Endpoint não implementado - Faz sentido?');
+    } else if (filter.type === 'GUID') {
+      // só pode ser from
+      throw new Error('Endpoint não implementado - Faz sentido?');
+    } else if (filter.type === 'publicAddress') {
+      options.where.emissor = filter.data;
+    } else if (filter.type === 'IBGE') {
+      options.where.prefeitura_incidencia = filter.data;
+    }
   }
 }
 
