@@ -11,6 +11,12 @@ export default function (sequelize, DataTypes) {
         key: 'codigo_ibge',
       },
     },
+    cnpj: {
+      type: DataTypes.STRING(14),
+      primaryKey: true,
+      unique: true,
+      allowNull: false,
+    },
   },
   {
     underscored: true,
