@@ -17,7 +17,7 @@ export default function (sequelize, DataTypes) {
     underscored: true,
     tableName: 'estado',
     freezeTableName: true,
-    timestamps: false,
+    timestamps: true,
   });
 
   return estado;

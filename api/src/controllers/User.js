@@ -35,11 +35,16 @@ const list = [
   // passport.authenticate('bearer', { session: false }),
   (req, res) => {
     const userListView = new ListView();
+
     userListView.setFilterFields(['name', 'username', 'createdAt', 'estado2__sigla', 'estado1__sigla',
-      'estado2__sigla_to', 'estado1__sigla_from']);
+      'createdAt_to', 'createdAt_from']);
+
     userListView.setModel(models.user);
+
     userListView.buildQuery(req);
+
     console.log(userListView.getFilters());
+
     userListView.executeQuery().then(results => res.json(results));
 
     // models.user.findAll(
