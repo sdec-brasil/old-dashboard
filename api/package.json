@@ -7,7 +7,7 @@
     "start": "nodemon --ignore docs/swagger.json --exec babel-node -- src/index.js",
     "debug": "nodemon --ignore docs/swagger.json --inspect --exec babel-node -- src/index.js",
     "doc": "graphdoc",
-    "test": "NODE_ENV=test jest --silent src/tests/.*.test.js"
+    "test": "NODE_ENV=test NODE_TLS_REJECT_UNAUTHORIZED=0 jest src/tests/.*.test.js"
   },
   "graphdoc": {
     "endpoint": "http://localhost:8000/graphql",

@@ -1,27 +1,32 @@
 /* eslint-disable func-names */
 // Imports
-import chai from 'chai';
 import request from 'supertest';
+import fixtures from 'sequelize-fixtures';
+import models from '../../models';
 
 // App Imports
 import server from '../../index';
 
 process.env.NODE_ENV = 'test';
 
-const { expect } = chai;
-
 beforeAll((done) => {
   jest.setTimeout(7000);
-  process.on('dataLoaded', done);
+  process.on('dataLoaded', () => {
+    fixtures.loadFile(`${__dirname}/data.js`, models)
+      .then(() => done())
+      .catch((e) => {
+        throw new Error(e);
+      });
+  });
 });
 
 
-describe('GET /invoices', () => {
+describe('GET /users', () => {
   test('should return code 200', async (done) => {
     request(server)
       .get('/')
       .end((err, res) => {
-        expect(res.statusCode).to.equal(200);
+        expect(res.status).toBe(200);
         done();
       });
   });
