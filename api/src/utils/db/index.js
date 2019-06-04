@@ -54,7 +54,7 @@ export const accessTokens = {
     try {
       const decoded = jwt.decode(token).jti;
 
-      return models.access_token.findOne({
+      return models.accessToken.findOne({
         raw: true,
         where: {
           token_secret: decoded,
@@ -79,7 +79,7 @@ export const accessTokens = {
 
   save: (token, exp_date, user_id, client_id, scope) => {
     const decoded = jwt.decode(token).jti;
-    return models.access_token.create({
+    return models.accessToken.create({
       token_secret: decoded,
       exp_date,
       user_id,
@@ -97,14 +97,15 @@ export const accessTokens = {
   delete: (token) => {
     try {
       const id = jwt.decode(token).jti;
-      return Promise.resolve(models.access_token.findOne({
+      return Promise.resolve(models.accessToken.findOne({
         where: {
           token_secret: id,
         },
-      }).then((obj) => {
-        obj.destroy()
-          .then(() => obj);
-      }));
+      }).then(obj => models.accessToken.destroy({
+        where: {
+          token_secret: id,
+        },
+      }).then(() => obj)));
     } catch (error) {
       return Promise.resolve(null);
     }
@@ -115,7 +116,7 @@ export const accessTokens = {
   */
   removeExpired: () => {
     const now = Date.now();
-    return models.access_token.findAll({
+    return models.accessToken.destroy({
       where: {
         exp_date: {
           [models.Sequelize.Op.lt]: now,
@@ -134,7 +135,7 @@ export const authorizationCode = {
   findByToken: (token) => {
     try {
       const id = jwt.decode(token).jti;
-      return Promise.resolve(models.authorization_code.findOne({
+      return Promise.resolve(models.authorizationCode.findOne({
         where: {
           code_secret: id,
         },
@@ -159,14 +160,13 @@ export const authorizationCode = {
     const tk = jwt.decode(code);
     const id = tk.jti;
 
-
-    return Promise.resolve(models.authorization_code.create({
+    return models.authorizationCode.create({
       code_secret: id,
       client_id,
       redirect_uri,
       user_id,
       scope,
-    }));
+    });
   },
 
   /**
@@ -177,18 +177,15 @@ export const authorizationCode = {
   delete: (token) => {
     try {
       const id = jwt.decode(token).jti;
-      return Promise.resolve(models.authorization_code.findOne({
+      return Promise.resolve(models.authorizationCode.findOne({
         where: {
           code_secret: id,
         },
-      }).then(obj =>
-        // obj.destroy()
-        models.authorization_code.destroy({
-          where: {
-            code_secret: id,
-          },
-        })
-          .then(a => obj)));
+      }).then(obj => models.authorizationCode.destroy({
+        where: {
+          code_secret: id,
+        },
+      }).then(() => obj)));
     } catch (error) {
       return Promise.resolve(null);
     }
@@ -205,7 +202,7 @@ export const refreshToken = {
   findByToken: (token) => {
     try {
       const decoded = jwt.decode(token).jti;
-      return models.refresh_token.findOne({
+      return models.refreshToken.findOne({
         raw: true,
         where: {
           token_secret: decoded,
@@ -229,7 +226,7 @@ export const refreshToken = {
 
   save: (token, user_id, client_id, scope) => {
     const id = jwt.decode(token).jti;
-    models.refresh_token.create({
+    return models.refreshToken.create({
       token_secret: id,
       user_id,
       client_id,
@@ -246,14 +243,16 @@ export const refreshToken = {
   delete: (token) => {
     try {
       const id = jwt.decode(token).jti;
-      return Promise.resolve(models.refresh_token.findOne({
+      return Promise.resolve(models.refreshToken.findOne({
         where: {
           token_secret: id,
         },
-      }).then((obj) => {
-        obj.destroy()
-          .then(() => obj);
-      }));
+      }).then(obj => models.refreshToken.destroy({
+        where: {
+          token_secret: id,
+        },
+      })
+        .then(() => obj)));
     } catch (error) {
       return Promise.resolve(null);
     }

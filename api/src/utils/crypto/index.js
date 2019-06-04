@@ -1,7 +1,14 @@
 import fs from 'fs';
 import path from 'path';
 import jwt from 'jsonwebtoken';
+import uuid from 'uuid/v4';
 
+
+const bcrypt = require('bcrypt');
+
+export const hashPassword = (password, salt) => bcrypt.hashSync(password, salt);
+export const comparePassword = (password, hash) => bcrypt.compareSync(password, hash);
+export const generateSalt = () => bcrypt.genSaltSync(5);
 /** Private certificate used for signing JSON WebTokens */
 const privateKey = fs.readFileSync(path.join(__dirname, '../../../certs/privatekey.pem'));
 
@@ -9,17 +16,7 @@ const privateKey = fs.readFileSync(path.join(__dirname, '../../../certs/privatek
 const publicKey = fs.readFileSync(path.join(__dirname, '../../../certs/certificate.pem'));
 
 export const uid = {
-  generate: (length) => {
-    let token = '';
-    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    const charsLength = chars.length;
-
-    for (let i = 0; i < length; i += 1) {
-      token += chars[Math.floor(Math.random() * (charsLength)) + 0];
-    }
-
-    return token;
-  },
+  generate: () => uuid(),
 };
 
 /**
@@ -33,7 +30,7 @@ export const uid = {
  * @return {String} The JWT Token
  */
 export const createToken = ({ exp = 3600, sub = '' } = {}) => {
-  const id = uid.generate(25);
+  const id = uid.generate();
   const token = jwt.sign({
     jti: id,
     sub,
@@ -57,4 +54,7 @@ export const verifyToken = token => jwt.verify(token, publicKey);
 export const crypto = {
   createToken,
   verifyToken,
+  hashPassword,
+  comparePassword,
+  generateSalt,
 };

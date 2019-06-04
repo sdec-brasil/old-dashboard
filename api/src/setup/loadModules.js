@@ -75,10 +75,9 @@ export default function (server) {
 
   // From time to time we need to clean up any expired tokens
   // in the database
-  if (process.env.NODE_ENV !== 'test') {
-    setInterval(() => {
-      accessTokens.removeExpired()
-        .catch(err => console.error('Error trying to remove expired tokens:', err.stack));
-    }, db.timeToCheckExpiredTokens * 1000);
-  }
+  // *** commenting this since tokens will not expire
+  // setInterval(() => {
+  //   accessTokens.removeExpired()
+  //     .catch(err => console.error('Error trying to remove expired tokens:', err.stack));
+  // }, db.timeToCheckExpiredTokens * 1000);
 }

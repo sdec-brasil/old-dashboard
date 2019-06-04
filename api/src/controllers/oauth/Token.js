@@ -2,7 +2,6 @@
 import { db } from '../../utils/db';
 import validate from '../../utils/validate';
 
-import models from '../../models';
 
 /**
    * This endpoint is for verifying a token.  This has the same signature to
@@ -64,7 +63,8 @@ const info = (req, res) => {
    * {
    *   "error": "invalid_token"
    * }
-   * This will first try to delete the token as an access token.  If one is not found it will try and
+   * This will first try to delete the token as an access token.
+   * If one is not found it will try and
    * delete the token as a refresh token.  If both fail then an error is returned.
    * @param   {Object}  req - The request
    * @param   {Object}  res - The response
@@ -74,11 +74,14 @@ const revoke = (req, res) => validate.tokenForHttp(req.query.token)
   .then(() => db.accessTokens.delete(req.query.token))
   .then((token) => {
     if (token == null) {
-      return db.refreshTokens.delete(req.query.token);
+      return db.refreshToken.delete(req.query.token);
     }
     return token;
   })
-  .then(tokenDeleted => validate.tokenExistsForHttp(tokenDeleted))
+  .then((tokenDeleted) => {
+    console.log('deleted', tokenDeleted);
+    validate.tokenExistsForHttp(tokenDeleted);
+  })
   .then(() => {
     res.json({});
   })
@@ -87,15 +90,7 @@ const revoke = (req, res) => validate.tokenForHttp(req.query.token)
     res.json({ error: err.message });
   });
 
-const test = (req, res) => {
-  models.client.findAll().then((clients) => {
-    console.log(clients);
-    res.json(req.query);
-  });
-};
-
 export default {
   info,
   revoke,
-  test,
 };
