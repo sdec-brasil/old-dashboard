@@ -1,6 +1,6 @@
 // App Imports
-import { db } from '../utils/db';
-import validate from '../utils/validate';
+import { db } from '../../utils/db';
+import validate from '../../utils/validate';
 
 
 /**
@@ -78,10 +78,7 @@ const revoke = (req, res) => validate.tokenForHttp(req.query.token)
     }
     return token;
   })
-  .then((tokenDeleted) => {
-    console.log('deleted', tokenDeleted);
-    validate.tokenExistsForHttp(tokenDeleted);
-  })
+  .then(tokenDeleted => validate.tokenExistsForHttp(tokenDeleted))
   .then(() => {
     res.json({});
   })

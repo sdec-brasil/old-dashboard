@@ -70,7 +70,7 @@ export default function (sequelize, DataTypes) {
   });
 
   empresa.associate = (models) => {
-    empresa.hasMany(models.nota_fiscal, { primaryKey: { name: 'cnpj_empresa' } });
+    empresa.hasMany(models.invoice, { primaryKey: { name: 'cnpj_empresa' } });
   };
 
 

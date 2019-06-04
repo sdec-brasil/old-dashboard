@@ -1,0 +1,1292 @@
+openapi: 3.0.0
+# Added by API Auto Mocking Plugin
+servers:
+  - description: Swagger Mocking Server
+    url: https://virtserver.swaggerhub.com/tloriato/SDEC-API/1.0.0
+info:
+  version: "1.0.0"
+  title: SDEC API
+  description: >-
+    This is an example of using OAuth2 Application Flow in a specification to
+    describe security to your API.
+security:
+  - application:
+      - read
+      - write
+tags: 
+  - name: Authentication
+    description: Endpoints related to your authentication and authorization inside the system.
+  - name: Public Data
+    description: Endpoints to retrive public information
+  - name: User Emitter Related
+    description: Endpoints related exclusively to the user emitter information and operation
+  - name: Client Related
+    description: Endpoints related exclusively to the client information and operation
+    
+paths:
+  /teste:
+      post:
+        summary: Adds a new user
+        requestBody:
+          content:
+            application/json:
+              schema:      # Request body contents
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                example:   # Sample object
+                  id: 10
+                  name: Jessica Smith
+        responses:
+          '200':
+            description: A user object.
+            content:
+              application/json:
+                schema:
+                  type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                example: 
+                  # Properties of the referenced object
+                  id: 10
+                  name: Example
+  /invoices:
+    get:
+      summary: Retorna uma lista das últimas notas fiscais emitidas
+      security: []
+      tags: [Public Data]
+      description: >-
+        Retorna uma lista das últimas notas fiscais emitidas.
+      parameters:
+        - name: town
+          in: query
+          required: false
+          description: Filtrar por notas ficais emitidas para a prefeitura entidade (CNPJ || IBGE)
+          schema:
+            type: array
+            items:
+              type: string
+          style: form
+          explode: false
+        - $ref: '#/components/parameters/EntParam'
+        - $ref: '#/components/parameters/EntToParam'
+        - $ref: '#/components/parameters/untilParam'
+        - $ref: '#/components/parameters/offsetParam'
+        - $ref: '#/components/parameters/limitParam'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Invoice'
+    post:
+      summary: Emite uma nota fiscal
+      security:
+        - bearer: []
+      tags: [User Emitter Related]
+      description: >-
+        Emite uma nota fiscal
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Invoice'
+      responses:
+        '200':
+          description: your car appointment has been booked
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Invoice'
+              # examples:
+              #   confirmation-success:
+              #     $ref: '#/components/examples/example1'
+              example:
+                ex1:
+                  value:
+                    vamo: la
+                    meu: garoto
+              # examples:
+              #   application/json:
+              #   substitutes: 998d1c901447c87698ff7a1c5cab64ad7372d49c71c88446f83e21d54ae7d637
+              #   emissor: 1HB5XMLmzFVj8ALj6mfBsbifRoD4miY36v
+              #   prestacao:
+              #     baseCalculo: 0
+              #     valLiquiNfse: 0
+              #     competencia: "2019-05-27"
+              #     valServicos: 0
+              #     valDeduções: 0
+              #     valPis: 0
+              #     valCofins: 0
+              #     valInss: 0
+              #     valIr: 0
+              #     valCsll: 0
+              #     outrasRetencoes: 0
+              #     valTotalTributos: 0
+              #     valIss: 0
+              #     aliqServicos: 0
+              #     descontoIncond: 0
+              #     descontoCond: 0
+              #     itemLista: string
+              #     codCnae: 0
+              #     codServico: string
+              #     codNBS: string
+              #     discrimincacao: string
+              #     codTributMunicipio: 0
+              #     numProcecsso: string
+              #   tomador:
+              #     identificacao: string
+              #     nif: strin
+              #     nomeRazao: string
+              #     logEnd: string
+              #     numEnd: string
+              #     compEnd: string
+              #     bairroEnd: string
+              #     cidadeEnd: 0,
+              #     estadoEnd: string
+              #     paisEnd: 0,
+              #     cepEnd: string
+              #     email: user@example.com
+              #     tel: strin
+              #   intermediario:
+              #     identificacao: 18524387585
+              #     nomeRazao: string
+              #     cidade: 0
+              #   constCivil: 
+              #     codObra: string
+              #     art: string
+  /invoices/{txid}:
+    get:
+      summary: Retorna uma nota fiscal com a TxID correspondente
+      security: []
+      parameters:
+        - in: path
+          name: txid
+          schema:
+            $ref: '#/components/schemas/TxID'
+          required: true
+          description: TxID da Nota Fiscal
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Invoice'
+    post:
+      security:
+        - bearer: []
+      summary: >-
+        Cria uma nova nota fiscal na blockchain que substitui a nota
+        referenciada em txid
+      parameters:
+        - in: path
+          name: txid
+          schema:
+            $ref: '#/components/schemas/TxID'
+          required: true
+          description: TxID da Nota Fiscal
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Invoice'
+  /user:
+    get:
+      summary: Retorna informações do usuário autenticado
+      description: >-
+        Retorna informações do usuário autenticado
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                  $ref: '#/components/schemas/User'
+  /users:
+    get:
+      summary: Retorna informações públicas dos usuários do sistema
+      description: >- 
+        Retorna informações públicas dos usuários do sistema
+        (as informações de registros e estatísticas?)
+      security: []
+      parameters:
+        - name: tags
+          in: query
+          description: tags to filter by
+          required: false
+          style: form
+          schema:
+            type: array
+            items:
+              type: string
+        - name: limit
+          in: query
+          description: maximum number of results to return
+          required: false
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+    post:
+      summary: Submete informações para criação de um novo usuário
+      description: >- 
+        Submete informações para criação de um novo usuário no sistema
+        e na blockchain
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+  /users/{id}:
+    get:
+      summary: Retorna informações sobre um usuário
+      description: >-
+        Retorna informações sobre um usuário
+      security: []
+      parameters:
+        - in: path
+          name: id
+          description: Endereço Público || CPF || GUID || CNPJ (contem o registry).
+          schema:
+            oneOf:
+              - $ref: '#/components/schemas/CPF'
+              - $ref: '#/components/schemas/CNPJ'
+              - $ref: '#/components/schemas/UUID'
+              - $ref: '#/components/schemas/EnderecoPublico'
+          required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+    post:
+      summary: Submete informações para a edição de um usuário
+      description: >- 
+        Submete informações para edição de usuário no sistema
+        e na blockchain. Cada usuário só pode editar seu próprio registro.
+      security:
+        - bearer: []
+      parameters:
+        - in: path
+          name: id
+          description: Endereço Público || CPF || GUID || CNPJ (contem o registry).
+          schema:
+            oneOf:
+              - $ref: '#/components/schemas/CPF'
+              - $ref: '#/components/schemas/CNPJ'
+              - $ref: '#/components/schemas/UUID'
+              - $ref: '#/components/schemas/EnderecoPublico'
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+  /client:
+    get:
+      tags: ['Client Related']
+      security:
+        - bearer: []
+      summary: Retorna informações do client autenticado
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                  $ref: '#/components/schemas/Client'
+  # /clients:
+  #   post:
+  #     tags: [Client Related]      
+  #     summary: Submete informações para criação de um novo client
+  #     security: []
+  #     requestBody:
+  #       required: true
+  #       content:
+  #         application/json:
+  #           schema:
+  #             $ref: '#/components/schemas/Client'
+  #     responses:
+  #       '201':
+  #         description: CREATED
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: '#/components/schemas/Client'
+  /clients/{id}:
+    patch:
+      tags: [Client Related]
+      summary: Edita informações do client
+      security:
+        - bearer: []
+      parameters:
+        - in: path
+          name: id
+          description: clientID do client a ser editado.
+          schema:
+            oneOf:
+              - $ref: '#/components/schemas/UUID'
+              - type: string
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Client'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Client'
+    delete:
+      tags: [Client Related]
+      summary: Exclui o client com o id enviado
+      description: Cada client pode exlcuir apenas seu próprio registro no banco
+      security:
+        - bearer: []
+      parameters:
+        - in: path
+          name: id
+          description: id do client no banco ou clientID.
+          schema:
+            oneOf:
+              - $ref: '#/components/schemas/UUID'
+              - type: string
+          required: true
+      responses:
+        '200':
+          description: OK
+  /blocks:
+    get:
+      summary: Retorna informações públicas dos blocos da Chain.
+      tags: [Public Data]
+      security: []
+      parameters:
+        - $ref: '#/components/parameters/offsetParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/untilParam'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Block'
+  /blocks/{id}:
+    get:
+      tags: [Public Data]
+      summary: Retorna informações públicas de um bloco da Chain.
+      security: []
+      parameters:
+        - in: path
+          name: id
+          description: Altura ou TxID do bloco.
+          schema:
+            oneOf:
+              - $ref: '#/components/schemas/UUID'
+              - type: string
+              - type: integer
+          required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Block'
+  /blockchain:
+    get:
+      summary: Retorna informações gerais sobre o estado da Blockchain.
+      tags: [Public Data]
+      security: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BlockChain'
+  /addresses:
+    get:
+      summary: Retorna informações gerais sobre os endereços públicos da rede.
+      tags: [Public Data]
+      security: []
+      parameters:
+        - $ref: '#/components/parameters/offsetParam'
+        - $ref: '#/components/parameters/limitParam'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PublicAddress'
+  /addresses/{publicAddress}:
+    get:
+      tags: [Public Data]
+      summary: Retorna informações gerais sobre um endereço específico da rede.
+      security: []
+      parameters:
+        - in: path
+          name: publicAddress
+          description: Endereço público a ter suas informações retornadas.
+          schema:
+            oneOf:
+              - $ref: '#/components/schemas/UUID'
+              - type: string
+          required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicAddress'
+  /towns:
+    get:
+      summary: Retorna informações das prefeituras do sistema.
+      tags: [Public Data]
+      security: []
+      parameters:
+        - name: mesorregiao
+          in: query
+          required: false
+          description: Filtrar prefeituras por mesorregião.
+          schema:
+            type: array
+            items:
+              type: string
+          style: form
+          explode: false
+        - name: estado
+          in: query
+          required: false
+          description: Filtro de prefeituras por estado. Enviar a sigla dos estados desejados.
+          schema:
+            type: array
+            items:
+              type: string
+          style: form
+          explode: false
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/offsetParam'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Town'
+  /towns/{id}:
+    get:
+      tags: [Public Data]
+      summary: Retorna informações sobre uma prefeitura.
+      security: []
+      parameters:
+        - in: path
+          name: id
+          description: GUID || Código do município IBGE || CNPJ
+          schema:
+            oneOf:
+              - $ref: '#/components/schemas/UUID'
+              - type: string
+          required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Town'
+
+components:
+  parameters:
+    
+    EntParam:
+      in: query
+      name: from
+      description: >-
+        Filtrar por esse ```CNPJ || CPF || GUID || Endereço Público```  como emissor da Nota Fiscal. Se mais de um parâmetro
+        "from" for enviado, será feito a união entre eles.
+      schema:
+        type: string
+
+    EntToParam:
+      in: query
+      name: to
+      description: >-
+        Filtrar por esse ```CPNJ || Código IBGE``` como município de 
+        incidência.
+      schema:
+        type: string
+      
+
+    untilParam:
+      in: query
+      name: until
+      description: >-
+        Só serão retornados resultados até essa data.
+      schema:
+        type: string
+        format: date-time
+        example: "2017-07-21T17:32:28Z"
+
+    offsetParam:
+      in: query
+      name: offset
+      required: false
+      schema:
+        type: integer
+        minimum: 0
+        example: 15
+      description: >-
+        Número de itens da busca para pular antes de retornar o resultado.
+
+    
+    limitParam:
+      in: query
+      name: limit
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 250
+        default: 50
+        example: 50
+      description: Número de itens que serão retornados.
+
+  schemas:
+    EnderecoPublico:
+      description: >-
+        Endereço Público da Blockchain
+      type: string
+      minLength: 26
+      maxLength: 35
+      pattern: ^[13][a-km-zA-HJ-NP-Z0-9]{26,33}$
+      example: 1HB5XMLmzFVj8ALj6mfBsbifRoD4miY36v
+    TxID:
+      description: >-
+        String alfanumérica que representa o SHA256 de uma transação na blockchain,
+        comumente chamada de Transaction ID (TxId).
+      type: string
+      pattern: '[A-Fa-f0-9]{64}'
+      minLength: 64
+      maxLength: 64
+      example: 998d1c901447c87698ff7a1c5cab64ad7372d49c71c88446f83e21d54ae7d637
+    CPF:
+      description: >-
+        CPF
+      type: string
+    CNPJ:
+      description: >-
+        CNPJ
+      type: string
+    UUID:
+      description: >-
+        UUID
+      type: string
+      format: uuid
+    User:
+      title: User
+      type: object
+      required:
+        - razao
+        - logEnd
+        - numEnd
+        - bairroEnd
+        - cidadeEnd
+        - estadoEnd
+        - cepEnd
+        - tipoIdentificacao
+        - identificacao
+      properties:
+        id:
+          description: ID do usuário no banco.
+          type: string
+          format: uuid
+          readOnly: true
+        password:
+          description: senha do usuário em nosso sistema 
+            ela fica guardada na blockchain?? TODO
+          type: string
+          format: password
+          writeOnly: true
+        razao:
+          description: Razão social do prestador de serviço.
+          type: string
+        fantasia:
+          description: Nome Fantasia do prestador do serviço.
+          type: string
+        logEnd:
+          description: Tipo e nome do logradouro (Av.., Rua..., ...).
+          type: string
+        numEnd:
+          description: Número do imóvel.
+          type: string
+        compEnd:
+          description: Complemento do endereço do prestador.
+          type: string
+        bairroEnd:
+          description: Bairro do prestador.
+          type: string
+        cidadeEnd:
+          description: Código do município do estabelecimento prestador do serviço (Tabela do IBGE).
+          type: integer
+          example: 3304557
+        estadoEnd:
+          description: Sigla da unidade da federação do prestador.
+          type: string
+          pattern: '[A-F]{2}'
+          minLength: 2
+          maxLength: 2
+          example: RJ
+        paisEnd:
+          description: Código do país onde o tomador está estabelecido (Tabela do BACEN). Preencher somente se CidadePrestador igual 9999999.
+          type: integer
+          minimum: 0
+          maximum: 9999
+          example: 1058
+        cepEnd:
+          description: Número do CEP.
+          type: string
+          pattern: '[0-9]{8}'
+          minLength: 8
+          maxLength: 8
+          example: 22040010
+        email:
+          description: E-mail do prestador.
+          type: string
+          format: email
+          example: example@email.com
+        tel:
+          description: Número do telefone do prestador, no formato \<cod pais>\<DDD>\<numero>.
+          type: string
+          maxLength: 20
+          example: 552122357792
+        tipoIdentificacao:
+          enum: [1, 2]
+          description: >
+            Tipo da identificação enviada no campo identidade:
+             * `1` - CPF
+
+             * `2` - CNPJ
+        identificacao:
+          description: Número do CPF/CNPJ do Prestador do Serviço.
+          type: string
+          maxLength: 14
+          example: 13892838278
+        endBlock:
+          description: Endereço Público da Empresa no Sistema para emissão de NFSD.
+          $ref: '#/components/schemas/TxID'
+          readOnly: true
+        cancelsId:
+          description: UUID do usuário cancelado por este.
+          type: string
+          format: uuid
+        cancelsUri:
+          description: URI do usuário cancelado por este.
+          type: string
+          format: uri
+          readOnly: true
+        canceledById:
+          description: UUID do usuário que cancelou este.
+          format: uuid
+          type: string
+          readOnly: true
+        canceledByUri:
+          description: URI do usuário que cancelou este.
+          type: string
+          format: uri
+          readOnly: true
+    Prestacao:
+      title: Prestação
+      type: object
+      required:
+        - baseCalculo
+        - competencia
+        - valServicos
+        - issRetido
+        - itemLista
+        - discriminacao
+        - exigibilidadeISS
+        - OptanteSimplesNacional
+        - IncentivoFiscal
+      properties:
+        baseCalculo:
+          description: (ValorServicos - ValorDeducoes - DescontoIncondicionado)
+          type: integer
+          format: int64
+          minimum: 0
+        valLiquiNfse:
+          description: (ValorServicos - ValorPIS – ValorCOFINS – ValorINSS – ValorIR – ValorCSLL – OutrasRetençoes – ValorISSRetido – DescontoIncondicionado – DescontoCondicionado)
+          type: integer
+          format: int64
+          minimum: 0
+        competencia:
+          description: Dia, mês e ano da prestação de serviço (AAAAMMDD).
+          type: string
+          format: date
+        valServicos:
+          description: Valor dos serviços em R$.
+          type: integer
+          format: int64
+          minimum: 0
+        valDeduções:
+          description: Valor das deduções para Redução da Base de Cálculo em R$.
+          type: integer
+          format: int64
+          minimum: 0
+        valPis:
+          description: Valor da retenção do PIS em R$ Informação declaratória.
+          type: integer
+          format: int64
+          minimum: 0
+        valCofins:
+          description: Valor da retenção do COFINS em R$ Informação declaratória.
+          type: integer
+          format: int64
+          minimum: 0
+        valInss:
+          description: Valor da retenção do INSS em R$ Informação declaratória.
+          type: integer
+          format: int64
+          minimum: 0
+        valIr:
+          description: Valor da retenção do IR em R$ Informação declaratória.
+          type: integer
+          format: int64
+          minimum: 0
+        valCsll:
+          description: Valor da retenção do CSLL em R$ Informação declaratória.
+          type: integer
+          format: int64
+          minimum: 0
+        outrasRetencoes:
+          description: Outras retenções na Fonte. Informação declaratória.
+          type: integer
+          format: int64
+          minimum: 0
+        valTotalTributos:
+          description: Valor total aproximado dos tributos federais, estaduais e municipais, em conformidade com o artigo 1o da Lei no 12.741/2012.
+          type: integer
+          format: int64
+          minimum: 0
+        valIss:
+          description: Valor do ISS devido em R$.
+          type: integer
+          format: int64
+          minimum: 0
+        aliqServicos:
+          description: Alíquota do serviço prestado.
+          type: integer
+          format: int64
+          minimum: 0
+        descontoIncond:
+          description: Valor do desconto incondicionado.
+          type: integer
+          format: int64
+          minimum: 0
+        descontoCond:
+          description: Valor do desconto condicionado.
+          type: integer
+          format: int64
+          minimum: 0
+        issRetido:
+          type: boolean
+          # enum: [1, 2]
+          # description: >
+          #   * `1` - Sim
+
+          #   * `2` - Não
+        respRetencao:
+          enum: [1, 2]
+          description: >
+            Informado somente se IssRetido igual a “1 – Sim” A opção “2 – Intermediário” somente poderá ser selecionada se “CpfCnpjIntermediario” informado.
+            * `1` - Tomador
+
+            * `2` - Intermediário
+        itemLista:
+          description: Código do serviço prestado Item da LC 116/2003.
+          type: string
+          maxLength: 5
+        codCnae:
+          description: CNAE
+          type: integer
+        codServico:
+          description: Código do serviço prestado próprio do município.
+          type: string
+          maxLength: 20
+        codNBS:
+          description: Código NBS.
+          type: string
+          maxLength: 9
+        discrimincacao:
+          description: Discriminação dos serviços.
+          type: string
+          maxLength: 2000
+        exibigilidadeISS:
+          enum: [1, 2, 3, 4, 5, 6, 7]
+          description: >
+            * `1` - Exigível
+
+            * `2` - Não incidência
+
+            * `3` - Isenção
+            
+            * `4` - Exportação
+            
+            * `5` - Imunidade
+            
+            * `6` - Exigibilidade Suspensa por Decisão Judicial
+            
+            * `7` - Exigibilidade Suspensa por Processo Administrativo
+        codTributMunicipio:
+          description: Código do município onde é a incidência do imposto (Tabela do IBGE).
+          type: integer
+          minimum: 0
+          maximum: 9999999
+        numProcecsso:
+          description: Número do processo judicial ou administrativo de suspensão da exigibilidade. Obrigatório e informado somente quando declarada a suspensão da exigibilidade do tributo.
+          type: string
+          maxLength: 30
+        regimeEspTribut:
+          enum: [1, 2, 3, 4, 5, 6]
+          description: >
+            * `1` – Microempresa Municipal
+            
+            * `2` – Estimativa
+            
+            * `3` – Sociedade de Profissionais
+            
+            * `4` – Cooperativa
+            
+            * `5` – Microempresário Individual (MEI)
+            
+            * `6` – Microempresário e Empresa de Pequeno Porte (ME EPP).
+        OptanteSimplesNacional:
+          enum: [1, 2]
+          description: >
+            * `1` – Sim
+            
+            * `2` – Não
+        IncentivoFiscal:
+          type: boolean
+    Tomador:
+      title: Tomador
+      type: object
+      properties:
+        identificacaoTomador:
+          description: PF/CNPJ do tomador do serviço. Obrigatório para CNPJ.
+          type: string
+          maxLength: 14
+        nif:
+          description: Este elemento só deverá ser preenchido para tomadores não residentes no Brasil.
+          maxLength: 40
+          type: string
+        nomeRazaoTomador:
+          description: Nome / Razão Social do tomador.
+          type: string
+          maxLength: 150
+        logEnd:
+          description: Tipo e nome do logradouro (Av.., Rua..., ...).
+          type: string
+          maxLength: 125
+        numEnd:
+          description: Número do Imóvel.
+          type: string
+          maxLength: 10
+        compEnd:
+          description: Complemento do endereço do tomador.
+          type: string
+          maxLength: 60
+        bairroEnd:
+          description: Bairro do tomador.
+          type: string
+          maxLength: 60
+        cidadeEnd:
+          description: Código do município onde o tomador está estabelecido (Tabela do IBGE).
+          type: integer
+          format: int32
+          minimum: 0
+          maximum: 9999999
+        estadoEnd:
+          description: Sigla da unidade da federação do tomador.
+          type: string
+          maxLength: 2
+        paisEnd:
+          description: Código do país onde o tomador está estabelecido (Tabela do BACEN). Preencher somente se CidadeTomador igual 9999999.
+          type: integer
+          minimum: 0
+          maximum: 9999
+        cepEnd:
+          description: Número do CEP.
+          type: string
+          maxLength: 8
+        email:
+          description: E-mail do tomador.
+          type: string
+          format: email
+          maxLength: 80
+        tel:
+          description: Número do telefone do tomador.
+          type: string
+          maxLength: 20
+    Intermediario:
+      title: Intermediário
+      type: object
+      properties:
+        identificacaoIntermed:
+          description: Número do CPF/CNPJ do intermediário do serviço.
+          type: string
+          maxLength: 14
+          example: 18524387585
+        nomeRazaoIntermed:
+          description: Nome ou Razão Social de intermediário do Serviço.
+          type: string
+          maxLength: 150
+        cidadeIntermed:
+          description: Código do município onde o intermediário está estabelecido (Tabela do IBGE).
+          type: integer
+          maximum: 9999999
+    ConstrucaoCivil:
+      title: Construção Civil
+      type: object
+      properties:
+        codObra:
+          description: Número da matricula CEI da obra ou da empresa.
+          type: string
+          maxLength: 30
+        art:
+          description: Número da ART.
+          type: string
+          maxLength: 30
+    Invoice:
+      title: Invoice
+      type: object
+      required:
+        - emissor
+        - prestacao
+        - estado
+      properties:
+        txId:
+          type: string
+          format: uuid
+          description: Transaction Id da nota Fiscal.
+          readOnly: true
+        substitutes:
+          $ref: '#/components/schemas/TxID'
+        substitutedBy:
+          $ref: '#/components/schemas/TxID'
+          readOnly: true
+        emissor:
+          type: string
+          description: Endereço Público da Empresa que está emitindo a nota.
+          maxLength: 38
+        prestacao:
+          $ref: '#/components/schemas/Prestacao'
+        tomador:
+          $ref: '#/components/schemas/Tomador'
+        intermediario:
+          $ref: '#/components/schemas/Intermediario'
+        constCivil:
+          $ref: '#/components/schemas/ConstrucaoCivil'
+        numeroNFSD:
+          description: Diz respeito à identificação única da transação na Blockchain que originou a nota.
+          type: string
+          readOnly: true
+        blocoConfirmacao:
+          description: Diz respeito ao número do bloco onde a transação foi incluída.
+          type: string
+          readOnly: true
+        dataBlocoConfirmacao:
+          description: Data/Hora da emissão da NFS-e (AAAA-MM-DDTHH:mm:ss), segundo consta na Blockchain.
+          type: string
+          readOnly: true
+        estado:
+          enum: [0, 1, 2, 3, 4]
+          description: >
+            Estado atual da nota fiscal:
+            
+            * `0` - pendente
+
+            * `1` - atrasado
+
+            * `2` - pago
+
+            * `3` - substituida
+
+            * `4` - dados inconsistentes
+
+    Client:
+      title: Client
+      type: object
+      properties:
+        id:
+          description: ID do client no banco.
+          type: string
+          format: uuid
+          readOnly: true
+        name:
+          description: Nome ou Razão Social do Client.
+          type: string
+        secret:
+          description: Nome ou Razão Social do Client.
+          type: string
+          format: password
+          writeOnly: true
+    Block:
+      title: Bloco
+      type: object
+      properties:
+        blockHash:
+          description: hash do bloco.
+          $ref: '#/components/schemas/TxID'
+        blockTimestamp:
+          description: Timestamp da confirmação do bloco.
+          type: string
+          format: date-time
+        previousBlockHash:
+          description: id of the previous block on the Chain
+          $ref: '#/components/schemas/TxID'
+        blockHeight:
+          description: Altura do bloco.
+          type: integer
+        blockNumTx:
+          type: integer
+        minerAddress:
+          $ref: '#/components/schemas/TxID'
+        transactions:
+          type: array
+          description: Lista de TxID das transações desse bloco.
+          items:
+            $ref: '#/components/schemas/TxID'
+
+    BlockChain:
+      title: Estado da Blockchain
+      type: object
+      description: Informações sobre o estado atual da blockchain.
+      properties:
+        totalTransactions:
+          type: integer
+          readOnly: true
+          description: Número total de transações confirmadas na blockchain.
+        currentHeight:
+          type: integer
+          readOnly: true
+          description: Altura da blockchain.
+        lastBlockHash:
+          $ref: '#/components/schemas/TxID'
+          type: string
+          readOnly: true
+          description: hash do último bloco confirmado na blockchain.
+        nUniqueAddresses:
+          type: integer
+          readOnly: true
+          description: Número de endereços públicos registrados na blockchain.
+        nRegisteredUsers:
+          type: integer
+          readOnly: true
+          description: Número de usuário registrados na blockchain.
+        nEmitedInvoices:
+          type: integer
+          readOnly: true
+          description: Número total de notas fiscais emitidas.
+        nUniqueMiners:
+          type: integer
+          readOnly: true
+          description: Número de mineradores cadastrados.
+        currentDifficulty:
+          type: integer
+          readOnly: true
+          description: Dificuldade atual da mineração.
+        nMempoolTransactions:
+          type: integer
+          readOnly: true
+          description: Número de transações na Mempool atualmente.
+    PublicAddress:
+      title: Endereço Público
+      type: object
+      properties:
+        publicAddress:
+          $ref: '#/components/schemas/EnderecoPublico'
+          readOnly: true
+          description: Endereço público em questão.
+        balance:
+          type: number
+          readOnly: true
+          description: Saldo disponível.
+          example: 250,00
+        nTransactions:
+          type: integer
+          readOnly: true
+          example: 708
+          description: Número total de transações feitas por este endereço.         
+        lastEmittedInvoices:
+          type: array
+          description: Últimas notas fiscais emitidas.
+          items:
+            $ref: '#/components/schemas/TxID'
+          readOnly: true
+        lastTransactions:
+          description: Últimas transações realizadas.
+          readOnly: true
+          type: array
+          items:
+            $ref: '#/components/schemas/TxID'
+    Town:
+      title: Prefeitura
+      type: object
+      properties:
+        codigoMunicipio:
+          type: string
+          description: Código do município na tabela do IBGE.
+        nomeMunicipio:
+          type: string
+          description: Nome do município.
+        estado:
+          type: string
+          description: Estado do município.
+        mesorregiao:
+          type: string
+          description: Mesorregião do município.
+        cnpj:
+          $ref: '#/components/schemas/CNPJ'
+        nInvoicesReceived:
+          type: integer
+          description: número de notas fiscais recebidas.
+          readOnly: true
+        totalValueReceived:
+          type: array
+          description: Valor recebido em R$ nas últimas [24h, 7d, 30d, 1y].
+          readOnly: true
+          items:
+            type: number
+        numberTopEmitters:
+          type: object
+          description: 5 maiores emissores de nota fiscal em termos de números de notas.
+          properties:
+            userName:
+              description: Nome do emissor
+              type: string
+              readOnly: true
+            nInvoices:
+              description: Quantidade de notas emitidas
+              readOnly: true
+            userUri:
+              description: URI para as informações do usuário.
+              readOnly: true
+              type: string
+              format: uri
+        valueTopEmitters:
+          type: object
+          description: 5 maiores emissores de nota fiscal em termos de valor das notas.
+          properties:
+            userName:
+              description: Nome do emissor
+              type: string
+              readOnly: true
+            nInvoices:
+              description: Quantidade de notas emitidas
+              readOnly: true
+            userUri:
+              description: URI para as informações do usuário.
+              readOnly: true
+              type: string
+              format: uri
+        financial:
+          type: object
+          description: Informações financeiras sobre a prefeitura.
+          properties:
+            receivableInvoices:
+              description: >
+                Notas Fiscais referentes à uma prefeitura 
+                que devem ser pagas até o final do mês.
+              type: array
+              items:
+                type: string
+                format: uri
+            overdueInvoices:
+              description: >
+                Notas Fiscais vencidas e ainda não recebidas, referentes
+                à uma prefeitura.
+              type: array
+              items:
+                type: string
+                format: uri
+            totalAccumulatedValue:
+              description: Valor total acumulado em BRL, desde o início do sistema.
+              type: number
+              readOnly: true
+              multipleOf: 0.01
+
+  securitySchemes:
+    application:
+      type: oauth2
+      flows:
+        authorizationCode:
+          tokenUrl: 'http://example.com/oauth/token'
+          authorizationUrl: 'http://example.com/oauth/token'
+        clientCredentials:
+          tokenUrl: 'http://example.com/oauth/token'
+          scopes:
+            write: allows modifying resources
+            read: allows reading resources
+    bearer:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  examples:
+    example1:
+      value:
+        vamo: la
+        meu: garoto

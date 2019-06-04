@@ -7,7 +7,7 @@
     "start": "nodemon --ignore docs/swagger.json --exec babel-node -- src/index.js",
     "debug": "nodemon --ignore docs/swagger.json --inspect --exec babel-node -- src/index.js",
     "doc": "graphdoc",
-    "test": "mocha --require @babel/register src/tests"
+    "test": "NODE_ENV=test NODE_TLS_REJECT_UNAUTHORIZED=0 jest src/tests/.*.test.js"
   },
   "graphdoc": {
     "endpoint": "http://localhost:8000/graphql",
@@ -21,13 +21,20 @@
     "@babel/node": "7.2.2",
     "@babel/preset-env": "7.4.2",
     "babel-loader": "8.0.5",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-stage-0": "^6.24.1",
     "eslint": "^5.16.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.16.0",
+    "jest": "^24.8.0",
     "nodemon": "1.18.10"
   },
   "dependencies": {
     "@2fd/graphdoc": "^2.4.0",
+    "babel-jest": "^24.8.0",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
     "bcrypt": "^3.0.6",
     "body-parser": "1.18.3",
     "chai": "^4.2.0",
@@ -43,6 +50,7 @@
     "express-session": "^1.16.1",
     "express-session-sequelize": "^2.0.0",
     "graphql": "14.2.0",
+    "jest-environment-node": "^24.8.0",
     "jsonwebtoken": "^8.5.1",
     "mocha": "^6.1.4",
     "morgan": "1.9.1",
@@ -59,7 +67,7 @@
     "sequelize": "^5.3.0",
     "sequelize-fixtures": "^0.10.0",
     "sequelize-import": "^1.2.1",
-    "sinon-chai": "^3.3.0",
+    "supertest": "^4.0.2",
     "swagger-jsdoc": "^3.2.9",
     "uuid": "^3.3.2"
   }

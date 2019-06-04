@@ -53,7 +53,7 @@ export default function (server) {
   server.use(passport.session());
 
   // HTTP logger
-  server.use(morgan('tiny'));
+  if (process.env.NODE_ENV !== 'test') server.use(morgan('tiny'));
 
   // Catch all for error messages.  Instead of a stack
   // trace, this will log the json of the error message
@@ -75,9 +75,10 @@ export default function (server) {
 
   // From time to time we need to clean up any expired tokens
   // in the database
-  // *** commenting this since tokens will not expire
-  // setInterval(() => {
-  //   accessTokens.removeExpired()
-  //     .catch(err => console.error('Error trying to remove expired tokens:', err.stack));
-  // }, db.timeToCheckExpiredTokens * 1000);
+  if (process.env.NODE_ENV !== 'test') {
+    setInterval(() => {
+      accessTokens.removeExpired()
+        .catch(err => console.error('Error trying to remove expired tokens:', err.stack));
+    }, db.timeToCheckExpiredTokens * 1000);
+  }
 }

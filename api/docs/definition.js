@@ -1,6 +1,7 @@
 import { general } from '../src/config/config';
 
 const swaggerDefinition = {
+  openapi: '3.0.0',
   info: {
   // API informations (required)
     title: 'SDEC', // Title (required)
