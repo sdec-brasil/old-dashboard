@@ -1,4 +1,12 @@
 {
+  "test": {
+    "username": "abe",
+    "password": "PASSWORD",
+    "database": "abe",
+    "host": "127.0.0.1",
+    "dialect": "mysql",
+    "port": 5306
+  },
   "development": {
     "username": "abe",
     "password": "PASSWORD",
