@@ -2,7 +2,7 @@ import models from '../../models';
 
 const { Op } = models.Sequelize;
 
-export default class ListView {
+export default class ListFilterSet {
   constructor() {
     this.filterFields = [];
     this.model = null;
@@ -13,7 +13,7 @@ export default class ListView {
   /**
    * @function setFilterFields
    *
-   * @description used to set filterable fields on one ListFilter instance.
+   * @description used to set filterable fields on one ListFilterSet instance.
    * query parameters not in filterFields will be completely ignored.
    *
    * @param {Array<String>} filterFields - array of strings with the allowed query parameters.

@@ -1,7 +1,7 @@
 // Imports
 import passport from 'passport';
 import models from '../models';
-import ListView from '../utils/listFilters';
+import ListFilterSet from '../utils/listFilters';
 
 /**
    * Simple informational end point, if you want to get information
@@ -34,10 +34,10 @@ const info = [
 const list = [
   // passport.authenticate('bearer', { session: false }),
   (req, res) => {
-    const userListView = new ListView();
+    const userListView = new ListFilterSet();
 
     userListView.setFilterFields(['name', 'username', 'createdAt', 'estado2__sigla', 'estado1__sigla',
-      'createdAt_to', 'createdAt_from']);
+      'createdAt_to', 'createdAt_from', 'estado1__createdAt_from', 'estado1__createdAt_to']);
 
     userListView.setModel(models.user);
 
