@@ -1,8 +1,8 @@
 // App Imports
-import { db } from '../utils/db';
-import validate from '../utils/validate';
+import { db } from '../../utils/db';
+import validate from '../../utils/validate';
 
-import models from '../models';
+import models from '../../models';
 
 /**
    * This endpoint is for verifying a token.  This has the same signature to

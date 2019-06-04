@@ -5,7 +5,7 @@ import blockchain from './blockchain';
 import blocks from './blocks';
 import clients from './clients';
 import invoices from './invoices';
-import towns from './towns';
+import city from './city';
 import transactions from './transactions';
 import user from './user';
 import users from './users';
@@ -17,7 +17,7 @@ const routes = {
   ...blocks,
   ...clients,
   ...invoices,
-  ...towns,
+  ...city,
   ...transactions,
   ...user,
   ...users,

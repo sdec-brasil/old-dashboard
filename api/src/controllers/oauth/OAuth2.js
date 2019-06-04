@@ -4,10 +4,10 @@ import oauth2orize from 'oauth2orize';
 import passport from 'passport';
 
 // App Imports
-import { db } from '../utils/db';
-import { tokens as config } from '../config/config';
-import { crypto } from '../utils/crypto';
-import validate from '../utils/validate';
+import { db } from '../../utils/db';
+import { tokens as config } from '../../config/config';
+import { crypto } from '../../utils/crypto';
+import validate from '../../utils/validate';
 
 // Register supported grant types.
 //

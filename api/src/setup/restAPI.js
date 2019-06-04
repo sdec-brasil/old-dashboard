@@ -7,11 +7,11 @@ import fs from 'fs';
 import routes from '../routes';
 import swaggerDefinition from '../../docs/definition';
 import RestExample from '../controllers/RestExample';
-import OAuth2 from '../controllers/OAuth2';
-import Client from '../controllers/Client';
-import User from '../controllers/User';
-import Auth from '../controllers/Auth';
-import Token from '../controllers/Token';
+import OAuth2 from '../controllers/oauth/OAuth2';
+import Client from '../controllers/oauth/Client';
+import User from '../controllers/oauth/User';
+import Auth from '../controllers/oauth/Auth';
+import Token from '../controllers/oauth/Token';
 
 // Setup RestAPI
 export default function (server) {

@@ -6,4 +6,17 @@ export default class InvoiceController {
     const response = await InvoiceGet(req);
     res.status(response.code).send(response.data);
   }
+
+  async post(req, res) {
+    throw new Error('Not implemented');
+  }
+
+  async getByTxId(req, res) {
+    // req.params.txid
+    throw new Error('Not implemented');
+  }
+
+  async replaceInvoice(req, res) {
+    throw new Error('Not implemented');
+  }
 }
