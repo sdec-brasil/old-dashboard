@@ -1,6 +1,7 @@
 // Imports
 import passport from 'passport';
 import models from '../models';
+import ListView from '../utils/listFilters';
 
 /**
    * Simple informational end point, if you want to get information
@@ -30,70 +31,30 @@ const info = [
   },
 ];
 
-class ListView {
-  constructor() {
-    this.filterFields = [];
-    this.model = null;
-  }
-
-  setFilters(filterFields) {
-    if (Array.isArray(filterFields)) {
-      this.filterFields = filterFields;
-    }
-  }
-
-  setModel(model) {
-    this.model = model;
-  }
-
-  query(req) {
-    if (this.model) {
-      const filters = {};
-      filters.where = {};
-      
-      Object.keys(req.query).forEach((field) => {
-        if ((this.model.rawAttributes[field] !== undefined)
-        && this.filterFields.includes(field)) {
-          console.log(typeof (this.model.rawAttributes[field].type.key));
-          console.log(`field: ${field} - ${this.model.rawAttributes[field].type.key}`);
-          console.log(`${this.model.rawAttributes[field].type}:`, Object.keys(this.model.rawAttributes[field].type));
-          Object.keys(this.model.rawAttributes[field].type).forEach((key) => {
-            console.log(`${key}:`, this.model.rawAttributes[field].type[key]);
-          });
-
-          // checking field type, to parse query string correctly:
-          let filterValue = req.query[field];
-          if (this.model.rawAttributes[field].type.key === 'BOOLEAN') {
-            filterValue = (filterValue === 'true');
-          } else if (this.model.rawAttributes[field].type.key === 'INTEGER') {
-            filterValue = parseInt(filterValue, 10);
-          }
-          filters.where[field] = filterValue;
-        }
-      });
-      // adding offset
-      if (req.query.offset) {
-        filters.offset = parseInt(req.query.offset, 10);
-      }
-      // adding limit
-      if (req.query.limit) {
-        filters.limit = parseInt(req.query.limit, 10);
-      }
-      console.log('query object:', filters);
-
-      // console.log(this.model.rawAttributes);
-      return this.model.findAll(filters);
-    }
-    return null;
-  }
-}
 const list = [
   // passport.authenticate('bearer', { session: false }),
   (req, res) => {
     const userListView = new ListView();
-    userListView.setFilters(['name', 'username']);
+    userListView.setFilters(['name', 'username', 'createdAt']);
     userListView.setModel(models.user);
     userListView.query(req).then(results => res.json(results));
+    // models.user.findAll(
+    //   {
+    //     include: [{
+    //       model: models.estado,
+    //       as: 'estado2',
+    //       where: {
+    //         sigla: 'BA',
+    //       },
+    //     },
+    //     {
+    //       model: models.estado,
+    //       as: 'estado1',
+    //     }],
+    //   },
+    // ).then((users) => {
+    //   res.json(users);
+    // });
   },
 ];
 

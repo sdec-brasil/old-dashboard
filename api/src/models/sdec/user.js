@@ -20,12 +20,14 @@ export default function (sequelize, DataTypes) {
       allowNull: false,
     },
   }, {
-    underscored: true,
+    underscored: false,
     tableName: 'user',
   });
 
   user.associate = (models) => {
     user.hasMany(models.conta_bancaria, { primaryKey: { name: 'user_id' } });
+    user.belongsTo(models.estado, { foreignKey: 'estado1_id', as: 'estado1' });
+    user.belongsTo(models.estado, { foreignKey: 'estado2_id', as: 'estado2' });
   };
 
   return user;
