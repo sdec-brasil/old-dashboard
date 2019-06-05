@@ -110,6 +110,8 @@ export const accessTokens = {
       return Promise.resolve(null);
     }
   },
+
+
   /**
   * Removes expired access tokens.
   * @returns {Promise} resolved with the # of tokens that were expired
@@ -193,7 +195,7 @@ export const authorizationCode = {
 
 };
 
-export const refreshToken = {
+export const refreshTokens = {
   /**
    * Returns a refresh token if it finds one, otherwise returns null if one is not found.
    * @param   {String}  token - The token to decode to get the id of the refresh token to find.
@@ -264,5 +266,5 @@ export const db = {
   clients,
   accessTokens,
   authorizationCode,
-  refreshToken,
+  refreshTokens,
 };

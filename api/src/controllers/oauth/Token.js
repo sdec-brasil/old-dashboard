@@ -1,6 +1,7 @@
 // App Imports
 import { db } from '../../utils/db';
 import validate from '../../utils/validate';
+import models from '../../models';
 
 
 /**
@@ -74,11 +75,20 @@ const revoke = (req, res) => validate.tokenForHttp(req.query.token)
   .then(() => db.accessTokens.delete(req.query.token))
   .then((token) => {
     if (token == null) {
-      return db.refreshToken.delete(req.query.token);
+      return db.refreshTokens.delete(req.query.token);
     }
     return token;
   })
-  .then(tokenDeleted => validate.tokenExistsForHttp(tokenDeleted))
+  .then((tokenDeleted) => {
+    validate.tokenExistsForHttp(tokenDeleted);
+    // if its a refresh token, delete also all access tokens from this user to this client.
+    return models.accessToken.destroy({
+      where: {
+        user_id: tokenDeleted.user_id,
+        client_id: tokenDeleted.client_id,
+      },
+    });
+  })
   .then(() => {
     res.json({});
   })

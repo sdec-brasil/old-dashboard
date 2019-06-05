@@ -132,7 +132,7 @@ server.exchange(oauth2orize.exchange.clientCredentials((client, scope, done) => 
  * token on behalf of the client who authorized the code
  */
 server.exchange(oauth2orize.exchange.refreshToken((client, refreshToken, scope, done) => {
-  db.refreshToken.findByToken(refreshToken)
+  db.refreshTokens.findByToken(refreshToken)
     .then(foundRefreshToken => validate.refreshToken(foundRefreshToken, refreshToken, client))
     .then(foundRefreshToken => validate.generateToken(foundRefreshToken))
     .then(token => done(null, token, null, expiresIn))

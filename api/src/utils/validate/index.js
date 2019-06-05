@@ -165,7 +165,7 @@ validate.isRefreshToken = ({ scope }) => scope != null && scope.indexOf('offline
  */
 validate.generateRefreshToken = ({ user_id, client_id, scope }) => {
   const refreshToken = crypto.createToken({ sub: user_id, exp: tokens.refreshToken.expiresIn });
-  return db.refreshToken.save(refreshToken, user_id, client_id, scope)
+  return db.refreshTokens.save(refreshToken, user_id, client_id, scope)
     .then(() => refreshToken);
 };
 
