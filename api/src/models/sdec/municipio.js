@@ -1,7 +1,7 @@
-// Nota_Pagamento
+// Municipio
 export default function (sequelize, DataTypes) {
   const municipio = sequelize.define('municipio', {
-    codigo_ibge: {
+    codigoIbge: {
       type: DataTypes.STRING(7),
       primaryKey: true,
       allowNull: false,
@@ -13,7 +13,7 @@ export default function (sequelize, DataTypes) {
     },
   },
   {
-    underscored: true,
+    underscored: false,
     tableName: 'municipio',
     freezeTableName: true,
     timestamps: false,
@@ -21,7 +21,7 @@ export default function (sequelize, DataTypes) {
 
   municipio.associate = (models) => {
     municipio.belongsTo(models.estado, { targetKey: 'sigla', foreignKey: { name: 'uf', allowNull: false } });
-    municipio.belongsTo(models.regiao, { targetKey: 'nome_regiao', foreignKey: { name: 'nome_regiao', allowNull: false } });
+    municipio.belongsTo(models.regiao, { targetKey: 'nomeRegiao', foreignKey: { name: 'nomeRegiao', allowNull: false } });
   };
 
   return municipio;

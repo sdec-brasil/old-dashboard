@@ -252,15 +252,15 @@ export default function (sequelize, DataTypes) {
     },
   },
   {
-    underscored: true,
+    underscored: false,
     tableName: 'invoice',
     freezeTableName: true,
     timestamps: false,
   });
 
   invoice.associate = (models) => {
-    invoice.belongsTo(models.prefeitura, { targetKey: 'codigo_municipio', foreignKey: { name: 'prefeitura_incidencia', allowNull: false } });
-    invoice.belongsTo(models.empresa, { targetKey: 'endereco_blockchain', foreignKey: { name: 'emissor', allowNull: false } });
+    invoice.belongsTo(models.prefeitura, { targetKey: 'codigoMunicipio', foreignKey: { name: 'prefeituraIncidencia', allowNull: false } });
+    invoice.belongsTo(models.empresa, { targetKey: 'enderecoBlockchain', foreignKey: { name: 'emissor', allowNull: false } });
   };
 
   return invoice;

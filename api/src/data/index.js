@@ -12,14 +12,23 @@ export default function (models) {
           .then(() => {
             // fixtures.loadFile(`${__dirname}/municipio/municipios.js`, models, { log: () => {} })
             // .then(() => {
-            fixtures.loadFile(`${__dirname}/user/users.js`, models, { log: () => {} })
+            fixtures.loadFile(`${__dirname}/municipio/municipiosSmall.js`, models, { log: () => {} })
               .then(() => {
-                fixtures.loadFile(`${__dirname}/client/clients.js`, models, { log: () => {} })
+                fixtures.loadFile(`${__dirname}/prefeitura/prefeituras.js`, models, { log: () => {} })
                   .then(() => {
-                    fixtures.loadFile(`${__dirname}/authorizationCode/authorizationCodes.js`, models, { log: () => {} })
+                    fixtures.loadFile(`${__dirname}/empresa/empresas.js`, models, { log: () => {} })
                       .then(() => {
-                        process.emit('dataLoaded');
-                        resolve();
+                        fixtures.loadFile(`${__dirname}/user/users.js`, models, { log: () => {} })
+                          .then(() => {
+                            fixtures.loadFile(`${__dirname}/client/clients.js`, models, { log: () => {} })
+                              .then(() => {
+                                fixtures.loadFile(`${__dirname}/authorizationCode/authorizationCodes.js`, models, { log: () => {} })
+                                  .then(() => {
+                                    process.emit('dataLoaded');
+                                    resolve();
+                                  });
+                              });
+                          });
                       });
                   });
               });

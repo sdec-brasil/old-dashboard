@@ -1,13 +1,13 @@
 // Regiao
 export default function (sequelize, DataTypes) {
   const regiao = sequelize.define('regiao', {
-    nome_regiao: {
+    nomeRegiao: {
       type: DataTypes.STRING(65),
       allowNull: false,
       primaryKey: true,
     },
   }, {
-    underscored: true,
+    underscored: false,
     tableName: 'regiao',
     timestamps: false,
   });

@@ -1,14 +1,14 @@
 // Prefeitura
 export default function (sequelize, DataTypes) {
   const prefeitura = sequelize.define('prefeitura', {
-    codigo_municipio: {
+    codigoMunicipio: {
       type: DataTypes.STRING(7),
       primaryKey: true,
       unique: true,
       allowNull: false,
       references: {
         model: 'municipio',
-        key: 'codigo_ibge',
+        key: 'codigoIbge',
       },
     },
     cnpj: {
@@ -19,14 +19,14 @@ export default function (sequelize, DataTypes) {
     },
   },
   {
-    underscored: true,
+    underscored: false,
     tableName: 'prefeitura',
     freezeTableName: true,
     timestamps: false,
   });
 
   prefeitura.associate = (models) => {
-    prefeitura.belongsTo(models.municipio, { foreignKey: { name: 'codigo_municipio', allowNull: false, unique: true } });
+    prefeitura.belongsTo(models.municipio, { foreignKey: { name: 'codigoMunicipio', allowNull: false, unique: true } });
   };
 
   return prefeitura;
