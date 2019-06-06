@@ -130,8 +130,11 @@ export default class ListFilterSet {
    * @memberof ListView
    */
   buildQuery(req) {
+    if (req === undefined) {
+      throw new Error('!! Error !! ListView.buildQuery(req) requires the request as argument.');
+    }
     if (!this.model) {
-      throw new Error('!! Error !! ListView.buildQuery() called but model was not set yet! Set it with ListView.setModel(model).');
+      throw new Error('!! Error !! ListView.buildQuery(req) called but model was not set yet! Set it with ListView.setModel(model).');
     }
     Object.keys(req.query).forEach((queryField) => {
       if (this.filterFields.includes(queryField)) {
@@ -139,14 +142,14 @@ export default class ListFilterSet {
         const [field, targetField] = queryField.split('__');
         if (targetField) {
           /*
-          const modelField = this.model.associations[field];
-          const modelTargetField = this.model.associations[field]
-            .target.rawAttributes[targetField];
-          console.log('modelField:', Object.keys(modelField));
-          console.log('modelTargetField:', Object.keys(modelTargetField));
-          console.log('modelTargetField - field:', modelTargetField.field);
-          console.log('modelTargetField -  - fieldName:', modelTargetField.fieldName);
-          */
+            const modelField = this.model.associations[field];
+            const modelTargetField = this.model.associations[field]
+              .target.rawAttributes[targetField];
+            console.log('modelField:', Object.keys(modelField));
+            console.log('modelTargetField:', Object.keys(modelTargetField));
+            console.log('modelTargetField - field:', modelTargetField.field);
+            console.log('modelTargetField -  - fieldName:', modelTargetField.fieldName);
+            */
 
           // build include property
           if (this.filters.include === undefined) {
@@ -185,8 +188,10 @@ export default class ListFilterSet {
     // adding limit
     if (req.query.limit) {
       this.filters.limit = parseInt(req.query.limit, 10);
+    } else {
+      this.filters.limit = 20;
     }
-    console.log('query object built:', this.filters);
+    // console.log('query object built:', this.filters);
   }
 
 

@@ -3,6 +3,7 @@ import { limitSettings } from '../../config/config';
 import formatters from '../../utils/formatters';
 import validate from '../../utils/validate';
 import models from '../../models';
+import { ListFilterSet, serializers } from '../../utils';
 
 /**
  * Tries to identify which type param belongs to and format it for our service
@@ -215,6 +216,21 @@ function constructOptions(args) {
 }
 
 export async function InvoiceGet(req) {
+  const listView = new ListFilterSet();
+  listView.setModel(models.invoice);
+  // listView.setFilterFields([
+  //   '',
+  // ]);
+  listView.buildQuery(req);
+  const queryResult = await listView.executeQuery();
+  // TODO: obs. serializers.invoice() might be a problem if the limit querystring
+  // is too high.
+  return {
+    data: queryResult.map(inv => serializers.invoice(inv)),
+    code: 200,
+  };
+
+
   const response = new ResponseList(req);
 
   if (response.err) {

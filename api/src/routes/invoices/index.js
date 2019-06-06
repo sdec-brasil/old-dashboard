@@ -2,8 +2,9 @@ import login from 'connect-ensure-login';
 
 export default {
   // Retorna uma lista das últimas notas fiscais emitidas
-  'GET /invoices': 'Invoices.get',
-
+  'GET /invoices': {
+    path: 'Invoices.get',
+  },
   // Publica uma nota fiscal na Blockchain
   'POST /invoices': {
     path: 'Invoices.post',
