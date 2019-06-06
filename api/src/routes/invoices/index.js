@@ -1,6 +1,6 @@
 import login from 'connect-ensure-login';
 
-const routes = {
+export default {
   // Retorna uma lista das últimas notas fiscais emitidas
   'GET /invoices': 'Invoices.get',
 
@@ -13,7 +13,9 @@ const routes = {
   },
 
   // Pega nota fiscal pelo txid
-  'GET /invoices/:txid': 'Invoices.getByTxid',
+  'GET /invoices/:txid': {
+    path: 'Invoices.getByTxId',
+  },
 
   // Cria uma nova nota fiscal na blockchain que substitui a nota referenciada em txid
   'POST /invoices/:txid': {

@@ -1,5 +1,7 @@
 /* eslint-disable class-methods-use-this */
 import { InvoiceGet } from '../services/invoices';
+import models from '../models';
+import { serializers } from '../utils';
 
 export default class InvoiceController {
   async get(req, res) {
@@ -12,8 +14,14 @@ export default class InvoiceController {
   }
 
   async getByTxId(req, res) {
-    // req.params.txid
-    throw new Error('Not implemented');
+    // validate txid;
+    const inv = await models.invoice.findByPk(req.params.txid);
+    if (inv) {
+      res.json(serializers.invoice(inv));
+    } else {
+      res.status(404).send('Not found');
+    }
+    // throw new Error('Not implemented');
   }
 
   async replaceInvoice(req, res) {

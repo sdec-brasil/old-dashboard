@@ -27,11 +27,11 @@ export default function (sequelize, DataTypes) {
       type: DataTypes.BIGINT({ unsigned: true }),
       allowNull: false,
     },
-    aliquotaServicos: {
+    aliqServicos: {
       type: DataTypes.BIGINT({ unsigned: true }),
       allowNull: true,
     },
-    valorLiquiNfse: {
+    valLiquiNfse: {
       type: DataTypes.BIGINT({ unsigned: true }),
       allowNull: true,
     },
@@ -71,17 +71,13 @@ export default function (sequelize, DataTypes) {
       type: DataTypes.BIGINT({ unsigned: true }),
       allowNull: true,
     },
-    valorTotalTributos: {
+    valTotalTributos: {
       type: DataTypes.BIGINT({ unsigned: true }),
       allowNull: true,
     },
-    valorIss: {
+    valIss: {
       type: DataTypes.BIGINT({ unsigned: true }),
       allowNull: false,
-    },
-    aliqServicos: {
-      type: DataTypes.BIGINT({ unsigned: true }),
-      allowNull: true,
     },
     descontoIncond: {
       type: DataTypes.BIGINT({ unsigned: true }),
@@ -117,7 +113,7 @@ export default function (sequelize, DataTypes) {
       type: DataTypes.STRING(20),
       allowNull: true,
     },
-    codNbs: {
+    codNBS: {
       type: DataTypes.STRING(9),
       allowNull: true,
     },
@@ -125,7 +121,7 @@ export default function (sequelize, DataTypes) {
       type: DataTypes.STRING(2000),
       allowNull: false,
     },
-    exigibilidadeIss: {
+    exigibilidadeISS: {
       // * `1` - Exigível
       // * `2` - Não incidência
       // * `3` - Isenção
@@ -144,7 +140,7 @@ export default function (sequelize, DataTypes) {
       type: DataTypes.STRING(30),
       allowNull: true,
     },
-    regimeEspTributacao: {
+    regimeEspTribut: {
       // * `1` – Microempresa Municipal
       // * `2` – Estimativa
       // * `3` – Sociedade de Profissionais

@@ -1,10 +1,14 @@
-import models from '../../models';
 import uuid from 'uuid/v4';
-import { fail } from 'assert';
+import models from '../../models';
+
+
+let prefeiturasCod = [];
+let empresasEnd = [];
+
 
 // auxiliary functions -----------------
 function randint(limit) {
-  return Math.floor(Math.random()*10000)%limit;
+  return Math.floor(Math.random() * 10000) % limit;
 }
 
 function choice(arr) {
@@ -17,7 +21,7 @@ function txId() {
   return uuid();
 }
 
-// function substitutes() {  
+// function substitutes() {
 // }
 
 // substitutedBy {
@@ -28,7 +32,7 @@ function blocoConfirmacao() {
 }
 
 function dataBlocoConfirmacao() {
-  return new Date(Date.now() - randint(50)*10000000);
+  return new Date(Date.now() - randint(50) * 10000000);
 }
 
 // ----- Campos da Prestação:
@@ -36,16 +40,16 @@ function baseCalculo() {
   return randint(1000000);
 }
 
-function aliquotaServicos() {
+function aliqServicos() {
   return randint(5000);
 }
 
-function valorLiquiNfse() {
+function valLiquiNfse() {
   return randint(5000);
 }
 
 function competencia() {
-  return new Date(Date.now() - randint(50)*100000000);
+  return new Date(Date.now() - randint(50) * 100000000);
 }
 
 function valServicos() {
@@ -65,7 +69,7 @@ function valCofins() {
 }
 
 function valInss() {
-  return randint(999);  
+  return randint(999);
 }
 
 function valIr() {
@@ -73,23 +77,19 @@ function valIr() {
 }
 
 function valCsll() {
-  return randint(999);  
+  return randint(999);
 }
 
 function outrasRetencoes() {
   return randint(999);
 }
 
-function valorTotalTributos() {
+function valTotalTributos() {
   return randint(50000);
 }
 
-function valorIss() {
+function valIss() {
   return randint(999);
-}
-
-function aliqServicos() {
-  return randint(20000);  
 }
 
 function descontoIncond() {
@@ -125,7 +125,7 @@ function codServico() {
   return uuid().slice(0, 20);
 }
 
-function codNbs() {
+function codNBS() {
   return uuid().slice(0, 9);
 }
 
@@ -133,7 +133,7 @@ function discriminacao() {
   return uuid();
 }
 
-function exigibilidadeIss() {
+function exigibilidadeISS() {
   // * `1` - Exigível
   // * `2` - Não incidência
   // * `3` - Isenção
@@ -152,7 +152,7 @@ function numProcesso() {
   return uuid().slice(0, 30);
 }
 
-function regimeEspTributacao() {
+function regimeEspTribut() {
   // * `1` – Microempresa Municipal
   // * `2` – Estimativa
   // * `3` – Sociedade de Profissionais
@@ -196,7 +196,7 @@ function compEnd() {
 }
 
 function bairroEnd() {
-  return uuid().slice(0, 60);  
+  return uuid().slice(0, 60);
 }
 
 function cidadeEnd() {
@@ -216,7 +216,7 @@ function cepEnd() {
 }
 
 function email() {
-  return uuid().slice(0, 15) + '@xxxx.xx';
+  return `${uuid().slice(0, 15)}@xxxx.xx`;
 }
 
 function tel() {
@@ -257,29 +257,25 @@ function estado() {
 }
 
 function prefeituraIncidencia() {
-  if (prefeiturasCod.length == 0) {
-    throw new Error("!! Error !! no registered prefeituras found while creating invoices.");
+  if (prefeiturasCod.length === 0) {
+    throw new Error('!! Error !! no registered prefeituras found while creating invoices.');
   }
   return choice(prefeiturasCod);
 }
 
 function emissor() {
-  if (empresasEnd.length == 0) {
-    throw new Error("!! Error !! no registered empresas found while creating invoices.");
+  if (empresasEnd.length === 0) {
+    throw new Error('!! Error !! no registered empresas found while creating invoices.');
   }
   return choice(empresasEnd);
 }
-
-let prefeiturasCod = [];
-let empresasEnd = [];
 
 const generator = {
   txId,
   blocoConfirmacao,
   dataBlocoConfirmacao,
   baseCalculo,
-  aliquotaServicos,
-  valorLiquiNfse,
+  valLiquiNfse,
   competencia,
   valServicos,
   valDeducoes,
@@ -289,8 +285,8 @@ const generator = {
   valIr,
   valCsll,
   outrasRetencoes,
-  valorTotalTributos,
-  valorIss,
+  valTotalTributos,
+  valIss,
   aliqServicos,
   descontoIncond,
   descontoCond,
@@ -299,12 +295,12 @@ const generator = {
   itemLista,
   codCnae,
   codServico,
-  codNbs,
+  codNBS,
   discriminacao,
-  exigibilidadeIss,
+  exigibilidadeISS,
   codTributMunicipio,
   numProcesso,
-  regimeEspTributacao,
+  regimeEspTribut,
   optanteSimplesNacional,
   incentivoFiscal,
   identificacaoTomador,
@@ -340,20 +336,20 @@ function newInvoice() {
 
 
 async function generateInvoices(n) {
-  return new Promise(async (resolve, reject) => {
-    console.log(`Generating ${n} invoices...`);
+  return new Promise(async (resolve) => {
+    console.log(`SETUP - Generating ${n} invoices...`);
 
     const prefeituras = await models.prefeitura.findAll();
     prefeiturasCod = prefeituras.map(x => x.codigoMunicipio);
     const empresas = await models.empresa.findAll();
     empresasEnd = empresas.map(x => x.enderecoBlockchain);
-    
+
     const invoices = [];
     for (let i = 0; i < n; i += 1) {
       invoices.push(newInvoice());
     }
     models.invoice.bulkCreate(invoices);
-    console.log('Done populating invoices.');
+    console.log('SETUP - Done populating invoices.');
     resolve(true);
   });
 }
