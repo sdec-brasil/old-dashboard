@@ -4,6 +4,7 @@ import * as crypto from './crypto';
 import formatters from './formatters';
 import ListFilterSet from './listFilterSet';
 import serializers from './serializers';
+import generateInvoices from './generators/invoice';
 
 export {
   query,
@@ -12,4 +13,5 @@ export {
   formatters,
   ListFilterSet,
   serializers,
+  generateInvoices,
 };
