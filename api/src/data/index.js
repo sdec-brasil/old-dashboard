@@ -1,6 +1,7 @@
 // Imports
 import fixtures from 'sequelize-fixtures';
 import process from 'process';
+import generateInvoices from './invoice/generateInvoices';
 
 export default function (models) {
   console.log('SETUP - Starting to populate tables with Initial Data');
@@ -24,8 +25,10 @@ export default function (models) {
                               .then(() => {
                                 fixtures.loadFile(`${__dirname}/authorizationCode/authorizationCodes.js`, models, { log: () => {} })
                                   .then(() => {
-                                    process.emit('dataLoaded');
-                                    resolve();
+                                    generateInvoices(500).then(() => {
+                                      process.emit('dataLoaded');
+                                      resolve();
+                                    });
                                   });
                               });
                           });
