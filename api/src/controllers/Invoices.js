@@ -14,7 +14,6 @@ export default class InvoiceController {
   }
 
   async getByTxId(req, res) {
-    // validate txid;
     const inv = await models.invoice.findByPk(req.params.txid);
     if (inv) {
       res.json(serializers.invoice(inv));

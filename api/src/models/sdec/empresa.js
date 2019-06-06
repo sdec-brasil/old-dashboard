@@ -69,10 +69,5 @@ export default function (sequelize, DataTypes) {
     timestamps: false,
   });
 
-  empresa.associate = (models) => {
-    empresa.hasMany(models.invoice, { primaryKey: { name: 'cnpjEmpresa' } });
-  };
-
-
   return empresa;
 }

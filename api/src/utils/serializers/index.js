@@ -63,8 +63,8 @@ serializers.invoice = (inv) => {
   };
   Object.keys(invoiceStructure).forEach((category) => {
     invoiceStructure[category].forEach((field) => {
-      if (invoice[field]) {
-        if (!invoice[category]) {
+      if (invoice[field] !== undefined) {
+        if (invoice[category] === undefined) {
           invoice[category] = {};
         }
         invoice[category][field] = invoice[field];
