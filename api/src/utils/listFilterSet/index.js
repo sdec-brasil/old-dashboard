@@ -109,10 +109,10 @@ export default class ListFilterSet {
       // });
 
       const parsedFilterValue = this.parseValue(filterValue, modelField);
-      if (!obj.where) {
+      if (obj.where === undefined) {
         obj.where = {};
       }
-      if (!obj.where[field]) {
+      if (obj.where[field] === undefined) {
         obj.where[field] = {};
       }
       obj.where[field][op] = parsedFilterValue;
@@ -149,7 +149,7 @@ export default class ListFilterSet {
           */
 
           // build include property
-          if (!this.filters.include) {
+          if (this.filters.include === undefined) {
             this.filters.include = [];
           }
           // check to see if there is already an include for this association
@@ -160,7 +160,7 @@ export default class ListFilterSet {
             }
           });
           // if there is not include for this, build one
-          if (!includeObject) {
+          if (includeObject === undefined) {
             includeObject = {
               model: this.model.associations[field].target,
               as: field,

@@ -2,959 +2,959 @@ module.exports = [
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Leste Rondoniense',
+      nomeRegiao: 'Leste Rondoniense',
       uf: 'RO',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Madeira-Guaporé',
+      nomeRegiao: 'Madeira-Guaporé',
       uf: 'RO',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Vale do Acre',
+      nomeRegiao: 'Vale do Acre',
       uf: 'AC',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Vale do Juruá',
+      nomeRegiao: 'Vale do Juruá',
       uf: 'AC',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Centro Amazonense',
+      nomeRegiao: 'Centro Amazonense',
       uf: 'AM',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Sudoeste Amazonense',
+      nomeRegiao: 'Sudoeste Amazonense',
       uf: 'AM',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Sul Amazonense',
+      nomeRegiao: 'Sul Amazonense',
       uf: 'AM',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Norte Amazonense',
+      nomeRegiao: 'Norte Amazonense',
       uf: 'AM',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Norte de Roraima',
+      nomeRegiao: 'Norte de Roraima',
       uf: 'RR',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Sul de Roraima',
+      nomeRegiao: 'Sul de Roraima',
       uf: 'RR',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Nordeste Paraense',
+      nomeRegiao: 'Nordeste Paraense',
       uf: 'PA',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Sudeste Paraense',
+      nomeRegiao: 'Sudeste Paraense',
       uf: 'PA',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Marajó',
+      nomeRegiao: 'Marajó',
       uf: 'PA',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Baixo Amazonas',
+      nomeRegiao: 'Baixo Amazonas',
       uf: 'PA',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Sudoeste Paraense',
+      nomeRegiao: 'Sudoeste Paraense',
       uf: 'PA',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Metropolitana de Belém',
+      nomeRegiao: 'Metropolitana de Belém',
       uf: 'PA',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Norte do Amapá',
+      nomeRegiao: 'Norte do Amapá',
       uf: 'AP',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Sul do Amapá',
+      nomeRegiao: 'Sul do Amapá',
       uf: 'AP',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Ocidental do Tocantins',
+      nomeRegiao: 'Ocidental do Tocantins',
       uf: 'TO',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Oriental do Tocantins',
+      nomeRegiao: 'Oriental do Tocantins',
       uf: 'TO',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Oeste Maranhense',
+      nomeRegiao: 'Oeste Maranhense',
       uf: 'MA',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Leste Maranhense',
+      nomeRegiao: 'Leste Maranhense',
       uf: 'MA',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Norte Maranhense',
+      nomeRegiao: 'Norte Maranhense',
       uf: 'MA',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Sul Maranhense',
+      nomeRegiao: 'Sul Maranhense',
       uf: 'MA',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Centro Maranhense',
+      nomeRegiao: 'Centro Maranhense',
       uf: 'MA',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Sudeste Piauiense',
+      nomeRegiao: 'Sudeste Piauiense',
       uf: 'PI',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Centro-Norte Piauiense',
+      nomeRegiao: 'Centro-Norte Piauiense',
       uf: 'PI',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Sudoeste Piauiense',
+      nomeRegiao: 'Sudoeste Piauiense',
       uf: 'PI',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Norte Piauiense',
+      nomeRegiao: 'Norte Piauiense',
       uf: 'PI',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Sul Cearense',
+      nomeRegiao: 'Sul Cearense',
       uf: 'CE',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Norte Cearense',
+      nomeRegiao: 'Norte Cearense',
       uf: 'CE',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Noroeste Cearense',
+      nomeRegiao: 'Noroeste Cearense',
       uf: 'CE',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Sertões Cearenses',
+      nomeRegiao: 'Sertões Cearenses',
       uf: 'CE',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Jaguaribe',
+      nomeRegiao: 'Jaguaribe',
       uf: 'CE',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Centro-Sul Cearense',
+      nomeRegiao: 'Centro-Sul Cearense',
       uf: 'CE',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Metropolitana de Fortaleza',
+      nomeRegiao: 'Metropolitana de Fortaleza',
       uf: 'CE',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Central Potiguar',
+      nomeRegiao: 'Central Potiguar',
       uf: 'RN',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Oeste Potiguar',
+      nomeRegiao: 'Oeste Potiguar',
       uf: 'RN',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Leste Potiguar',
+      nomeRegiao: 'Leste Potiguar',
       uf: 'RN',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Agreste Potiguar',
+      nomeRegiao: 'Agreste Potiguar',
       uf: 'RN',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Sertão Paraibano',
+      nomeRegiao: 'Sertão Paraibano',
       uf: 'PB',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Agreste Paraibano',
+      nomeRegiao: 'Agreste Paraibano',
       uf: 'PB',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Borborema',
+      nomeRegiao: 'Borborema',
       uf: 'PB',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Mata Paraibana',
+      nomeRegiao: 'Mata Paraibana',
       uf: 'PB',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Metropolitana de Recife',
+      nomeRegiao: 'Metropolitana de Recife',
       uf: 'PE',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Sertão Pernambucano',
+      nomeRegiao: 'Sertão Pernambucano',
       uf: 'PE',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'São Francisco Pernambucano',
+      nomeRegiao: 'São Francisco Pernambucano',
       uf: 'PE',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Agreste Pernambucano',
+      nomeRegiao: 'Agreste Pernambucano',
       uf: 'PE',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Mata Pernambucana',
+      nomeRegiao: 'Mata Pernambucana',
       uf: 'PE',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Sertão Alagoano',
+      nomeRegiao: 'Sertão Alagoano',
       uf: 'AL',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Leste Alagoano',
+      nomeRegiao: 'Leste Alagoano',
       uf: 'AL',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Agreste Alagoano',
+      nomeRegiao: 'Agreste Alagoano',
       uf: 'AL',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Leste Sergipano',
+      nomeRegiao: 'Leste Sergipano',
       uf: 'SE',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Agreste Sergipano',
+      nomeRegiao: 'Agreste Sergipano',
       uf: 'SE',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Sertão Sergipano',
+      nomeRegiao: 'Sertão Sergipano',
       uf: 'SE',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Centro Sul Baiano',
+      nomeRegiao: 'Centro Sul Baiano',
       uf: 'BA',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Vale São-Franciscano da Bahia',
+      nomeRegiao: 'Vale São-Franciscano da Bahia',
       uf: 'BA',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Nordeste Baiano',
+      nomeRegiao: 'Nordeste Baiano',
       uf: 'BA',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Centro Norte Baiano',
+      nomeRegiao: 'Centro Norte Baiano',
       uf: 'BA',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Sul Baiano',
+      nomeRegiao: 'Sul Baiano',
       uf: 'BA',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Metropolitana de Salvador',
+      nomeRegiao: 'Metropolitana de Salvador',
       uf: 'BA',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Extremo Oeste Baiano',
+      nomeRegiao: 'Extremo Oeste Baiano',
       uf: 'BA',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Triângulo Mineiro/Alto Paranaíba',
+      nomeRegiao: 'Triângulo Mineiro/Alto Paranaíba',
       uf: 'MG',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Central Mineira',
+      nomeRegiao: 'Central Mineira',
       uf: 'MG',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Zona da Mata',
+      nomeRegiao: 'Zona da Mata',
       uf: 'MG',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Vale do Rio Doce',
+      nomeRegiao: 'Vale do Rio Doce',
       uf: 'MG',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Oeste de Minas',
+      nomeRegiao: 'Oeste de Minas',
       uf: 'MG',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Vale do Mucuri',
+      nomeRegiao: 'Vale do Mucuri',
       uf: 'MG',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Norte de Minas',
+      nomeRegiao: 'Norte de Minas',
       uf: 'MG',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Sul/Sudoeste de Minas',
+      nomeRegiao: 'Sul/Sudoeste de Minas',
       uf: 'MG',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Campo das Vertentes',
+      nomeRegiao: 'Campo das Vertentes',
       uf: 'MG',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Jequitinhonha',
+      nomeRegiao: 'Jequitinhonha',
       uf: 'MG',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Metropolitana de Belo Horizonte',
+      nomeRegiao: 'Metropolitana de Belo Horizonte',
       uf: 'MG',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Noroeste de Minas',
+      nomeRegiao: 'Noroeste de Minas',
       uf: 'MG',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Central Espírito-santense',
+      nomeRegiao: 'Central Espírito-santense',
       uf: 'ES',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Noroeste Espírito-santense',
+      nomeRegiao: 'Noroeste Espírito-santense',
       uf: 'ES',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Sul Espírito-santense',
+      nomeRegiao: 'Sul Espírito-santense',
       uf: 'ES',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Litoral Norte Espírito-santense',
+      nomeRegiao: 'Litoral Norte Espírito-santense',
       uf: 'ES',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Sul Fluminense',
+      nomeRegiao: 'Sul Fluminense',
       uf: 'RJ',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Noroeste Fluminense',
+      nomeRegiao: 'Noroeste Fluminense',
       uf: 'RJ',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Baixadas',
+      nomeRegiao: 'Baixadas',
       uf: 'RJ',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Centro Fluminense',
+      nomeRegiao: 'Centro Fluminense',
       uf: 'RJ',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Metropolitana do Rio de Janeiro',
+      nomeRegiao: 'Metropolitana do Rio de Janeiro',
       uf: 'RJ',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Norte Fluminense',
+      nomeRegiao: 'Norte Fluminense',
       uf: 'RJ',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Presidente Prudente',
+      nomeRegiao: 'Presidente Prudente',
       uf: 'SP',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'São José do Rio Preto',
+      nomeRegiao: 'São José do Rio Preto',
       uf: 'SP',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Campinas',
+      nomeRegiao: 'Campinas',
       uf: 'SP',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Bauru',
+      nomeRegiao: 'Bauru',
       uf: 'SP',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Piracicaba',
+      nomeRegiao: 'Piracicaba',
       uf: 'SP',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Itapetininga',
+      nomeRegiao: 'Itapetininga',
       uf: 'SP',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Ribeirão Preto',
+      nomeRegiao: 'Ribeirão Preto',
       uf: 'SP',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Araçatuba',
+      nomeRegiao: 'Araçatuba',
       uf: 'SP',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Macro Metropolitana Paulista',
+      nomeRegiao: 'Macro Metropolitana Paulista',
       uf: 'SP',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Marília',
+      nomeRegiao: 'Marília',
       uf: 'SP',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Araraquara',
+      nomeRegiao: 'Araraquara',
       uf: 'SP',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Vale do Paraíba Paulista',
+      nomeRegiao: 'Vale do Paraíba Paulista',
       uf: 'SP',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Metropolitana de São Paulo',
+      nomeRegiao: 'Metropolitana de São Paulo',
       uf: 'SP',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Assis',
+      nomeRegiao: 'Assis',
       uf: 'SP',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Litoral Sul Paulista',
+      nomeRegiao: 'Litoral Sul Paulista',
       uf: 'SP',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Norte Pioneiro Paranaense',
+      nomeRegiao: 'Norte Pioneiro Paranaense',
       uf: 'PR',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Metropolitana de Curitiba',
+      nomeRegiao: 'Metropolitana de Curitiba',
       uf: 'PR',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Centro Ocidental Paranaense',
+      nomeRegiao: 'Centro Ocidental Paranaense',
       uf: 'PR',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Noroeste Paranaense',
+      nomeRegiao: 'Noroeste Paranaense',
       uf: 'PR',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Norte Central Paranaense',
+      nomeRegiao: 'Norte Central Paranaense',
       uf: 'PR',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Sudoeste Paranaense',
+      nomeRegiao: 'Sudoeste Paranaense',
       uf: 'PR',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Oeste Paranaense',
+      nomeRegiao: 'Oeste Paranaense',
       uf: 'PR',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Sudeste Paranaense',
+      nomeRegiao: 'Sudeste Paranaense',
       uf: 'PR',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Centro Oriental Paranaense',
+      nomeRegiao: 'Centro Oriental Paranaense',
       uf: 'PR',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Centro-Sul Paranaense',
+      nomeRegiao: 'Centro-Sul Paranaense',
       uf: 'PR',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Serrana',
+      nomeRegiao: 'Serrana',
       uf: 'SC',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Oeste Catarinense',
+      nomeRegiao: 'Oeste Catarinense',
       uf: 'SC',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Vale do Itajaí',
+      nomeRegiao: 'Vale do Itajaí',
       uf: 'SC',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Grande Florianópolis',
+      nomeRegiao: 'Grande Florianópolis',
       uf: 'SC',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Norte Catarinense',
+      nomeRegiao: 'Norte Catarinense',
       uf: 'SC',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Sul Catarinense',
+      nomeRegiao: 'Sul Catarinense',
       uf: 'SC',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Sudoeste Rio-grandense',
+      nomeRegiao: 'Sudoeste Rio-grandense',
       uf: 'RS',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Noroeste Rio-grandense',
+      nomeRegiao: 'Noroeste Rio-grandense',
       uf: 'RS',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Centro Ocidental Rio-grandense',
+      nomeRegiao: 'Centro Ocidental Rio-grandense',
       uf: 'RS',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Metropolitana de Porto Alegre',
+      nomeRegiao: 'Metropolitana de Porto Alegre',
       uf: 'RS',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Sudeste Rio-grandense',
+      nomeRegiao: 'Sudeste Rio-grandense',
       uf: 'RS',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Nordeste Rio-grandense',
+      nomeRegiao: 'Nordeste Rio-grandense',
       uf: 'RS',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Centro Oriental Rio-grandense',
+      nomeRegiao: 'Centro Oriental Rio-grandense',
       uf: 'RS',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Leste de Mato Grosso do Sul',
+      nomeRegiao: 'Leste de Mato Grosso do Sul',
       uf: 'MS',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Centro Norte de Mato Grosso do Sul',
+      nomeRegiao: 'Centro Norte de Mato Grosso do Sul',
       uf: 'MS',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Sudoeste de Mato Grosso do Sul',
+      nomeRegiao: 'Sudoeste de Mato Grosso do Sul',
       uf: 'MS',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Pantanais Sul Mato-grossense',
+      nomeRegiao: 'Pantanais Sul Mato-grossense',
       uf: 'MS',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Centro-Sul Mato-grossense',
+      nomeRegiao: 'Centro-Sul Mato-grossense',
       uf: 'MT',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Nordeste Mato-grossense',
+      nomeRegiao: 'Nordeste Mato-grossense',
       uf: 'MT',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Norte Mato-grossense',
+      nomeRegiao: 'Norte Mato-grossense',
       uf: 'MT',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Sudeste Mato-grossense',
+      nomeRegiao: 'Sudeste Mato-grossense',
       uf: 'MT',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Sudoeste Mato-grossense',
+      nomeRegiao: 'Sudoeste Mato-grossense',
       uf: 'MT',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Centro Goiano',
+      nomeRegiao: 'Centro Goiano',
       uf: 'GO',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Leste Goiano',
+      nomeRegiao: 'Leste Goiano',
       uf: 'GO',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Sul Goiano',
+      nomeRegiao: 'Sul Goiano',
       uf: 'GO',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Norte Goiano',
+      nomeRegiao: 'Norte Goiano',
       uf: 'GO',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Noroeste Goiano',
+      nomeRegiao: 'Noroeste Goiano',
       uf: 'GO',
     },
   },
   {
     model: 'regiao',
     data: {
-      nome_regiao: 'Distrito Federal',
+      nomeRegiao: 'Distrito Federal',
       uf: 'DF',
     },
   },

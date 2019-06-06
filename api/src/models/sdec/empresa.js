@@ -7,45 +7,45 @@ export default function (sequelize, DataTypes) {
       unique: true,
       allowNull: false,
     },
-    endereco_blockchain: {
+    enderecoBlockchain: {
       type: DataTypes.STRING(45),
       unique: true,
       allowNull: false,
     },
-    razao_social: {
+    razaoSocial: {
       type: DataTypes.STRING(150),
       unique: true,
       allowNull: false,
     },
-    nome_fantasia: {
+    nomeFantasia: {
       type: DataTypes.STRING(60),
       allowNull: false,
     },
-    endereco_empresa: {
+    enderecoEmpresa: {
       type: DataTypes.STRING(125),
       allowNull: false,
     },
-    numero_endereco: {
+    numeroEndereco: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    complemento_endereco: {
+    complementoEndereco: {
       type: DataTypes.STRING(60),
       allowNull: true,
     },
-    bairro_endereco: {
+    bairroEndereco: {
       type: DataTypes.STRING(60),
       allowNull: false,
     },
-    cidade_endereco: {
-      type: DataTypes.STRING(7),
+    cidadeEndereco: {
+      type: DataTypes.STRING(60),
       allowNull: false,
     },
-    unidade_federacao: {
+    unidadeFederacao: {
       type: DataTypes.STRING(2),
       allowNull: false,
     },
-    pais_endereco: {
+    paisEndereco: {
       type: DataTypes.STRING(4),
       allowNull: true,
     },
@@ -63,16 +63,11 @@ export default function (sequelize, DataTypes) {
     },
   },
   {
-    underscored: true,
+    underscored: false,
     tableName: 'empresa',
     freezeTableName: true,
     timestamps: false,
   });
-
-  empresa.associate = (models) => {
-    empresa.hasMany(models.invoice, { primaryKey: { name: 'cnpj_empresa' } });
-  };
-
 
   return empresa;
 }
