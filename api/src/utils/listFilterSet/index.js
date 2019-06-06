@@ -205,6 +205,6 @@ export default class ListFilterSet {
    * @memberof ListView
    */
   executeQuery() {
-    return this.model.findAll(this.filters);
+    return this.model.findAndCountAll(this.filters);
   }
 }

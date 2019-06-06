@@ -226,12 +226,14 @@ export async function InvoiceGet(req) {
     // TODO: obs. serializers.invoice() might be a problem if the limit querystring
     // is too high.
     listView.executeQuery().then((queryResult) => {
-      const formattedQueryResult = queryResult.map(inv => serializers.invoice(inv));
-
+      const formattedQueryResult = {};
+      formattedQueryResult.rows = queryResult.rows.map(inv => serializers.invoice(inv));
+      formattedQueryResult.count = queryResult.count;
       const response = new ResponseList(req, formattedQueryResult);
       resolve({ code: 200, data: response.value() });
     }).catch((err) => {
-      resolve({ code: 500, data: err.msg });
+      resolve({ code: 500, data: err.message });
+      throw err;
     });
   });
 
