@@ -216,72 +216,74 @@ function constructOptions(args) {
 }
 
 export async function InvoiceGet(req) {
-  const listView = new ListFilterSet();
-  listView.setModel(models.invoice);
-  // listView.setFilterFields([
-  //   '',
-  // ]);
-  listView.buildQuery(req);
-  const queryResult = await listView.executeQuery();
-  // TODO: obs. serializers.invoice() might be a problem if the limit querystring
-  // is too high.
-  return {
-    data: queryResult.map(inv => serializers.invoice(inv)),
-    code: 200,
-  };
+  return new Promise(async (resolve) => {
+    const listView = new ListFilterSet();
+    listView.setModel(models.invoice);
+    // listView.setFilterFields([
+    //   '',
+    // ]);
+    listView.buildQuery(req);
+    // TODO: obs. serializers.invoice() might be a problem if the limit querystring
+    // is too high.
+    listView.executeQuery().then((queryResult) => {
+      const formattedQueryResult = queryResult.map(inv => serializers.invoice(inv));
+
+      const response = new ResponseList(req, formattedQueryResult);
+      resolve({ code: 200, data: response.value() });
+    }).catch((err) => {
+      resolve({ code: 500, data: err.msg });
+    });
+  });
+
+  // if (response.err) {
+  //   return {
+  //     code: response.code,
+  //     data: response.value(),
+  //   };
+  // }
+
+  // const { _town, _from } = req.query;
+
+  // const pagination = {
+  //   limit: response.cursor.limit,
+  //   offset: response.cursor.offset,
+  //   until: response.cursor.until,
+  // };
+
+  // if (_town && _from) {
+  //   const from = treatFrom(_from);
+  //   const town = await treatTown(_town);
+
+  //   if (town.err === undefined && from.err === undefined) {
+  //     const options = constructOptions([pagination, town, from]);
+  //   }
+
+  //   // what if there's an error?
+  // } if (_town) {
+  //   // stop
+  // } else if (_from) {
+  //   const from = treatFrom(_from);
+
+  //   if (from.err) {
+  //     response.constructError({ field: 'from', code: from.err, where: from.where });
+  //     return {
+  //       code: response.code,
+  //       data: response.value(),
+  //     };
+  //   }
 
 
-  const response = new ResponseList(req);
+  //   if (from.type === 'CNPJ') {
+  //     models.invoice.findAll({
+  //       where: {
 
-  if (response.err) {
-    return {
-      code: response.code,
-      data: response.value(),
-    };
-  }
-
-  const { _town, _from } = req.query;
-
-  const pagination = {
-    limit: response.cursor.limit,
-    offset: response.cursor.offset,
-    until: response.cursor.until,
-  };
-
-  if (_town && _from) {
-    const from = treatFrom(_from);
-    const town = await treatTown(_town);
-
-    if (town.err === undefined && from.err === undefined) {
-      const options = constructOptions([pagination, town, from]);
-    }
-
-    // what if there's an error?
-  } if (_town) {
-    // stop
-  } else if (_from) {
-    const from = treatFrom(_from);
-
-    if (from.err) {
-      response.constructError({ field: 'from', code: from.err, where: from.where });
-      return {
-        code: response.code,
-        data: response.value(),
-      };
-    }
-
-
-    if (from.type === 'CNPJ') {
-      models.invoice.findAll({
-        where: {
-
-        },
-        pagination,
-      });
-    }
-  } else {
-    // stop
-  }
+  //       },
+  //       pagination,
+  //     });
+  //   }
+  // } else {
+  //   // stop
+  // }
 }
 
 export const lintFixer = 5;
