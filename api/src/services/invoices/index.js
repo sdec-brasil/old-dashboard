@@ -236,56 +236,6 @@ export async function InvoiceGet(req) {
       throw err;
     });
   });
-
-  // if (response.err) {
-  //   return {
-  //     code: response.code,
-  //     data: response.value(),
-  //   };
-  // }
-
-  // const { _town, _from } = req.query;
-
-  // const pagination = {
-  //   limit: response.cursor.limit,
-  //   offset: response.cursor.offset,
-  //   until: response.cursor.until,
-  // };
-
-  // if (_town && _from) {
-  //   const from = treatFrom(_from);
-  //   const town = await treatTown(_town);
-
-  //   if (town.err === undefined && from.err === undefined) {
-  //     const options = constructOptions([pagination, town, from]);
-  //   }
-
-  //   // what if there's an error?
-  // } if (_town) {
-  //   // stop
-  // } else if (_from) {
-  //   const from = treatFrom(_from);
-
-  //   if (from.err) {
-  //     response.constructError({ field: 'from', code: from.err, where: from.where });
-  //     return {
-  //       code: response.code,
-  //       data: response.value(),
-  //     };
-  //   }
-
-
-  //   if (from.type === 'CNPJ') {
-  //     models.invoice.findAll({
-  //       where: {
-
-  //       },
-  //       pagination,
-  //     });
-  //   }
-  // } else {
-  //   // stop
-  // }
 }
 
 export const lintFixer = 5;
