@@ -78,7 +78,7 @@ export default class ListFilterSet {
     if (['INTEGER', 'TINYINT', 'BIGINT'].includes(modelField.type.key)) {
       return parseInt(value, 10);
     }
-    if (modelField.type.key === 'DATE') {
+    if (['DATE', 'DATEONLY'].includes(modelField.type.key)) {
       return Date.parse(value);
     }
     if (['STRING', 'VARCHAR', 'TEXT', 'TINYTEXT'].includes(modelField.type.key)) {
