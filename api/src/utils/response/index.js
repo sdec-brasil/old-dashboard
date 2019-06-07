@@ -8,13 +8,14 @@ function buildUrl(req, limit, nextOffset, count) {
   // check if there is actually a next/previous page of results
   if (nextOffset < 0) return null;
   if (nextOffset >= count) return null;
-  // TODO: treat negative offset and offset too high (with no results left to display)
+  // build the URL
   const lastPart = req.originalUrl.split('?')[0];
   const queryParams = req.query;
   let url = `${req.protocol}://${req.get('host')}${lastPart}?`;
   Object.keys(queryParams).forEach((key) => {
     if (key !== 'offset' && key !== 'limit') {
-      url = `${url}${key}=${queryParams[key]}&`;
+      const value = encodeURIComponent(queryParams[key]);
+      url = `${url}${key}=${value}&`;
     }
   });
   url = `${url}limit=${limit}&offset=${nextOffset}`;

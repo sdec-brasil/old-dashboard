@@ -75,13 +75,13 @@ export default class ListFilterSet {
     if (modelField.type.key === 'BOOLEAN') {
       return (value === 'true');
     }
-    if (modelField.type.key === 'INTEGER') {
+    if (['INTEGER', 'TINYINT', 'BIGINT'].includes(modelField.type.key)) {
       return parseInt(value, 10);
     }
     if (modelField.type.key === 'DATE') {
       return Date.parse(value);
     }
-    if (modelField.type.key === 'STRING') {
+    if (['STRING', 'VARCHAR', 'TEXT', 'TINYTEXT'].includes(modelField.type.key)) {
       return value;
     }
     throw new Error(`Field type ${modelField.type.key} not recognized.`);
@@ -167,6 +167,7 @@ export default class ListFilterSet {
             includeObject = {
               model: this.model.associations[field].target,
               as: field,
+              attributes: [],
             };
             this.filters.include.push(includeObject);
           }
