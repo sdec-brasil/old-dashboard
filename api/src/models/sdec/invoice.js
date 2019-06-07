@@ -256,7 +256,7 @@ export default function (sequelize, DataTypes) {
 
   invoice.associate = (models) => {
     invoice.belongsTo(models.prefeitura, { targetKey: 'codigoMunicipio', foreignKey: { name: 'prefeituraIncidencia', allowNull: false } });
-    invoice.belongsTo(models.empresa, { targetKey: 'enderecoBlockchain', foreignKey: { name: 'emissor', allowNull: false } });
+    invoice.belongsTo(models.empresa, { targetKey: 'enderecoBlockchain', as: 'emissor', foreignKey: { name: 'enderecoEmissor', allowNull: false } });
   };
 
   return invoice;

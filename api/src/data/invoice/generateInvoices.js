@@ -263,7 +263,7 @@ function prefeituraIncidencia() {
   return choice(prefeiturasCod);
 }
 
-function emissor() {
+function enderecoEmissor() {
   if (empresasEnd.length === 0) {
     throw new Error('!! Error !! no registered empresas found while creating invoices.');
   }
@@ -323,7 +323,7 @@ const generator = {
   art,
   estado,
   prefeituraIncidencia,
-  emissor,
+  enderecoEmissor,
 };
 
 function newInvoice() {
