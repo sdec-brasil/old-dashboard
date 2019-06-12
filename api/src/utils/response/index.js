@@ -62,6 +62,7 @@ export default class ResponseList {
     if (this.err) response.err = this.err;
     if (this.data) response.data = this.data;
 
+
     return response;
   }
 }
