@@ -1,6 +1,8 @@
 /* eslint-disable class-methods-use-this */
 
 import models from '../models';
+import { limitSettings } from '../config/config';
+
 
 const sqs = require('sequelize-querystring');
 
@@ -9,7 +11,7 @@ export default class CitiesController {
     const sq = sqs.withSymbolicOps(models.Sequelize, { symbolic: true });
     models.prefeitura.findAndCountAll({
       offset: parseInt(req.query.offset, 10) || 0,
-      limit: parseInt(req.query.limit, 10) || 10,
+      limit: parseInt(req.query.limit, 10) || limitSettings.city.get,
       where: req.query.filter ? sq.find(req.query.filter) : {},
       order: req.query.sort ? sq.sort(req.query.sort) : [],
     }).then((results) => {
@@ -21,6 +23,11 @@ export default class CitiesController {
   }
 
   async getById(req, res) {
-    throw new Error('Not implemented');
+    const inv = await models.prefeitura.findByPk(req.params.id);
+    if (inv) {
+      res.json(inv);
+    } else {
+      res.status(404).send('Not found');
+    }
   }
 }

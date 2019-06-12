@@ -20,7 +20,6 @@ export default class InvoiceController {
     } else {
       res.status(404).send('Not found');
     }
-    // throw new Error('Not implemented');
   }
 
   async replaceInvoice(req, res) {
