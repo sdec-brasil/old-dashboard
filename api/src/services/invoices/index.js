@@ -3,7 +3,7 @@ import { limitSettings } from '../../config/config';
 import formatters from '../../utils/formatters';
 import validate from '../../utils/validate';
 import models from '../../models';
-import { ListFilterSet, serializers } from '../../utils';
+import { serializers } from '../../utils';
 
 const sqs = require('sequelize-querystring');
 
@@ -38,9 +38,17 @@ export async function InvoiceGet(req) {
     const sq = sqs.withSymbolicOps(models.Sequelize, {});
     models.invoice.findAndCountAll({
       offset: parseInt(req.query.offset, 10) || 0,
-      limit: parseInt(req.query.limit, 10) || 10,
+      limit: parseInt(req.query.limit, 10) || limitSettings.invoice.get,
       where: req.query.filter ? sq.find(req.query.filter) : {},
       order: req.query.sort ? sq.sort(req.query.sort) : [],
+
+      // This should be uncommented after transforming blocoConfirmacao
+      // in a foreignkey to block.
+      // attributes: {
+      //   include: [[models.Sequelize.literal('block.block_nDatetime'), 'dataBlocoConfirmacao'],
+      //     [models.Sequelize.literal('block.block_hash'), 'blocoConfirmacao']],
+      // },
+      // include: [{ model: models.block, as: 'block', attributes: [] }],
     }).then((results) => {
       const formattedResults = {};
       formattedResults.rows = results.rows.map(inv => serializers.invoice(inv));
