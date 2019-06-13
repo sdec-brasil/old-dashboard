@@ -3,7 +3,7 @@ module.exports = [
     model: 'empresa',
     data: {
       cnpj: '1231231231234',
-      enderecoBlockchain: '1HB5XMLmzFVj8ALj6mfBsbifRoD4miY36v',
+      enderecoBlockchain: '1HB5XMLmzFVj8ALj6mfBsbifRoD4miY37c',
       razaoSocial: 'Adesivos ColaComigo e Colas S.A.',
       nomeFantasia: 'Cola-Comigo Adesivos',
       enderecoEmpresa: 'Rua dos cabelos',
@@ -22,7 +22,7 @@ module.exports = [
     model: 'empresa',
     data: {
       cnpj: '1231231231235',
-      enderecoBlockchain: '1UB5XMLmzFVj8ALj6mfBsbifRoD4miY36v',
+      enderecoBlockchain: '1UB5XMLmzFVj8ALj6mfBsbifRoD4miY36b',
       razaoSocial: 'Loja de Material Escolar Pablo Escobar LTDA.',
       nomeFantasia: 'Pablo Escobar Material Escolar',
       enderecoEmpresa: 'Rua dos colombianos',
@@ -41,7 +41,7 @@ module.exports = [
     model: 'empresa',
     data: {
       cnpj: '1231231231236',
-      enderecoBlockchain: '1HB5XMLmzFGj9ALj6mfBsbifRoD4miY36v',
+      enderecoBlockchain: '1HB5XMLmzFGj9ALj6mfBsbifRoD4miY35a',
       razaoSocial: 'Eletrônicos ViaShop LTDA.',
       nomeFantasia: 'ViaShop',
       enderecoEmpresa: 'Rua das luzes',

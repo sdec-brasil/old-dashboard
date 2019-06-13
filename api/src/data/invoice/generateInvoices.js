@@ -27,13 +27,13 @@ function txId() {
 // substitutedBy {
 // }
 
-function blocoConfirmacao() {
-  return uuid();
-}
+// function blocoConfirmacao() {
+//   return uuid();
+// }
 
-function dataBlocoConfirmacao() {
-  return new Date(Date.now() - randint(50) * 10000000);
-}
+// function dataBlocoConfirmacao() {
+//   return new Date(Date.now() - randint(50) * 10000000);
+// }
 
 // ----- Campos da Prestação:
 function baseCalculo() {
@@ -272,8 +272,8 @@ function enderecoEmissor() {
 
 const generator = {
   txId,
-  blocoConfirmacao,
-  dataBlocoConfirmacao,
+  // blocoConfirmacao,
+  // dataBlocoConfirmacao,
   baseCalculo,
   valLiquiNfse,
   competencia,
@@ -348,7 +348,7 @@ async function generateInvoices(n) {
     for (let i = 0; i < n; i += 1) {
       invoices.push(newInvoice());
     }
-    models.invoice.bulkCreate(invoices);
+    await models.invoice.bulkCreate(invoices);
     console.log('SETUP - Done populating invoices.');
     resolve(true);
   });

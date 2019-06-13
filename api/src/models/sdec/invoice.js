@@ -14,14 +14,14 @@ export default function (sequelize, DataTypes) {
       type: DataTypes.STRING(64),
       allowNull: true,
     },
-    blocoConfirmacao: {
-      type: DataTypes.STRING(),
-      allowNull: true,
-    },
-    dataBlocoConfirmacao: {
-      type: DataTypes.DATEONLY,
-      allowNull: true,
-    },
+    // blocoConfirmacao: {
+    //   type: DataTypes.STRING(),
+    //   allowNull: true,
+    // },
+    // dataBlocoConfirmacao: {
+    //   type: DataTypes.DATEONLY,
+    //   allowNull: true,
+    // },
     // ----- Campos da Prestação:
     baseCalculo: {
       type: DataTypes.BIGINT({ unsigned: true }),
@@ -257,6 +257,7 @@ export default function (sequelize, DataTypes) {
   invoice.associate = (models) => {
     invoice.belongsTo(models.prefeitura, { targetKey: 'codigoMunicipio', foreignKey: { name: 'prefeituraIncidencia', allowNull: false } });
     invoice.belongsTo(models.empresa, { targetKey: 'enderecoBlockchain', as: 'emissor', foreignKey: { name: 'enderecoEmissor', allowNull: false } });
+    invoice.belongsTo(models.block, { targetKey: 'block_id', as: 'block', foreignKey: { name: 'blocoConfirmacaoId', allowNull: true } });
   };
 
   return invoice;
