@@ -1,58 +1,36 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-
 <head>
-  <title>OAuth2Orize Recipes Login</title>
-  <!-- Needed for mobile sites to work -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <!-- Style sheets -->
-  <link rel="stylesheet" type="text/css" href="stylesheets/pure-min.css">
-  <link rel="stylesheet" type="text/css" href="stylesheets/base.css">
-  <link rel="stylesheet" type="text/css" href="stylesheets/sign-in-modules.css">
+    <title>SDEC: Login</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+    <style>
+        body         { padding-top:80px; }
+    </style>
 </head>
 <body>
+<div class="container">
+<div class="col-sm-6 col-sm-offset-3">
 
-<!-- HTML login screen form -->
-<form action="/login" method="post" class="pure-form pure-form-stacked">
-  <fieldset>
-    <!-- Upper box with Title, username, and password -->
-    <div class="upper-box">
-      <!-- Title -->
-      <div>
-        <h1 class="title-padding">Authorization Server</h1>
-      </div>
-      <div class="pure-control-group">
-        <!-- Username label and input -->
-        <label class="labels" for="name">Username:</label>
+    <h1><span class="fa fa-sign-in"></span> Login</h1>
 
-        <div class="input-fields">
-          <input class="pure-input-1 input-fields" id="name" type="text" placeholder="Hint: bob" name="username"/>
+    <!-- LOGIN FORM -->
+    <form action="/login" method="post">
+        <div class="form-group">
+            <label>Username</label>
+            <input type="text" class="form-control" name="username">
         </div>
-      </div>
-      <div class="pure-control-group">
-        <!-- Password label and input -->
-        <label class="labels" for="password">Password:</label>
-
-        <div class="input-fields">
-          <input class="pure-input-1 input-fields" id="password" type="password" placeholder="Hint: secret"
-                 name="password"/>
+        <div class="form-group">
+            <label>Password</label>
+            <input type="password" class="form-control" name="password">
         </div>
-      </div>
-    </div>
-    <!-- Bottom box with Sign in -->
-    <div class="bottom-box">
-      <div class="pure-controls sign-in-button">
-        <button type="submit" value="Submit" class="pure-button pure-button-primary">Sign in</button>
-      </div>
-    </div>
-  </fieldset>
-  <div class="from-text">
-    <a href="https://github.com/FrankHassanabad/Oauth2orizeRecipes">
-      From OAuth2OrizeRecipes
-    </a>
-  </div>
-</form>
 
+        <button type="submit" class="btn btn-warning btn-lg">Login</button>
+    </form>
+
+    <hr>
+
+</div>
+</div>
 </body>
 </html>
