@@ -75,13 +75,13 @@ export default class ListFilterSet {
     if (modelField.type.key === 'BOOLEAN') {
       return (value === 'true');
     }
-    if (modelField.type.key === 'INTEGER') {
+    if (['INTEGER', 'TINYINT', 'BIGINT'].includes(modelField.type.key)) {
       return parseInt(value, 10);
     }
-    if (modelField.type.key === 'DATE') {
+    if (['DATE', 'DATEONLY'].includes(modelField.type.key)) {
       return Date.parse(value);
     }
-    if (modelField.type.key === 'STRING') {
+    if (['STRING', 'VARCHAR', 'TEXT', 'TINYTEXT'].includes(modelField.type.key)) {
       return value;
     }
     throw new Error(`Field type ${modelField.type.key} not recognized.`);
@@ -130,8 +130,11 @@ export default class ListFilterSet {
    * @memberof ListView
    */
   buildQuery(req) {
+    if (req === undefined) {
+      throw new Error('!! Error !! ListView.buildQuery(req) requires the request as argument.');
+    }
     if (!this.model) {
-      throw new Error('!! Error !! ListView.buildQuery() called but model was not set yet! Set it with ListView.setModel(model).');
+      throw new Error('!! Error !! ListView.buildQuery(req) called but model was not set yet! Set it with ListView.setModel(model).');
     }
     Object.keys(req.query).forEach((queryField) => {
       if (this.filterFields.includes(queryField)) {
@@ -139,14 +142,14 @@ export default class ListFilterSet {
         const [field, targetField] = queryField.split('__');
         if (targetField) {
           /*
-          const modelField = this.model.associations[field];
-          const modelTargetField = this.model.associations[field]
-            .target.rawAttributes[targetField];
-          console.log('modelField:', Object.keys(modelField));
-          console.log('modelTargetField:', Object.keys(modelTargetField));
-          console.log('modelTargetField - field:', modelTargetField.field);
-          console.log('modelTargetField -  - fieldName:', modelTargetField.fieldName);
-          */
+            const modelField = this.model.associations[field];
+            const modelTargetField = this.model.associations[field]
+              .target.rawAttributes[targetField];
+            console.log('modelField:', Object.keys(modelField));
+            console.log('modelTargetField:', Object.keys(modelTargetField));
+            console.log('modelTargetField - field:', modelTargetField.field);
+            console.log('modelTargetField -  - fieldName:', modelTargetField.fieldName);
+            */
 
           // build include property
           if (this.filters.include === undefined) {
@@ -164,6 +167,7 @@ export default class ListFilterSet {
             includeObject = {
               model: this.model.associations[field].target,
               as: field,
+              attributes: [],
             };
             this.filters.include.push(includeObject);
           }
@@ -185,8 +189,10 @@ export default class ListFilterSet {
     // adding limit
     if (req.query.limit) {
       this.filters.limit = parseInt(req.query.limit, 10);
+    } else {
+      this.filters.limit = 20;
     }
-    console.log('query object built:', this.filters);
+    // console.log('query object built:', this.filters);
   }
 
 
@@ -200,6 +206,6 @@ export default class ListFilterSet {
    * @memberof ListView
    */
   executeQuery() {
-    return this.model.findAll(this.filters);
+    return this.model.findAndCountAll(this.filters);
   }
 }

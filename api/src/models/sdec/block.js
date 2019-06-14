@@ -84,7 +84,7 @@ export default function (sequelize, DataTypes) {
     },
     block_num_tx: {
       type: DataTypes.DECIMAL(10, 0),
-      allowNull: false,
+      allowNull: true,
     },
     block_ss_destroyed: {
       type: DataTypes.DECIMAL(28, 0),

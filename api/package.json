@@ -67,6 +67,7 @@
     "sequelize": "^5.3.0",
     "sequelize-fixtures": "^0.10.0",
     "sequelize-import": "^1.2.1",
+    "sequelize-querystring": "^0.10.0",
     "supertest": "^4.0.2",
     "swagger-jsdoc": "^3.2.9",
     "uuid": "^3.3.2"

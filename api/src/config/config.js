@@ -76,4 +76,7 @@ export const limitSettings = {
   invoice: {
     get: 100,
   },
+  city: {
+    get: 100,
+  },
 };

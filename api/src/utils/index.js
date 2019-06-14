@@ -4,7 +4,8 @@ import * as crypto from './crypto';
 import formatters from './formatters';
 import ListFilterSet from './listFilterSet';
 import serializers from './serializers';
-import generateInvoices from './generators/invoice';
+import treatNestedFilters from './treatNestedFilters';
+import customErr from './customErr';
 
 export {
   query,
@@ -13,5 +14,6 @@ export {
   formatters,
   ListFilterSet,
   serializers,
-  generateInvoices,
+  treatNestedFilters,
+  customErr,
 };
