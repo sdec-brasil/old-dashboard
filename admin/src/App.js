@@ -3,6 +3,7 @@ import { Admin, Resource, ListGuesser } from 'react-admin';
 import jsonServerProvider from 'ra-data-json-server';
 
 import UserList from './components/users.js';
+import HomePage from './components/homepage';
 
 function App() {
 
@@ -10,7 +11,7 @@ function App() {
 
   return (
     <div className='App'>
-      <Admin dataProvider={dataProvider}>
+      <Admin dashboard={HomePage} dataProvider={dataProvider}>
         <Resource name='users' list={UserList} />
       </Admin>
     </div>
