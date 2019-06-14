@@ -14,14 +14,6 @@ export default function (sequelize, DataTypes) {
       type: DataTypes.STRING(64),
       allowNull: true,
     },
-    // blocoConfirmacao: {
-    //   type: DataTypes.STRING(),
-    //   allowNull: true,
-    // },
-    // dataBlocoConfirmacao: {
-    //   type: DataTypes.DATEONLY,
-    //   allowNull: true,
-    // },
     // ----- Campos da Prestação:
     baseCalculo: {
       type: DataTypes.BIGINT({ unsigned: true }),

@@ -272,8 +272,6 @@ function enderecoEmissor() {
 
 const generator = {
   txId,
-  // blocoConfirmacao,
-  // dataBlocoConfirmacao,
   baseCalculo,
   valLiquiNfse,
   competencia,

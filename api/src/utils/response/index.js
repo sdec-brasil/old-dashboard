@@ -1,9 +1,5 @@
 import { limitSettings } from '../../config/config';
 
-// function validPagination(offset, until, limit) {
-//   return Number.isInteger(offset) && Number.isInteger(until) && Number.isInteger(limit);
-// }
-
 function buildUrl(req, limit, nextOffset, count) {
   // check if there is actually a next/previous page of results
   if (nextOffset < 0) return null;
@@ -45,13 +41,6 @@ export default class ResponseList {
       next: buildUrl(req, limit, offset + limit, this.meta.count),
       previous: buildUrl(req, limit, offset - limit, this.meta.count),
     };
-    // } else {
-    //   this.code = 400;
-    //   this.err = {
-    //     type: 'pagination_error',
-    //     path: req.query,
-    //   };
-    // }
   }
 
   value() {

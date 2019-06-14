@@ -5,6 +5,7 @@ import formatters from './formatters';
 import ListFilterSet from './listFilterSet';
 import serializers from './serializers';
 import treatNestedFilters from './treatNestedFilters';
+import customErr from './customErr';
 
 export {
   query,
@@ -14,4 +15,5 @@ export {
   ListFilterSet,
   serializers,
   treatNestedFilters,
+  customErr,
 };
