@@ -4,6 +4,7 @@ import process from 'process';
 import generateInvoices from './invoice/generateInvoices';
 import generateBlocks from './block/generateBlocks';
 
+
 export default function (models) {
   console.log('SETUP - Starting to populate tables with Initial Data');
 
@@ -28,5 +29,6 @@ export default function (models) {
     } catch (err) {
       reject(err);
     }
+
   });
 }

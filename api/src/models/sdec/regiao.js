@@ -12,6 +12,7 @@ export default function (sequelize, DataTypes) {
     timestamps: false,
   });
 
+
   regiao.associate = (models) => {
     regiao.belongsTo(models.estado, {
       targetKey: 'sigla',
