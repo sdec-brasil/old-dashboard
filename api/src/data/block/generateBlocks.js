@@ -21,9 +21,14 @@ function block_hash() {
   return uuid().slice(0, 5);
 }
 
+function block_hash_string() {
+  return uuid().slice(0, 5);
+}
+
 const generator = {
   block_id,
   block_hash,
+  block_hash_string,
 };
 
 async function newBlocks(n) {

@@ -13,7 +13,7 @@ export default function (sequelize, DataTypes) {
         unique: true,
       },
       block_hash_string: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(),
         allowNull: false,
         unique: true,
       },

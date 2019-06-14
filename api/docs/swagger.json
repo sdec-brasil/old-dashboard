@@ -1,13 +1,13 @@
 {
-  "openapi": "3.0.0",
-  "info": {
-    "title": "SDEC",
-    "version": "1.0.0",
-    "description": "API Pública do Sistema"
-  },
-  "host": "localhost:8000",
-  "basePath": "/",
-  "paths": {},
-  "components": {},
-  "tags": []
+    "openapi": "3.0.0",
+    "info": {
+        "title": "SDEC",
+        "version": "1.0.0",
+        "description": "API Pública do Sistema"
+    },
+    "host": "localhost:8000",
+    "basePath": "/",
+    "paths": {},
+    "components": {},
+    "tags": []
 }

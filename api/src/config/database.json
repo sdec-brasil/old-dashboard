@@ -13,7 +13,7 @@
     "database": "abe",
     "host": "127.0.0.1",
     "dialect": "mysql",
-    "port": 4306
+    "port": 5306
   },
   "production": {
     "username": "root",
