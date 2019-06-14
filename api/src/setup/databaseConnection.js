@@ -25,7 +25,8 @@ const connection = new Sequelize(
     logging: false,
     operatorsAliases: Sequelize.Op,
     port: databaseConfigEnv.port,
-  }, opts,
+  },
+  opts,
 );
 
 // Test connection
