@@ -1,9 +1,13 @@
 import React from 'react';
-import { Admin, Resource, ListGuesser } from 'react-admin';
+import { Admin, Resource, ListGuesser, ShowGuesser } from 'react-admin';
 import jsonServerProvider from 'ra-data-json-server';
 
-import UserList from './components/users.js';
 import HomePage from './components/homepage';
+import DataProvider from './data/dataProvider';
+
+import invoice from './components/Invoice';
+import block from './components/Block';
+import city from './components/City';
 
 function App() {
 
@@ -11,8 +15,10 @@ function App() {
 
   return (
     <div className='App'>
-      <Admin dashboard={HomePage} dataProvider={dataProvider}>
-        <Resource name='users' list={UserList} />
+      <Admin dashboard={HomePage} dataProvider={DataProvider}>
+        <Resource name='invoices' {...invoice} />
+        <Resource name='cities' {...city} />
+        <Resource name='blocks' {...block} />
       </Admin>
     </div>
   );
