@@ -35,11 +35,10 @@ const InvoiceShow = (props) => {
   );
 }
 
-/*
 InvoiceShow.propTypes = {
-    location: PropTypes.object.isRequired,
-    match: PropTypes.object.isRequired,
-    permissions: PropTypes.string,
-}; */
+    field: PropTypes.object.isRequired,
+    record: PropTypes.object.isRequired,
+    label: PropTypes.string,
+}; 
 
 export default InvoiceShow;
