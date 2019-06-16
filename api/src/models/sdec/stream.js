@@ -17,17 +17,22 @@ export default function (sequelize, DataTypes) {
       },
     },
     {
-      underscored: true,
+      underscored: false,
       tableName: 'stream',
       timestamps: false,
     },
   );
 
   stream.associate = (models) => {
-    stream.belongsTo(models.regiao, { targetKey: 'nomeRegiao', foreignKey: { name: 'nomeRegiao', allowNull: true } });
-    stream.belongsTo(models.regiao, { targetKey: 'uf', foreignKey: { name: 'uf', allowNull: true } });
+    stream.belongsTo(models.regiao, {
+      targetKey: 'nomeRegiao',
+      foreignKey: { name: 'nomeRegiao', allowNull: true },
+    });
+    stream.belongsTo(models.regiao, {
+      targetKey: 'uf',
+      foreignKey: { name: 'uf', allowNull: true },
+    });
   };
-
 
   return stream;
 }
