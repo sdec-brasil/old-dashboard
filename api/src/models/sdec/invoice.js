@@ -97,7 +97,7 @@ export default function (sequelize, DataTypes) {
       allowNull: false,
     },
     codCnae: {
-      type: DataTypes.INTEGER(),
+      type: DataTypes.STRING(20),
       allowNull: true,
     },
     // This may need to be a table
