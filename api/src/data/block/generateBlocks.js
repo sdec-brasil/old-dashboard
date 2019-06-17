@@ -21,14 +21,20 @@ function block_hash() {
   return uuid().slice(0, 5);
 }
 
-function block_hash_string() {
-  return uuid().slice(0, 5);
+// commented this field because it is not in the worker yet.
+// function block_hash_string() {
+//   return uuid().slice(0, 5);
+// }
+
+function block_num_tx() {
+  return randint(10000);
 }
 
 const generator = {
   block_id,
   block_hash,
-  block_hash_string,
+  // block_hash_string,
+  block_num_tx,
 };
 
 async function newBlocks(n) {
