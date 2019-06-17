@@ -40,6 +40,8 @@ export default function (sequelize, DataTypes) {
     },
   }, {
     tableName: 'asset',
+    freezeTableName: true,
+    timestamps: false,
   });
   return asset;
 }

@@ -1,5 +1,5 @@
 export default function (sequelize, DataTypes) {
-  return sequelize.define('block_next', {
+  const blockNext = sequelize.define('block_next', {
     block_id: {
       type: DataTypes.DECIMAL(14, 0),
       allowNull: false,
@@ -20,5 +20,8 @@ export default function (sequelize, DataTypes) {
     },
   }, {
     tableName: 'block_next',
+    freezeTableName: true,
+    timestamps: false,
   });
+  return blockNext;
 }

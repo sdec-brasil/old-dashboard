@@ -6,13 +6,21 @@ import SequelizeImport from 'sequelize-import';
 import databaseConnection from '../setup/databaseConnection';
 
 const path = require('path');
+const fs = require('fs');
 
 // Importing all models from the directory and subdirectories
 const models = SequelizeImport(`${__dirname}/sdec/`, databaseConnection, {
   exclude: ['index.js'],
 });
 
-models.block = databaseConnection.import(path.join(`${__dirname}/blockchain/`, 'block.js'));
+// Importing all models from the blockchain directory
+const PATH = `${__dirname}/blockchain/`;
+const files = fs.readdirSync(PATH);
+files.forEach((file) => {
+  const [fileName] = file.split('.');
+  models[fileName] = databaseConnection.import(path.join(PATH, fileName));
+});
+
 
 Object.keys(models).forEach((modelName) => {
   if ('associate' in models[modelName]) {

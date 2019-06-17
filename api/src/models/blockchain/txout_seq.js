@@ -1,5 +1,5 @@
 export default function (sequelize, DataTypes) {
-  return sequelize.define('txout_seq', {
+  const txoutSeq = sequelize.define('txout_seq', {
     id: {
       type: DataTypes.BIGINT,
       allowNull: false,
@@ -8,5 +8,8 @@ export default function (sequelize, DataTypes) {
     },
   }, {
     tableName: 'txout_seq',
+    freezeTableName: true,
+    timestamps: false,
   });
+  return txoutSeq;
 }

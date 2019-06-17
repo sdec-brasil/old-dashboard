@@ -1,5 +1,5 @@
 export default function (sequelize, DataTypes) {
-  return sequelize.define('tx_seq', {
+  const txSeq = sequelize.define('tx_seq', {
     id: {
       type: DataTypes.BIGINT,
       allowNull: false,
@@ -8,5 +8,8 @@ export default function (sequelize, DataTypes) {
     },
   }, {
     tableName: 'tx_seq',
+    freezeTableName: true,
+    timestamps: false,
   });
+  return txSeq;
 }

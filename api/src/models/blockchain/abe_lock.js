@@ -1,5 +1,5 @@
 export default function (sequelize, DataTypes) {
-  return sequelize.define('abe_lock', {
+  const abeLock = sequelize.define('abe_lock', {
     lock_id: {
       type: DataTypes.DECIMAL,
       allowNull: false,
@@ -9,7 +9,11 @@ export default function (sequelize, DataTypes) {
       type: DataTypes.STRING(255),
       allowNull: true,
     },
-  }, {
+  },
+  {
     tableName: 'abe_lock',
+    freezeTableName: true,
+    timestamps: false,
   });
+  return abeLock;
 }

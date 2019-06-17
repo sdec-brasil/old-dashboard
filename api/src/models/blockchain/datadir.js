@@ -1,5 +1,5 @@
 export default function (sequelize, DataTypes) {
-  return sequelize.define('datadir', {
+  const datadir = sequelize.define('datadir', {
     datadir_id: {
       type: DataTypes.DECIMAL(10, 0),
       allowNull: false,
@@ -23,5 +23,8 @@ export default function (sequelize, DataTypes) {
     },
   }, {
     tableName: 'datadir',
+    freezeTableName: true,
+    timestamps: false,
   });
+  return datadir;
 }

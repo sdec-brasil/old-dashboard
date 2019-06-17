@@ -1,5 +1,5 @@
 export default function (sequelize, DataTypes) {
-  return sequelize.define('pubkey', {
+  const pubkey = sequelize.define('pubkey', {
     pubkey_id: {
       type: DataTypes.DECIMAL(26, 0),
       allowNull: false,
@@ -20,5 +20,8 @@ export default function (sequelize, DataTypes) {
     },
   }, {
     tableName: 'pubkey',
+    freezeTableName: true,
+    timestamps: false,
   });
+  return pubkey;
 }

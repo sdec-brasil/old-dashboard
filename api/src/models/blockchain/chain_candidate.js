@@ -1,5 +1,5 @@
 export default function (sequelize, DataTypes) {
-  return sequelize.define('chain_candidate', {
+  const chainCandidate = sequelize.define('chain_candidate', {
     chain_id: {
       type: DataTypes.DECIMAL(10, 0),
       allowNull: false,
@@ -24,6 +24,8 @@ export default function (sequelize, DataTypes) {
     },
   }, {
     tableName: 'chain_candidate',
+    freezeTableName: true,
+    timestamps: false,
     indexes: [
       {
         name: 'x_cc_block',
@@ -39,4 +41,5 @@ export default function (sequelize, DataTypes) {
       },
     ],
   });
+  return chainCandidate;
 }

@@ -1,5 +1,5 @@
 export default function (sequelize, DataTypes) {
-  return sequelize.define('txout_detail', {
+  const txoutDetail = sequelize.define('txout_detail', {
     chain_id: {
       type: DataTypes.DECIMAL(10),
       allowNull: false,
@@ -75,5 +75,8 @@ export default function (sequelize, DataTypes) {
   }, {
     tableName: 'txout_detail',
     engine: 'MYISAM',
+    freezeTableName: true,
+    timestamps: false,
   });
+  return txoutDetail;
 }

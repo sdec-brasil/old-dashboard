@@ -1,5 +1,5 @@
 export default function (sequelize, DataTypes) {
-  return sequelize.define('unlinked_txin', {
+  const unlinkedTxin = sequelize.define('unlinked_txin', {
     txin_id: {
       type: DataTypes.DECIMAL(26, 0),
       allowNull: false,
@@ -19,6 +19,8 @@ export default function (sequelize, DataTypes) {
     },
   }, {
     tableName: 'unlinked_txin',
+    freezeTableName: true,
+    timestamps: false,
     indexes: [
       {
         name: 'x_unlinked_txin_outpoint',
@@ -26,4 +28,5 @@ export default function (sequelize, DataTypes) {
       },
     ],
   });
+  return unlinkedTxin;
 }

@@ -1,5 +1,5 @@
 export default function (sequelize, DataTypes) {
-  return sequelize.define('chain_summary', {
+  const chainSummary = sequelize.define('chain_summary', {
     chain_id: {
       type: DataTypes.DECIMAL(10, 0),
       allowNull: false,
@@ -87,5 +87,8 @@ export default function (sequelize, DataTypes) {
   }, {
     tableName: 'chain_summary',
     engine: 'MYISAM',
+    freezeTableName: true,
+    timestamps: false,
   });
+  return chainSummary;
 }
