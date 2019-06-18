@@ -15,14 +15,6 @@ const listBlocks = async req => new Promise((resolve) => {
     limit: parseInt(req.query.limit, 10) || limitSettings.city.get,
     where,
     order: req.query.sort ? sq.sort(req.query.sort) : [],
-    // include: [
-    //   {
-    //     model: models.municipio,
-    //     include: [
-    //       models.estado, models.regiao,
-    //     ],
-    //   },
-    // ],
   }).then((results) => {
     const response = new ResponseList(req, results);
     resolve({ code: 200, data: response.value() });
@@ -33,17 +25,7 @@ const listBlocks = async req => new Promise((resolve) => {
 });
 
 const getBlock = async req => new Promise(async (resolve) => {
-  const inv = await models.block.findByPk(req.params.id,
-    {
-      // include: [
-      //   {
-      //     model: models.municipio,
-      //     include: [
-      //       models.estado, models.regiao,
-      //     ],
-      //   },
-      // ],
-    });
+  const inv = await models.block.findByPk(req.params.id);
   if (inv) {
     resolve({ code: 200, data: inv });
   } else {

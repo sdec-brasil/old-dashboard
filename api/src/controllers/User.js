@@ -8,7 +8,8 @@ export default class UserControllers {
   }
 
   async patch(req, res) {
-    const response = await service.patchUserInfo(req);
-    res.status(response.code).send(response.data);
+    throw new Error('Not implemented');
+    // const response = await service.patchUserInfo(req);
+    // res.status(response.code).send(response.data);
   }
 }
