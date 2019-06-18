@@ -30,8 +30,8 @@ export default function (sequelize, DataTypes) {
         allowNull: true,
       },
       block_datetime: {
-         type: DataTypes.DATE,
-         allowNull: true,
+        type: DataTypes.DATE,
+        allowNull: true,
       },
       block_nBits: {
         type: DataTypes.DECIMAL(10, 0),

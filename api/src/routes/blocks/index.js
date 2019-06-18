@@ -1,9 +1,9 @@
 export default {
-  // Retorna uma lista das últimas notas fiscais emitidas
+  // Retorna uma lista dos últimos blocos confirmados
   'GET /blocks': {
     path: 'Blocks.get',
   },
-  // Pega nota fiscal pelo txid
+  // Pega um bloco pelo block_id
   'GET /blocks/:id': {
     path: 'Blocks.getById',
   },
