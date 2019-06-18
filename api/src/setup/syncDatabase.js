@@ -11,14 +11,14 @@ export default function () {
     .sync({ force: false })
     .then(() => {
       console.info('INFO - Database sync complete.');
-      // seed(models)
-      //   .then(() => {
-      //     console.info('INFO - Done populating tables');
-      //   })
-      //   .catch((err) => {
-      //     console.info('ERR - Populating Tables');
-      //     throw new Error(err);
-      //   });
+      seed(models)
+        .then(() => {
+          console.info('INFO - Done populating tables');
+        })
+        .catch((err) => {
+          console.info('ERR - Populating Tables');
+          throw new Error(err);
+        });
     })
     .catch((err) => {
       console.error('ERROR - Unable to sync database.');
