@@ -12,11 +12,11 @@ export default function (sequelize, DataTypes) {
         allowNull: false,
         unique: true,
       },
-      // block_hash_string: {
-      //   type: DataTypes.STRING(),
-      //   allowNull: false,
-      //   unique: true,
-      // },
+      block_hash_string: {
+        type: DataTypes.STRING(),
+        allowNull: false,
+        unique: true,
+      },
       block_version: {
         type: DataTypes.DECIMAL(10, 0),
         allowNull: true,
@@ -29,10 +29,10 @@ export default function (sequelize, DataTypes) {
         type: DataTypes.DECIMAL(20, 0),
         allowNull: true,
       },
-      // block_datetime: {
-      //   type: DataTypes.DATE,
-      //   allowNull: true,
-      // },
+      block_datetime: {
+         type: DataTypes.DATE,
+         allowNull: true,
+      },
       block_nBits: {
         type: DataTypes.DECIMAL(10, 0),
         allowNull: true,
