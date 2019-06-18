@@ -1,5 +1,5 @@
 export default function (sequelize, DataTypes) {
-  return sequelize.define('asset_seq', {
+  const assetSeq = sequelize.define('asset_seq', {
     id: {
       type: DataTypes.BIGINT,
       allowNull: false,
@@ -8,5 +8,8 @@ export default function (sequelize, DataTypes) {
     },
   }, {
     tableName: 'asset_seq',
+    freezeTableName: true,
+    timestamps: false,
   });
+  return assetSeq;
 }

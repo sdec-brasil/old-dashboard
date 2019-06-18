@@ -1,5 +1,5 @@
 export default function (sequelize, DataTypes) {
-  return sequelize.define('multisig_pubkey', {
+  const multisigPubkey = sequelize.define('multisig_pubkey', {
     multisig_id: {
       type: DataTypes.DECIMAL(26, 0),
       allowNull: false,
@@ -20,5 +20,8 @@ export default function (sequelize, DataTypes) {
     },
   }, {
     tableName: 'multisig_pubkey',
+    freezeTableName: true,
+    timestamps: false,
   });
+  return multisigPubkey;
 }

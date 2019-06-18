@@ -1,14 +1,17 @@
 /* jshint indent: 2 */
 
-module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('block_seq', {
+export default function (sequelize, DataTypes) {
+  const blockSeq = sequelize.define('block_seq', {
     id: {
       type: DataTypes.BIGINT,
       allowNull: false,
       primaryKey: true,
-      autoIncrement: true
-    }
+      autoIncrement: true,
+    },
   }, {
-    tableName: 'block_seq'
+    tableName: 'block_seq',
+    freezeTableName: true,
+    timestamps: false,
   });
-};
+  return blockSeq;
+}

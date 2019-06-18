@@ -1,5 +1,5 @@
 export default function (sequelize, DataTypes) {
-  return sequelize.define('pubkey_seq', {
+  const pubkeySeq = sequelize.define('pubkey_seq', {
     id: {
       type: DataTypes.BIGINT,
       allowNull: false,
@@ -8,5 +8,8 @@ export default function (sequelize, DataTypes) {
     },
   }, {
     tableName: 'pubkey_seq',
+    freezeTableName: true,
+    timestamps: false,
   });
+  return pubkeySeq;
 }

@@ -1,5 +1,5 @@
 export default function (sequelize, DataTypes) {
-  return sequelize.define('txout', {
+  const txout = sequelize.define('txout', {
     txout_id: {
       type: DataTypes.DECIMAL(26, 0),
       allowNull: false,
@@ -31,6 +31,8 @@ export default function (sequelize, DataTypes) {
     },
   }, {
     tableName: 'txout',
+    freezeTableName: true,
+    timestamps: false,
     indexes: [
       {
         name: 'x_txout_pubkey',
@@ -38,4 +40,5 @@ export default function (sequelize, DataTypes) {
       },
     ],
   });
+  return txout;
 }

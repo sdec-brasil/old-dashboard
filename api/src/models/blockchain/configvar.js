@@ -1,5 +1,5 @@
 export default function (sequelize, DataTypes) {
-  return sequelize.define('configvar', {
+  const configvar = sequelize.define('configvar', {
     configvar_name: {
       type: DataTypes.STRING(100),
       allowNull: false,
@@ -11,5 +11,8 @@ export default function (sequelize, DataTypes) {
     },
   }, {
     tableName: 'configvar',
+    freezeTableName: true,
+    timestamps: false,
   });
+  return configvar;
 }

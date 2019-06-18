@@ -1,5 +1,5 @@
 export default function (sequelize, DataTypes) {
-  return sequelize.define('asset_txid', {
+  const assetTxid = sequelize.define('asset_txid', {
     asset_id: {
       type: DataTypes.DECIMAL(10, 0),
       allowNull: false,
@@ -22,5 +22,8 @@ export default function (sequelize, DataTypes) {
     },
   }, {
     tableName: 'asset_txid',
+    freezeTableName: true,
+    timestamps: false,
   });
+  return assetTxid;
 }

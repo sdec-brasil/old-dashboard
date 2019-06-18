@@ -1,5 +1,5 @@
 export default function (sequelize, DataTypes) {
-  return sequelize.define('txin_detail', {
+  const txinDetail = sequelize.define('txin_detail', {
     chain_id: {
       type: DataTypes.DECIMAL(10),
       allowNull: false,
@@ -87,5 +87,8 @@ export default function (sequelize, DataTypes) {
   }, {
     tableName: 'txin_detail',
     engine: 'MYISAM',
+    freezeTableName: true,
+    timestamps: false,
   });
+  return txinDetail;
 }

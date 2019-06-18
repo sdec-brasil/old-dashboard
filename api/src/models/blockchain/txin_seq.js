@@ -1,5 +1,5 @@
 export default function (sequelize, DataTypes) {
-  return sequelize.define('txin_seq', {
+  const txinSeq = sequelize.define('txin_seq', {
     id: {
       type: DataTypes.BIGINT,
       allowNull: false,
@@ -8,5 +8,8 @@ export default function (sequelize, DataTypes) {
     },
   }, {
     tableName: 'txin_seq',
+    freezeTableName: true,
+    timestamps: false,
   });
+  return txinSeq;
 }

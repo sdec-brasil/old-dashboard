@@ -1,5 +1,5 @@
 export default function (sequelize, DataTypes) {
-  return sequelize.define('txout_approx', {
+  const txoutApprox = sequelize.define('txout_approx', {
     txout_id: {
       type: DataTypes.DECIMAL(26),
       allowNull: false,
@@ -15,5 +15,8 @@ export default function (sequelize, DataTypes) {
   }, {
     tableName: 'txout_approx',
     engine: 'MYISAM',
+    freezeTableName: true,
+    timestamps: false,
   });
+  return txoutApprox;
 }
