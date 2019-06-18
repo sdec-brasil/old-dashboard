@@ -4,14 +4,22 @@ import { customErr } from '../../utils';
 import passport from '../../setup/passport';
 
 
-const getUserInfo = async req => new Promise((resolve) => {
-  console.log('user', req.user);
+const getUserInfo = async req => new Promise(async (resolve) => {
   if (req.user) {
-    console.log(req.user);
-    resolve({ code: 200, data: req.user });
-  } else {
-    resolve({ code: 500, data: { error: customErr.formatErr({ type: 'userNotFound', message: 'No user came in the request object.' }) } });
+    const userInstance = await models.user.findOne({
+      where: {
+        id: req.user.id,
+      },
+      include: [{
+        model: models.empresa,
+      }],
+    });
+    if (userInstance !== null) {
+      delete userInstance.password;
+      resolve({ code: 200, data: userInstance });
+    }
   }
+  resolve({ code: 500, data: { error: customErr.formatErr({ type: 'userNotFound', message: 'User not found. Make sure you are logged in.' }) } });
 });
 
 const patchUserInfo = async req => new Promise(async (resolve) => {

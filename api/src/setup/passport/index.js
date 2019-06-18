@@ -1,7 +1,6 @@
 // Imports
 import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
-import { Strategy as CookieStrategy } from 'passport-cookie';
 import { BasicStrategy } from 'passport-http';
 import { Strategy as ClientPasswordStrategy } from 'passport-oauth2-client-password';
 import { Strategy as BearerStrategy } from 'passport-http-bearer';
@@ -26,23 +25,6 @@ export default (() => {
         .then(user => done(null, user))
         .catch(() => done(null, false));
     },
-  ));
-
-  /**
-   * CookieStrategy
-   *
-   * This strategy is used to authenticate users based on a username and password.
-   * Anytime a request is made to authorize an application, we must ensure that
-   * a user is logged in before asking them to approve the request.
-   */
-  passport.use(new CookieStrategy(
-    ((accessToken, done) => {
-      console.log('acessToken', acessToken);
-      query.accessTokens.findByToken(accessToken)
-        .then(token => validate.token(token, accessToken))
-        .then(user => done(null, user, { scope: '*' }))
-        .catch(() => done(null, false));
-    }),
   ));
 
 

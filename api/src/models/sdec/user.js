@@ -28,6 +28,7 @@ export default function (sequelize, DataTypes) {
 
   user.associate = (models) => {
     user.hasMany(models.conta_bancaria, { primaryKey: { name: 'user_id' } });
+    user.belongsTo(models.empresa, { targetKey: 'cnpj', foreignKey: { name: 'empresaCnpj', allowNull: true } });
   };
 
   user.beforeSave((userInstance, options) => {
