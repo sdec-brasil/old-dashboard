@@ -7,8 +7,18 @@ const sqs = require('sequelize-querystring');
 
 const listInvoices = async req => new Promise(async (resolve) => {
   const sq = sqs.withSymbolicOps(models.Sequelize, {});
-  const where = req.query.filter ? sq.find(req.query.filter) : {};
-  treatNestedFilters(req.query, where);
+  let filter = req.query.filter ? req.query.filter : '';
+
+  if (!filter.includes('block.block_datetime')) {
+    if (filter.length === 0) {
+      filter += `block.block_datetime lte ${((new Date()).toISOString())}`;
+    } else {
+      filter += `, block.block_datetime lte ${((new Date()).toISOString())}`;
+    }
+  }
+  const where = sq.find(filter);
+  treatNestedFilters(filter, where);
+
   models.invoice.findAndCountAll({
     offset: parseInt(req.query.offset, 10) || 0,
     limit: parseInt(req.query.limit, 10) || limitSettings.invoice.get,
@@ -33,7 +43,7 @@ const listInvoices = async req => new Promise(async (resolve) => {
     const formattedResults = {};
     formattedResults.rows = results.rows.map(inv => serializers.invoice(inv));
     formattedResults.count = results.count;
-    const response = new ResponseList(req, formattedResults);
+    const response = new ResponseList(req, formattedResults, filter);
     resolve({ code: 200, data: response.value() });
   }).catch((err) => {
     resolve({ code: 500, data: { error: customErr.formatErr(err) } });

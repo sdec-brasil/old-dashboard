@@ -1,21 +1,31 @@
 import ResponseList from '../../utils/response';
 import { limitSettings } from '../../config/config';
 import models from '../../models';
-import { serializers, treatNestedFilters, customErr } from '../../utils';
+import { treatNestedFilters, customErr } from '../../utils';
 
 const sqs = require('sequelize-querystring');
 
 const listCompanies = async req => new Promise(async (resolve) => {
   const sq = sqs.withSymbolicOps(models.Sequelize, {});
-  const where = req.query.filter ? sq.find(req.query.filter) : {};
-  treatNestedFilters(req.query, where);
+  let filter = req.query.filter ? req.query.filter : '';
+
+  if (!filter.includes('block.block_datetime')) {
+    if (filter.length === 0) {
+      filter += `block.block_datetime lte ${((new Date()).toISOString())}`;
+    } else {
+      filter += `, block.block_datetime lte ${((new Date()).toISOString())}`;
+    }
+  }
+  const where = sq.find(filter);
+  treatNestedFilters(filter, where);
+
   models.empresa.findAndCountAll({
     offset: parseInt(req.query.offset, 10) || 0,
     limit: parseInt(req.query.limit, 10) || limitSettings.invoice.get,
     where,
     order: req.query.sort ? sq.sort(req.query.sort) : [],
   }).then((results) => {
-    const response = new ResponseList(req, results);
+    const response = new ResponseList(req, results, filter);
     resolve({ code: 200, data: response.value() });
   }).catch((err) => {
     resolve({ code: 500, data: { error: customErr.formatErr(err) } });
