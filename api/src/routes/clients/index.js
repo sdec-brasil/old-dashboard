@@ -1,26 +1,26 @@
-import login from 'connect-ensure-login';
+import passport from 'passport';
 
-const routes = {
-  'POST /clients': 'Clients.post',
+export default {
+  'POST /client': 'Clients.post',
 
   'GET /client': {
     path: 'Clients.getMe',
     middlewares: [
-      login.ensureLoggedIn,
+      passport.authenticate('bearer', { session: false }),
     ],
   },
 
   'PATCH /client': {
     path: 'Clients.patch',
     middlewares: [
-      login.ensureLoggedIn,
+      passport.authenticate('bearer', { session: false }),
     ],
   },
 
   'DELETE /client': {
     path: 'Clients.delete',
     middlewares: [
-      login.ensureLoggedIn,
+      passport.authenticate('bearer', { session: false }),
     ],
   },
 };

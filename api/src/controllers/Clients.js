@@ -1,16 +1,20 @@
 /* eslint-disable class-methods-use-this */
+import service from '../services/clients';
 
-export default class ClientController {
+export default class ClientsController {
   async getMe(req, res) {
-    throw new Error('Not implemented');
+    const response = await service.getClientInfo(req);
+    res.status(response.code).send(response.data);
   }
 
   async post(req, res) {
-    throw new Error('Not implemented');
+    const response = await service.createNewClient(req);
+    res.status(response.code).send(response.data);
   }
 
   async patch(req, res) {
-    throw new Error('Not implemented');
+    const response = await service.updateClient(req);
+    res.status(response.code).send(response.data);
   }
 
   async delete(req, res) {
