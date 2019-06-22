@@ -241,9 +241,6 @@ const decision = [
 const token = [
   passport.authenticate(['basic', 'oauth2-client-password'], { session: false }),
   server.token(),
-  (res, req) => {
-    res.send(200).message('oi');
-  },
   server.errorHandler(),
 ];
 
