@@ -3,16 +3,22 @@ import login from 'connect-ensure-login';
 export default {
   // Retorna informações do usuário logado
   'GET /user': {
-    path: 'User.get',
+    path: 'Users.getMe',
     middlewares: [
       login.ensureLoggedIn(),
     ],
   },
   // Edita informações do usuário logado
   'PATCH /user': {
-    path: 'User.patch',
+    path: 'Users.updateUser',
     middlewares: [
-      login.ensureLoggedIn,
+      login.ensureLoggedIn(),
+    ],
+  },
+  // Cria um novo usuário
+  'POST /user': {
+    path: 'Users.post',
+    middlewares: [
     ],
   },
 };

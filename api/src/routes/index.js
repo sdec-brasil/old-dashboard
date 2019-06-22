@@ -7,7 +7,7 @@ import clients from './clients';
 import invoices from './invoices';
 import city from './city';
 import transactions from './transactions';
-import user from './user';
+import users from './users';
 import companies from './companies';
 
 const routes = {
@@ -19,7 +19,7 @@ const routes = {
   ...invoices,
   ...city,
   ...transactions,
-  ...user,
+  ...users,
   ...companies,
 };
 
