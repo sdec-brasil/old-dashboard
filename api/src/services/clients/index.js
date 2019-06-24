@@ -37,9 +37,33 @@ const createNewClient = async req => new Promise(async (resolve) => {
   }
 });
 
+const deleteClient = async req => new Promise(async (resolve) => {
+  const clientId = req.user.id;
+  await models.authorizationCode.destroy({
+    where:
+    {
+      client_id: clientId,
+    },
+  });
+  await models.accessToken.destroy({
+    where: {
+      client_id: clientId,
+    },
+  });
+  await models.refreshToken.destroy({
+    where: {
+      client_id: clientId,
+    },
+  });
+  await (await models.client.findByPk(clientId)).destroy();
+
+  resolve({ code: 200, data: { success: 'Deleted client and revoked all his tokens.' } });
+});
+
 
 export default {
   getClientInfo,
   updateClient,
   createNewClient,
+  deleteClient,
 };

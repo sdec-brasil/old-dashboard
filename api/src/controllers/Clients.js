@@ -18,6 +18,7 @@ export default class ClientsController {
   }
 
   async delete(req, res) {
-    throw new Error('Not implemented');
+    const response = await service.deleteClient(req);
+    res.status(response.code).send(response.data);
   }
 }
