@@ -235,7 +235,7 @@ export default function (sequelize, DataTypes) {
       // 3 - substituida,
       // 4 - dados inconsistentes
       type: DataTypes.TINYINT({ unsigned: true }),
-      allowNull: false,
+      allowNull: true,
       defaultValue: 0,
     },
   },
