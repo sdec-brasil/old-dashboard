@@ -1,25 +1,24 @@
 import login from 'connect-ensure-login';
 
-const routes = {
-  // Retorna uma lista de usuários
-  'GET /users': 'Users.get',
-
-  // Cria um novo usuário na Blockchain
-  'POST /users': {
-    path: 'Users.post',
+export default {
+  // Retorna informações do usuário logado
+  'GET /user': {
+    path: 'Users.getMe',
     middlewares: [
-      login.ensureLoggedIn,
+      login.ensureLoggedIn(),
     ],
   },
-
-  // Pega usuário pelo ID
-  'GET /users/:id': 'Users.getById',
-
-  // Atualiza o modelo do usuário na Blockchain
-  'POST /users/:id': {
-    path: 'User.updateUser',
+  // Edita informações do usuário logado
+  'PATCH /user': {
+    path: 'Users.updateUser',
     middlewares: [
-      login.ensureLoggedIn,
+      login.ensureLoggedIn(),
+    ],
+  },
+  // Cria um novo usuário
+  'POST /user': {
+    path: 'Users.post',
+    middlewares: [
     ],
   },
 };

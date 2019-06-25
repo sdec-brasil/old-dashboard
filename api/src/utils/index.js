@@ -6,6 +6,7 @@ import ListFilterSet from './listFilterSet';
 import serializers from './serializers';
 import treatNestedFilters from './treatNestedFilters';
 import customErr from './customErr';
+import requests from './requests';
 
 export {
   query,
@@ -16,4 +17,5 @@ export {
   serializers,
   treatNestedFilters,
   customErr,
+  requests,
 };

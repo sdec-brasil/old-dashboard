@@ -4,11 +4,9 @@ import { Strategy as LocalStrategy } from 'passport-local';
 import { BasicStrategy } from 'passport-http';
 import { Strategy as ClientPasswordStrategy } from 'passport-oauth2-client-password';
 import { Strategy as BearerStrategy } from 'passport-http-bearer';
-import { OAuth2Strategy } from 'passport-oauth';
 
 // App Imports
 import { query, validate } from '../../utils';
-import { oauth2 } from '../../config/config';
 
 export default (() => {
   /**
@@ -100,16 +98,4 @@ export default (() => {
       .then(user => done(null, user))
       .catch(err => done(err));
   });
-
-  passport.use('oauth2-example', new OAuth2Strategy({
-    authorizationURL: oauth2.oauth2ServerBaseUrl + oauth2.authorizationUrl,
-    tokenURL: oauth2.oauth2ServerBaseUrl + oauth2.tokenUrl,
-    clientID: oauth2.clientId,
-    clientSecret: oauth2.clientSecret,
-    callbackURL: oauth2.callbackUrl,
-  }, (acToken, refToken, profile, cb) => {
-    console.log(acToken);
-    console.log(refToken);
-    console.log(profile);
-  }));
 })();

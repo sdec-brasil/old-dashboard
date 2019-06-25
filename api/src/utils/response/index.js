@@ -1,6 +1,6 @@
 import { limitSettings } from '../../config/config';
 
-function buildUrl(req, limit, nextOffset, count) {
+function buildUrl(req, limit, nextOffset, count, filter) {
   // check if there is actually a next/previous page of results
   if (nextOffset < 0) return null;
   if (nextOffset >= count) return null;
@@ -9,17 +9,20 @@ function buildUrl(req, limit, nextOffset, count) {
   const queryParams = req.query;
   let url = `${req.protocol}://${req.get('host')}${lastPart}?`;
   Object.keys(queryParams).forEach((key) => {
-    if (key !== 'offset' && key !== 'limit') {
+    if (key !== 'offset' && key !== 'limit' && key !== 'filter') {
       const value = encodeURIComponent(queryParams[key]);
       url = `${url}${key}=${value}&`;
     }
   });
   url = `${url}limit=${limit}&offset=${nextOffset}`;
+  if (filter) {
+    url = `${url}&filter=${filter}`;
+  }
   return url;
 }
 
 export default class ResponseList {
-  constructor(req, queryResult) {
+  constructor(req, queryResult, filter = null) {
     this.meta = {
       url: req.baseUrl,
       query: req.query,
@@ -38,8 +41,8 @@ export default class ResponseList {
       // until,
       offset,
       limit,
-      next: buildUrl(req, limit, offset + limit, this.meta.count),
-      previous: buildUrl(req, limit, offset - limit, this.meta.count),
+      next: buildUrl(req, limit, offset + limit, this.meta.count, filter),
+      previous: buildUrl(req, limit, offset - limit, this.meta.count, filter),
     };
   }
 

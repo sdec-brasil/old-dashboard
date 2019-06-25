@@ -1,7 +1,7 @@
-function treatNestedFilters(query, where) {
+function treatNestedFilters(filter, where) {
   const reg = /[, ]+/;
-  if (where && query.filter && Object.keys(query.filter)) {
-    const nesteds = query.filter.split(reg).filter(x => x.indexOf('.') !== -1);
+  if (where && filter && Object.keys(filter)) {
+    const nesteds = filter.split(reg).filter(x => x.indexOf('.') !== -1);
     nesteds.forEach((key) => {
       const splitted = key.split('.');
       const a = splitted[0];

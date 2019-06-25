@@ -7,14 +7,14 @@ export const sessions = {
   maxAge: 31449600000,
 };
 
-export const oauth2 = {
-  oauth2ServerBaseUrl: 'https://localhost:8000',
-  authorizationUrl: '/dialog/authorize',
-  tokenUrl: '/oauth/token',
-  clientId: '289a320e-6ea8-11e9-a923-1681be663d3e',
-  clientSecret: 'ssh-secret',
-  callbackUrl: 'http://localhost:8000/auth/oauth2-example/callback',
-};
+// export const oauth2 = {
+//   oauth2ServerBaseUrl: 'https://localhost:8000',
+//   authorizationUrl: '/dialog/authorize',
+//   tokenUrl: '/oauth/token',
+//   clientId: '289a320e-6ea8-11e9-a923-1681be663d3e',
+//   clientSecret: 'ssh-secret',
+//   callbackUrl: 'http://localhost:8000/auth/oauth2-example/callback',
+// };
 
 export const general = {
   graphqlEndpoint: '/graphql',
