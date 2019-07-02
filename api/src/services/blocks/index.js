@@ -9,7 +9,7 @@ const sqs = require('sequelize-querystring');
 const listBlocks = async req => new Promise((resolve) => {
   const sq = sqs.withSymbolicOps(models.Sequelize, { symbolic: true });
   const where = req.query.filter ? sq.find(req.query.filter) : {};
-  treatNestedFilters(req.query, where);
+  treatNestedFilters(req.query.filter, where);
   models.block.findAndCountAll({
     offset: parseInt(req.query.offset, 10) || 0,
     limit: parseInt(req.query.limit, 10) || limitSettings.city.get,

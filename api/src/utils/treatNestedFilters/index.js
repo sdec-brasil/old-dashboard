@@ -1,5 +1,7 @@
 function treatNestedFilters(filter, where) {
   const reg = /[, ]+/;
+  console.log('filter', filter);
+
   if (where && filter && Object.keys(filter)) {
     const nesteds = filter.split(reg).filter(x => x.indexOf('.') !== -1);
     nesteds.forEach((key) => {
