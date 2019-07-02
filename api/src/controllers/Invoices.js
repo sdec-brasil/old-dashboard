@@ -1,4 +1,5 @@
 /* eslint-disable class-methods-use-this */
+import { runInNewContext } from 'vm';
 import service from '../services/invoices';
 
 export default class InvoiceController {
@@ -7,9 +8,13 @@ export default class InvoiceController {
     res.status(response.code).send(response.data);
   }
 
-  async post(req, res) {
+  async post(req, res, next) {
     const response = await service.postInvoice(req);
-    res.status(response.code).send(response.data);
+    if (response.code !== 201) {
+      next(response.data);
+    } else {
+      res.status(response.code).send(response.data);
+    }
   }
 
   async getByTxId(req, res) {
@@ -17,7 +22,12 @@ export default class InvoiceController {
     res.status(response.code).send(response.data);
   }
 
-  async replaceInvoice(req, res) {
-    throw new Error('Not implemented');
+  async replaceInvoice(req, res, next) {
+    const response = await service.replaceInvoice(req);
+    if (response.code !== 201) {
+      next(response.data);
+    } else {
+      res.status(response.code).send(response.data);
+    }
   }
 }

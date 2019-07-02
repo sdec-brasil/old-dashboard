@@ -22,7 +22,7 @@ export default {
   'POST /invoices/:txid': {
     path: 'Invoices.replaceInvoice',
     middlewares: [
-      login.ensureLoggedIn,
+      // login.ensureLoggedIn,
     ],
   },
 };

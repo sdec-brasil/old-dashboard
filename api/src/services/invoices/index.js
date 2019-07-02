@@ -1,3 +1,4 @@
+import { runInNewContext } from 'vm';
 import ResponseList from '../../utils/response';
 import { limitSettings } from '../../config/config';
 import models from '../../models';
@@ -63,21 +64,43 @@ const getInvoice = async req => new Promise(async (resolve) => {
 const postInvoice = async req => new Promise(async (resolve) => {
   try {
     const invoiceInfo = serializers.invoice.deserialize(req.body);
-    console.log(invoiceInfo);
     const inv = await models.invoice.create(invoiceInfo);
     console.log('inv', inv);
     resolve({ code: 201, data: serializers.invoice.serialize(inv) });
   } catch (err) {
     const errors = {};
     console.log(err);
-    if (err.errors && Array.isArray(err.errors)) {
-      err.errors.forEach((e) => {
-        errors[e.path] = e.message;
-      });
-      resolve({ code: 400, data: { errors } });
-    } else {
-      resolve({ code: 400, data: { error: customErr.formatErr(err) } });
-    }
+    resolve({ code: 400, data: err });
+
+    // if (err.errors && Array.isArray(err.errors)) {
+    //   err.errors.forEach((e) => {
+    //     errors[e.path] = e.message;
+    //   });
+    //   resolve({ code: 400, data: { errors } });
+    // } else {
+    //   resolve({ code: 400, data: { error: customErr.formatErr(err) } });
+    // }
+  }
+});
+
+const replaceInvoice = async req => new Promise(async (resolve) => {
+  try {
+    const invoiceInfo = serializers.invoice.deserialize(req.body);
+    invoiceInfo.substitutes = req.params.txid;
+    const inv = await models.invoice.create(invoiceInfo);
+    await models.invoice.update(
+      { substitutedBy: inv.txId },
+      {
+        where: {
+          txId: inv.substitutes,
+        },
+      },
+    );
+    resolve({ code: 201, data: serializers.invoice.serialize(inv) });
+  } catch (err) {
+    const errors = {};
+    console.log(err);
+    resolve({ code: 400, data: err });
   }
 });
 
@@ -86,4 +109,5 @@ export default {
   listInvoices,
   getInvoice,
   postInvoice,
+  replaceInvoice,
 };
