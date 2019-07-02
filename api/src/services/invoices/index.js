@@ -41,7 +41,7 @@ const listInvoices = async req => new Promise(async (resolve) => {
     }],
   }).then((results) => {
     const formattedResults = {};
-    formattedResults.rows = results.rows.map(inv => serializers.invoice(inv));
+    formattedResults.rows = results.rows.map(inv => serializers.invoice.serialize(inv));
     formattedResults.count = results.count;
     const response = new ResponseList(req, formattedResults, filter);
     resolve({ code: 200, data: response.value() });
@@ -54,9 +54,30 @@ const listInvoices = async req => new Promise(async (resolve) => {
 const getInvoice = async req => new Promise(async (resolve) => {
   const inv = await models.invoice.findByPk(req.params.txid);
   if (inv) {
-    resolve({ code: 200, data: serializers.invoice(inv) });
+    resolve({ code: 200, data: serializers.invoice.serialize(inv) });
   } else {
     resolve(customErr.NotFoundError);
+  }
+});
+
+const postInvoice = async req => new Promise(async (resolve) => {
+  try {
+    const invoiceInfo = serializers.invoice.deserialize(req.body);
+    console.log(invoiceInfo);
+    const inv = await models.invoice.create(invoiceInfo);
+    console.log('inv', inv);
+    resolve({ code: 201, data: serializers.invoice.serialize(inv) });
+  } catch (err) {
+    const errors = {};
+    console.log(err);
+    if (err.errors && Array.isArray(err.errors)) {
+      err.errors.forEach((e) => {
+        errors[e.path] = e.message;
+      });
+      resolve({ code: 400, data: { errors } });
+    } else {
+      resolve({ code: 400, data: { error: customErr.formatErr(err) } });
+    }
   }
 });
 
@@ -64,4 +85,5 @@ const getInvoice = async req => new Promise(async (resolve) => {
 export default {
   listInvoices,
   getInvoice,
+  postInvoice,
 };

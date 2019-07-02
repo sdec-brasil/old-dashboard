@@ -8,7 +8,8 @@ export default class InvoiceController {
   }
 
   async post(req, res) {
-    throw new Error('Not implemented');
+    const response = await service.postInvoice(req);
+    res.status(response.code).send(response.data);
   }
 
   async getByTxId(req, res) {

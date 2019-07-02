@@ -9,7 +9,7 @@ export default {
   'POST /invoices': {
     path: 'Invoices.post',
     middlewares: [
-      login.ensureLoggedIn,
+      // login.ensureLoggedIn,
     ],
   },
 

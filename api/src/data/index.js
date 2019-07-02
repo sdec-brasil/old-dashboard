@@ -26,7 +26,7 @@ export default function (models) {
         await fixtures.loadFile(`${__dirname}/authorizationCode/authorizationCodes.js`, models, {
           log: () => {},
         });
-        await generateInvoices(500);
+        // await generateInvoices(500);
         await generateBlocks(4);
       }
       process.emit('dataLoaded');

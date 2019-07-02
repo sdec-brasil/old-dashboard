@@ -20,7 +20,7 @@ export default function (sequelize, DataTypes) {
       allowNull: false,
     },
     aliqServicos: {
-      type: DataTypes.BIGINT({ unsigned: true }),
+      type: DataTypes.DECIMAL(10, 1),
       allowNull: true,
     },
     valLiquiNfse: {
