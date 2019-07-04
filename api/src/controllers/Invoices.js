@@ -1,6 +1,7 @@
 /* eslint-disable class-methods-use-this */
-import { runInNewContext } from 'vm';
+import { validationResult, check, param } from 'express-validator/check';
 import service from '../services/invoices';
+
 
 export default class InvoiceController {
   async get(req, res) {
@@ -9,15 +10,24 @@ export default class InvoiceController {
   }
 
   async post(req, res, next) {
-    const response = await service.postInvoice(req);
-    if (response.code !== 201) {
-      next(response.data);
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      res.status(422).json({ errors: errors.array() });
     } else {
-      res.status(response.code).send(response.data);
+      const response = await service.postInvoice(req);
+      if (response.code !== 201) {
+        next(response.data);
+      } else {
+        res.status(response.code).send(response.data);
+      }
     }
   }
 
-  async getByTxId(req, res) {
+  async getByTxId(req, res, next) {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      res.status(422).json({ errors: errors.array() });
+    }
     const response = await service.getInvoice(req);
     res.status(response.code).send(response.data);
   }
