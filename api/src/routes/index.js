@@ -9,6 +9,7 @@ import city from './city';
 import transactions from './transactions';
 import users from './users';
 import companies from './companies';
+import settlement from './settlement';
 
 const routes = {
   ...addresses,
@@ -21,6 +22,7 @@ const routes = {
   ...transactions,
   ...users,
   ...companies,
+  ...settlement,
 };
 
 export default routes;
