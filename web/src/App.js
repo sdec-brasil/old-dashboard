@@ -1,13 +1,16 @@
-import React, { PureComponent } from 'react';
-import logo from './logo.svg';
+import React from 'react';
+import { Provider } from 'react-redux';
 import './App.scss';
 
+import Store from './store';
 import SideMenu from './components/SideMenu';
-import '@uik/styles.css'
+import './@uik/styles.css';
 
 function App() {
   return (
-    <SideMenu />
+    <Provider store={Store}>
+      <SideMenu />
+    </Provider>
   );
 }
 
