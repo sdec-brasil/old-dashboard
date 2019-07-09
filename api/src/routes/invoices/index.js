@@ -27,7 +27,8 @@ export default {
   'POST /invoices/:txid': {
     path: 'Invoices.replaceInvoice',
     middlewares: [
-      // login.ensureLoggedIn,
+      passport.authenticate('bearer', { session: false }),
+      validators.replaceInvoice,
     ],
   },
 };

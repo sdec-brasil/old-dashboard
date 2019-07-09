@@ -91,28 +91,51 @@ const postInvoice = async req => new Promise(async (resolve) => {
     const errors = {};
     console.log(err);
     resolve({ code: 400, data: err });
-
-    // if (err.errors && Array.isArray(err.errors)) {
-    //   err.errors.forEach((e) => {
-    //     errors[e.path] = e.message;
-    //   });
-    //   resolve({ code: 400, data: { errors } });
-    // } else {
-    //   resolve({ code: 400, data: { error: customErr.formatErr(err) } });
-    // }
   }
 });
 
 const replaceInvoice = async req => new Promise(async (resolve) => {
   try {
+    // getting token to identify user and user's company
+    const tk = req.headers.authorization.split(' ')[1];
+    const token = await query.accessTokens.findByToken(tk);
+    const user = await models.user.findByPk(token.user_id);
+    if (user === null) {
+      throw new Error('O usuário ao qual seu token se refere não foi encontrado.');
+    }
+    if (user.empresaCnpj === null) {
+      throw new Error('Esse usuário não pertence à uma empresa, logo não pode emitir notas fiscais');
+    }
+
+    const oldInvoice = await models.invoice.findByPk(req.params.txid, { raw: true });
+    if (oldInvoice === null) {
+      throw new Error('Essa invoice não existe.');
+    }
+
     const invoiceInfo = serializers.invoice.deserialize(req.body);
-    invoiceInfo.substitutes = req.params.txid;
+
+    // setting enderecoEmissor
+    const empresa = await models.empresa.findByPk(user.empresaCnpj, { raw: true });
+    if (oldInvoice.enderecoEmissor != empresa.enderecoBlockchain) {
+      throw new Error('A invoice que se quer alterar não foi emitida pela sua empresa.');
+    }
+    invoiceInfo.enderecoEmissor = empresa.enderecoBlockchain;
+
+    // setting blocoConfirmacaoId
+    const lastBlock = await models.block.findOne({ raw: true });
+    invoiceInfo.blocoConfirmacaoId = lastBlock.block_id;
+    // setting substitutes field
+    invoiceInfo.substitutes = oldInvoice.txId;
+
+    // performing invoice creation
     const inv = await models.invoice.create(invoiceInfo);
+
+    // updating old invoice
     await models.invoice.update(
       { substitutedBy: inv.txId },
       {
         where: {
-          txId: inv.substitutes,
+          txId: oldInvoice.txId,
         },
       },
     );
