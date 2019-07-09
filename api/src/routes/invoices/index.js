@@ -1,4 +1,5 @@
 import login from 'connect-ensure-login';
+import passport from 'passport';
 import validators from '../../services/invoices/validators';
 
 export default {
@@ -10,7 +11,7 @@ export default {
   'POST /invoices': {
     path: 'Invoices.post',
     middlewares: [
-      // login.ensureLoggedIn,
+      passport.authenticate('bearer', { session: false }),
       validators.postInvoice,
     ],
   },

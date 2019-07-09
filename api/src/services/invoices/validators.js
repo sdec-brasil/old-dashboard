@@ -3,6 +3,9 @@ import models from '../../models';
 
 const validators = {};
 validators.postInvoice = [
+  body('substitutes').not().exists(),
+  body('substitutedBy').not().exists(),
+  body('enderecoEmissor').not().exists(),
   body('prestacao.prefeituraIncidencia', 'valor nao valido').isNumeric()
     .isLength({ min: 7, max: 7 })
     .custom(async (value, { req }) => {

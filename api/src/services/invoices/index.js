@@ -1,7 +1,10 @@
 import ResponseList from '../../utils/response';
 import { limitSettings } from '../../config/config';
 import models from '../../models';
-import { serializers, treatNestedFilters, customErr } from '../../utils';
+import {
+  serializers, treatNestedFilters, customErr, query,
+} from '../../utils';
+
 
 const sqs = require('sequelize-querystring');
 
@@ -62,9 +65,27 @@ const getInvoice = async req => new Promise(async (resolve) => {
 
 const postInvoice = async req => new Promise(async (resolve) => {
   try {
+    // getting token to identify user and user's company
+    const tk = req.headers.authorization.split(' ')[1];
+    const token = await query.accessTokens.findByToken(tk);
+    const user = await models.user.findByPk(token.user_id);
+    if (user === null) {
+      throw new Error('O usuário ao qual seu token se refere não foi encontrado.');
+    }
+    if (user.empresaCnpj === null) {
+      throw new Error('Esse usuário não pertence à uma empresa, logo não pode emitir notas fiscais');
+    }
+
     const invoiceInfo = serializers.invoice.deserialize(req.body);
+
+    // setting enderecoEmissor
+    const empresa = await models.empresa.findByPk(user.empresaCnpj, { raw: true });
+    invoiceInfo.enderecoEmissor = empresa.enderecoBlockchain;
+    // setting blocoConfirmacaoId
+    const lastBlock = await models.block.findOne({ raw: true });
+    invoiceInfo.blocoConfirmacaoId = lastBlock.block_id;
+    // performing invoice creation
     const inv = await models.invoice.create(invoiceInfo);
-    console.log('inv', inv);
     resolve({ code: 201, data: serializers.invoice.serialize(inv) });
   } catch (err) {
     const errors = {};
