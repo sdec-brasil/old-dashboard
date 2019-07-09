@@ -235,7 +235,7 @@ export default function (sequelize, DataTypes) {
       defaultValue: 0,
     },
     tomadorEncriptado: {
-      type: DataTypes.STRING(150),
+      type: DataTypes.TEXT('long'),
       allowNull: true,
     },
   },

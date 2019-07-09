@@ -78,8 +78,6 @@ validators.postInvoice = [
     .isString().isLength({ max: 2000 }),
   body('prestacao.exigibilidadeISS', 'Deve ser um inteiro entre 1 e 7')
     .isInt({ min: 1, max: 7 }),
-  body('prestacao.codTributMunicipio')
-    .isInt().optional(),
   body('prestacao.numProcesso', 'Deve ser uma string de até 30 caracteres')
     .isString().isLength({ max: 30 }).optional(),
   body('prestacao.regimeEspTribut')

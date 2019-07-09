@@ -18,7 +18,6 @@ serializers.invoice.serialize = (inv) => {
       'issRetido',
       'itemLista',
       'discriminacao',
-      'codTributMunicipio',
       'exigibilidadeISS',
       'simplesNacional',
       'incentivoFiscal',
