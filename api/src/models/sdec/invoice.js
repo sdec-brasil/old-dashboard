@@ -124,10 +124,6 @@ export default function (sequelize, DataTypes) {
       type: DataTypes.TINYINT({ unsigned: true }),
       allowNull: false,
     },
-    codTributMunicipio: {
-      type: DataTypes.INTEGER({ unsigned: true }),
-      allowNull: true,
-    },
     numProcesso: {
       type: DataTypes.STRING(30),
       allowNull: true,
@@ -237,6 +233,10 @@ export default function (sequelize, DataTypes) {
       type: DataTypes.TINYINT({ unsigned: true }),
       allowNull: false,
       defaultValue: 0,
+    },
+    tomadorEncriptado: {
+      type: DataTypes.STRING(150),
+      allowNull: true,
     },
   },
   {
