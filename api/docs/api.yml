@@ -889,11 +889,6 @@ components:
             * `6` - Exigibilidade Suspensa por Decisão Judicial
             
             * `7` - Exigibilidade Suspensa por Processo Administrativo
-        codTributMunicipio:
-          description: Código do município onde é a incidência do imposto (Tabela do IBGE).
-          type: integer
-          minimum: 0
-          maximum: 9999999
         numProcecsso:
           description: Número do processo judicial ou administrativo de suspensão da exigibilidade. Obrigatório e informado somente quando declarada a suspensão da exigibilidade do tributo.
           type: string

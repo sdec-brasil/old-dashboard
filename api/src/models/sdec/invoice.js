@@ -20,7 +20,7 @@ export default function (sequelize, DataTypes) {
       allowNull: false,
     },
     aliqServicos: {
-      type: DataTypes.BIGINT({ unsigned: true }),
+      type: DataTypes.DECIMAL(10, 1),
       allowNull: true,
     },
     valLiquiNfse: {
@@ -123,10 +123,6 @@ export default function (sequelize, DataTypes) {
       // * `7` - Exigibilidade Suspensa por Processo Administrativo
       type: DataTypes.TINYINT({ unsigned: true }),
       allowNull: false,
-    },
-    codTributMunicipio: {
-      type: DataTypes.INTEGER({ unsigned: true }),
-      allowNull: true,
     },
     numProcesso: {
       type: DataTypes.STRING(30),
@@ -237,6 +233,10 @@ export default function (sequelize, DataTypes) {
       type: DataTypes.TINYINT({ unsigned: true }),
       allowNull: false,
       defaultValue: 0,
+    },
+    tomadorEncriptado: {
+      type: DataTypes.TEXT('long'),
+      allowNull: true,
     },
   },
   {

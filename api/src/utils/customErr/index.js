@@ -1,7 +1,16 @@
-const formatErr = err => ({
-  type: err.name,
-  message: err.message,
-});
+const formatErr = (err) => {
+  const error = {};
+  if (err.name) {
+    error.type = err.name;
+  }
+  if (err.message) {
+    error.message = err.message;
+  } else if (err.parent && err.parent.sqlMessage) {
+    error.message = err.parent.sqlMessage;
+  }
+  return error;
+};
+
 
 const NotFoundError = {
   code: 404,

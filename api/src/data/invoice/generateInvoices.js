@@ -144,10 +144,6 @@ function exigibilidadeISS() {
   return choice([1, 2, 3, 4, 5, 6, 7]);
 }
 
-function codTributMunicipio() {
-  return randint(4000);
-}
-
 function numProcesso() {
   return uuid().slice(0, 30);
 }
@@ -296,7 +292,6 @@ const generator = {
   codNBS,
   discriminacao,
   exigibilidadeISS,
-  codTributMunicipio,
   numProcesso,
   regimeEspTribut,
   optanteSimplesNacional,

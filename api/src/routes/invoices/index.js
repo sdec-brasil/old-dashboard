@@ -1,4 +1,6 @@
 import login from 'connect-ensure-login';
+import passport from 'passport';
+import validators from '../../services/invoices/validators';
 
 export default {
   // Retorna uma lista das últimas notas fiscais emitidas
@@ -9,20 +11,24 @@ export default {
   'POST /invoices': {
     path: 'Invoices.post',
     middlewares: [
-      login.ensureLoggedIn,
+      passport.authenticate('bearer', { session: false }),
+      validators.postInvoice,
     ],
   },
 
   // Pega nota fiscal pelo txid
   'GET /invoices/:txid': {
     path: 'Invoices.getByTxId',
+    middlewares: [
+    ],
   },
 
   // Cria uma nova nota fiscal na blockchain que substitui a nota referenciada em txid
   'POST /invoices/:txid': {
     path: 'Invoices.replaceInvoice',
     middlewares: [
-      login.ensureLoggedIn,
+      passport.authenticate('bearer', { session: false }),
+      validators.replaceInvoice,
     ],
   },
 };

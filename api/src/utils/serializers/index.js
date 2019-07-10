@@ -1,6 +1,8 @@
 const serializers = Object.create(null);
 
-serializers.invoice = (inv) => {
+serializers.invoice = {};
+
+serializers.invoice.serialize = (inv) => {
   const invoice = JSON.parse(JSON.stringify(inv));
   const invoiceStructure = {
     prestacao: [
@@ -16,7 +18,6 @@ serializers.invoice = (inv) => {
       'issRetido',
       'itemLista',
       'discriminacao',
-      'codTributMunicipio',
       'exigibilidadeISS',
       'simplesNacional',
       'incentivoFiscal',
@@ -73,6 +74,20 @@ serializers.invoice = (inv) => {
     });
   });
   return invoice;
+};
+
+serializers.invoice.deserialize = (inv) => {
+  const newInv = {};
+  Object.keys(inv).forEach((key) => {
+    if (typeof (inv[key]) === 'object') {
+      Object.keys(inv[key]).forEach((field) => {
+        newInv[field] = inv[key][field];
+      });
+    } else {
+      newInv[key] = inv[key];
+    }
+  });
+  return newInv;
 };
 
 export default serializers;
