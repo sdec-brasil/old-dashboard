@@ -16,7 +16,13 @@ const listCompanies = async req => new Promise(async (resolve) => {
       filter += `, block.block_datetime lte ${((new Date()).toISOString())}`;
     }
   }
-  const where = sq.find(filter);
+  let where = null;
+  try {
+    where = sq.find(filter);
+  } catch (err) {
+    resolve(customErr.BadFilterError);
+    throw err;
+  }
   treatNestedFilters(filter, where);
 
   models.empresa.findAndCountAll({

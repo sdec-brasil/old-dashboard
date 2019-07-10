@@ -19,7 +19,13 @@ const listInvoices = async req => new Promise(async (resolve) => {
       filter += `, block.block_datetime lte ${((new Date()).toISOString())}`;
     }
   }
-  const where = sq.find(filter);
+  let where = null;
+  try {
+    where = sq.find(filter);
+  } catch (err) {
+    resolve(customErr.BadFilterError);
+    throw err;
+  }
   treatNestedFilters(filter, where);
 
   models.invoice.findAndCountAll({
@@ -88,9 +94,8 @@ const postInvoice = async req => new Promise(async (resolve) => {
     const inv = await models.invoice.create(invoiceInfo);
     resolve({ code: 201, data: serializers.invoice.serialize(inv) });
   } catch (err) {
-    const errors = {};
     console.log(err);
-    resolve({ code: 400, data: err });
+    resolve({ code: 500, data: err.message });
   }
 });
 

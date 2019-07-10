@@ -8,7 +8,13 @@ const sqs = require('sequelize-querystring');
 
 const listCities = async req => new Promise((resolve) => {
   const sq = sqs.withSymbolicOps(models.Sequelize, { symbolic: true });
-  const where = req.query.filter ? sq.find(req.query.filter) : {};
+  let where = null;
+  try {
+    where = req.query.filter ? sq.find(req.query.filter) : {};
+  } catch (err) {
+    resolve(customErr.BadFilterError);
+    throw err;
+  }
   treatNestedFilters(req.query.filter, where);
   models.prefeitura.findAndCountAll({
     offset: parseInt(req.query.offset, 10) || 0,

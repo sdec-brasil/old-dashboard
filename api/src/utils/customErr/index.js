@@ -17,8 +17,19 @@ const NotFoundError = {
   data: {
     error:
      {
-       type: 404,
-       message: 'Not Found',
+       type: 'NotFoundError',
+       message: 'Object not Found.',
+     },
+  },
+};
+
+const BadFilterError = {
+  code: 400,
+  data: {
+    error:
+     {
+       type: 'BadFilterError',
+       message: 'Filter query string badly formatted.',
      },
   },
 };
@@ -26,4 +37,5 @@ const NotFoundError = {
 export default {
   formatErr,
   NotFoundError,
+  BadFilterError,
 };
