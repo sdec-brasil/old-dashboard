@@ -55,7 +55,7 @@ export default function setupErrorHandler(server) {
   });
 
   /*
-   Default handlers for all errors. If you let an error
+   Default handler for all errors. If you let an error
    arrive here, even if it was treated before, it will be treated
    again.
    */
