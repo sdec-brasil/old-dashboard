@@ -4,9 +4,13 @@ import service from '../services/invoices';
 
 
 export default class InvoiceController {
-  async get(req, res) {
-    const response = await service.listInvoices(req);
-    res.status(response.code).send(response.data);
+  async get(req, res, next) {
+    try {
+      const response = await service.listInvoices(req);
+      res.status(response.code).send(response.data);
+    } catch (err) {
+      next(err);
+    }
   }
 
   async post(req, res, next) {
@@ -14,30 +18,36 @@ export default class InvoiceController {
     if (!errors.isEmpty()) {
       res.status(422).json({ errors: errors.array() });
     } else {
-      const response = await service.postInvoice(req);
-      if (response.code !== 201) {
-        next(response.data);
-      } else {
+      try {
+        const response = await service.postInvoice(req);
         res.status(response.code).send(response.data);
+      } catch (err) {
+        next(err);
       }
     }
   }
 
   async getByTxId(req, res, next) {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      res.status(422).json({ errors: errors.array() });
+    try {
+      const response = await service.getInvoice(req);
+      res.status(response.code).send(response.data);
+    } catch (err) {
+      next(err);
     }
-    const response = await service.getInvoice(req);
-    res.status(response.code).send(response.data);
   }
 
   async replaceInvoice(req, res, next) {
-    const response = await service.replaceInvoice(req);
-    if (response.code !== 201) {
-      next(response.data);
+  // check for validation errors
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      res.status(422).json({ errors: errors.array() });
     } else {
-      res.status(response.code).send(response.data);
+      try {
+        const response = await service.replaceInvoice(req);
+        res.status(response.code).send(response.data);
+      } catch (err) {
+        next(err);
+      }
     }
   }
 }

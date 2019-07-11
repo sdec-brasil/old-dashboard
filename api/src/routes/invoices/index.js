@@ -28,7 +28,7 @@ export default {
     path: 'Invoices.replaceInvoice',
     middlewares: [
       passport.authenticate('bearer', { session: false }),
-      validators.replaceInvoice,
+      validators.postInvoice,
     ],
   },
 };

@@ -55,24 +55,6 @@ export default function (server) {
   // HTTP logger
   if (process.env.NODE_ENV !== 'test') server.use(morgan('tiny'));
 
-  // Catch all for error messages.  Instead of a stack
-  // trace, this will log the json of the error message
-  // to the browser and pass along the status with it
-  server.use((err, req, res, next) => {
-    if (err) {
-      if (err.status == null) {
-        console.error('Internal unexpected error from:', err.stack);
-        res.status(500);
-        res.json(err);
-      } else {
-        res.status(err.status);
-        res.json(err);
-      }
-    } else {
-      next();
-    }
-  });
-
   // From time to time we need to clean up any expired tokens
   // in the database
   if (process.env.NODE_ENV !== 'test') {

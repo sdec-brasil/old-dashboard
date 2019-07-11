@@ -1,43 +1,43 @@
 import ResponseList from '../../utils/response';
 import { limitSettings } from '../../config/config';
 import models from '../../models';
-import { treatNestedFilters, customErr } from '../../utils';
+import { treatNestedFilters, errors } from '../../utils';
 
 const sqs = require('sequelize-querystring');
 
 
-const listBlocks = async req => new Promise((resolve) => {
+const listBlocks = (req) => {
   const sq = sqs.withSymbolicOps(models.Sequelize, { symbolic: true });
   let where = null;
   try {
     where = req.query.filter ? sq.find(req.query.filter) : {};
   } catch (err) {
-    resolve(customErr.BadFilterError);
-    throw err;
+    throw new errors.BadFilterError();
   }
   treatNestedFilters(req.query.filter, where);
-  models.block.findAndCountAll({
+
+  return models.block.findAndCountAll({
     offset: parseInt(req.query.offset, 10) || 0,
     limit: parseInt(req.query.limit, 10) || limitSettings.city.get,
     where,
     order: req.query.sort ? sq.sort(req.query.sort) : [],
   }).then((results) => {
     const response = new ResponseList(req, results);
-    resolve({ code: 200, data: response.value() });
+    return { code: 200, data: response.value() };
   }).catch((err) => {
-    resolve({ code: 500, data: { error: customErr.formatErr(err) } });
     throw err;
   });
-});
+};
 
-const getBlock = async req => new Promise(async (resolve) => {
-  const inv = await models.block.findByPk(req.params.id);
-  if (inv) {
-    resolve({ code: 200, data: inv });
-  } else {
-    resolve(customErr.NotFoundError);
-  }
-});
+
+const getBlock = req => models.block.findByPk(req.params.id)
+  .then((inv) => {
+    if (inv) {
+      return { code: 200, data: inv };
+    }
+    throw new errors.NotFoundError('Block', `id: ${req.params.id}`);
+  });
+
 
 export default {
   listBlocks,
