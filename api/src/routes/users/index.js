@@ -1,4 +1,5 @@
 import login from 'connect-ensure-login';
+import validators from '../../services/users/validators';
 
 export default {
   // Retorna informações do usuário logado
@@ -13,12 +14,14 @@ export default {
     path: 'Users.updateUser',
     middlewares: [
       login.ensureLoggedIn(),
+      validators.editUser,
     ],
   },
   // Cria um novo usuário
   'POST /user': {
     path: 'Users.post',
     middlewares: [
+      validators.createUser,
     ],
   },
 };
