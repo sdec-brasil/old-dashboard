@@ -15,15 +15,15 @@ export default class UsersController {
 
   async post(req, res, next) {
     const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      res.status(422).json({ errors: errors.array() });
-    } else {
+    if (errors.isEmpty()) {
       try {
         const response = await service.createNewUser(req);
         res.status(response.code).send(response.data);
       } catch (err) {
         next(err);
       }
+    } else {
+      res.status(422).json({ errors: errors.array() });
     }
   }
 
