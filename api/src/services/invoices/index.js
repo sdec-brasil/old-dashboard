@@ -71,7 +71,6 @@ const getInvoice = async req => models.invoice.findByPk(req.params.txid)
 
 
 const postInvoice = async (req) => {
-  // getting token to identify user and user's company
   const tk = req.headers.authorization.split(' ')[1];
   const token = await query.accessTokens.findByToken(tk);
   const user = await models.user.findByPk(token.user_id);
@@ -84,20 +83,19 @@ const postInvoice = async (req) => {
 
   const invoiceInfo = serializers.invoice.deserialize(req.body);
 
-  // setting enderecoEmissor
+
   const empresa = await models.empresa.findByPk(user.empresaCnpj, { raw: true });
   invoiceInfo.enderecoEmissor = empresa.enderecoBlockchain;
-  // setting blocoConfirmacaoId
+
   const lastBlock = await models.block.findOne({ raw: true });
   invoiceInfo.blocoConfirmacaoId = lastBlock.block_id;
-  // performing invoice creation
+
   const inv = await models.invoice.create(invoiceInfo);
   return { code: 201, data: serializers.invoice.serialize(inv) };
 };
 
 
 const replaceInvoice = async (req) => {
-  // getting token to identify user and user's company
   const tk = req.headers.authorization.split(' ')[1];
   const token = await query.accessTokens.findByToken(tk);
   const user = await models.user.findByPk(token.user_id);
@@ -115,23 +113,18 @@ const replaceInvoice = async (req) => {
 
   const invoiceInfo = serializers.invoice.deserialize(req.body);
 
-  // setting enderecoEmissor
   const empresa = await models.empresa.findByPk(user.empresaCnpj, { raw: true });
   if (oldInvoice.enderecoEmissor !== empresa.enderecoBlockchain) {
     throw new errors.AuthorizationError('A invoice que se quer alterar não foi emitida pela sua empresa.');
   }
   invoiceInfo.enderecoEmissor = empresa.enderecoBlockchain;
 
-  // setting blocoConfirmacaoId
   const lastBlock = await models.block.findOne({ raw: true });
   invoiceInfo.blocoConfirmacaoId = lastBlock.block_id;
-  // setting substitutes field
   invoiceInfo.substitutes = oldInvoice.txId;
 
-  // performing invoice creation
   const inv = await models.invoice.create(invoiceInfo);
 
-  // updating old invoice
   await models.invoice.update(
     { substitutedBy: inv.txId },
     {

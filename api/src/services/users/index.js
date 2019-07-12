@@ -34,15 +34,6 @@ const updateUser = async (req) => {
       throw err;
     });
 };
-// } catch (err) {
-//   console.log(err);
-//   const errors = {};
-//   err.errors.forEach((e) => {
-//     errors[e.path] = e.message;
-//   });
-//   resolve({ code: 500, data: { errors } });
-// }
-// });
 
 
 const createNewUser = async (req) => {
@@ -60,16 +51,6 @@ const createNewUser = async (req) => {
       throw err;
     });
 };
-
-//   } catch (err) {
-//     console.log(err);
-//     const errors = {};
-//     err.errors.forEach((e) => {
-//       errors[e.path] = e.message;
-//     });
-//     resolve({ code: 500, data: { errors } });
-//   }
-// });
 
 
 export default {
