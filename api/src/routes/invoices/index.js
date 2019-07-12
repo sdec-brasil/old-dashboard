@@ -1,4 +1,3 @@
-import login from 'connect-ensure-login';
 import passport from 'passport';
 import validators from '../../services/invoices/validators';
 
@@ -28,7 +27,7 @@ export default {
     path: 'Invoices.replaceInvoice',
     middlewares: [
       passport.authenticate('bearer', { session: false }),
-      validators.replaceInvoice,
+      validators.postInvoice,
     ],
   },
 };

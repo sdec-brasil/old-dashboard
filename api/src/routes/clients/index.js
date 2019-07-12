@@ -1,7 +1,13 @@
 import passport from 'passport';
+import validators from '../../services/clients/validators';
 
 export default {
-  'POST /client': 'Clients.post',
+  'POST /client': {
+    path: 'Clients.post',
+    middlewares: [
+      validators.createClient,
+    ],
+  },
 
   'GET /client': {
     path: 'Clients.getMe',
@@ -14,6 +20,7 @@ export default {
     path: 'Clients.patch',
     middlewares: [
       passport.authenticate('bearer', { session: false }),
+      validators.editClient,
     ],
   },
 

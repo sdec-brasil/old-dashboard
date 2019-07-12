@@ -7,6 +7,7 @@ import serializers from './serializers';
 import treatNestedFilters from './treatNestedFilters';
 import customErr from './customErr';
 import requests from './requests';
+import errors from './errors';
 
 export {
   query,
@@ -18,4 +19,5 @@ export {
   treatNestedFilters,
   customErr,
   requests,
+  errors,
 };
