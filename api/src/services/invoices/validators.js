@@ -49,7 +49,7 @@ validators.postInvoice = [
         throw new Error('ValLiquiNfse está incorreto');
       }
     }),
-  body('prestacao.competencia').isInt(),
+  body('prestacao.dataIncidencia').isInt(),
   body('prestacao.valServicos').isInt(),
   body('prestacao.valDeducoes').isInt().optional(),
   body('prestacao.valPis').isInt().optional(),

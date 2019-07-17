@@ -27,7 +27,7 @@ export default function (sequelize, DataTypes) {
       type: DataTypes.BIGINT({ unsigned: true }),
       allowNull: true,
     },
-    competencia: {
+    dataIncidencia: {
       type: DataTypes.DATEONLY,
       allowNull: false,
     },

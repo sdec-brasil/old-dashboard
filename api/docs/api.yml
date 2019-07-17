@@ -123,7 +123,7 @@ paths:
               #   prestacao:
               #     baseCalculo: 0
               #     valLiquiNfse: 0
-              #     competencia: "2019-05-27"
+              #     dataIncidencia: "2019-05-27"
               #     valServicos: 0
               #     valDeduções: 0
               #     valPis: 0
@@ -752,7 +752,7 @@ components:
       type: object
       required:
         - baseCalculo
-        - competencia
+        - dataIncidencia
         - valServicos
         - issRetido
         - itemLista
@@ -771,7 +771,7 @@ components:
           type: integer
           format: int64
           minimum: 0
-        competencia:
+        dataIncidencia:
           description: Dia, mês e ano da prestação de serviço (AAAAMMDD).
           type: string
           format: date

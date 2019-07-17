@@ -23,7 +23,7 @@ const InvoiceShow = (props) => {
           <ReferenceField label='Prefeitura/UF' source='prestacao.prefeituraIncidencia' reference='cities'>
             <TextField source='municipio.nome' />
           </ReferenceField>
-          <TextField label='Data' source='prestacao.competencia' />
+          <TextField label='Data' source='prestacao.dataIncidencia' />
           <TextField label='Base de Cálculo' source='prestacao.baseCalculo' />
           <TextField label='Código do Serviço' source='prestacao.codServico' />
         </Tab>

@@ -7,7 +7,7 @@ serializers.invoice.serialize = (inv) => {
   const invoiceStructure = {
     prestacao: [
       'prefeituraIncidencia',
-      'competencia',
+      'dataIncidencia',
       'baseCalculo',
       'aliqServicos',
       'codServico',

@@ -48,7 +48,7 @@ function valLiquiNfse() {
   return randint(5000);
 }
 
-function competencia() {
+function dataIncidencia() {
   return new Date(Date.now() - randint(50) * 100000000);
 }
 
@@ -272,7 +272,7 @@ const generator = {
   dataBlocoConfirmacao,
   baseCalculo,
   valLiquiNfse,
-  competencia,
+  dataIncidencia,
   valServicos,
   valDeducoes,
   valPis,
