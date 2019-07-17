@@ -65,18 +65,31 @@ const getCityStats = async (req) => {
           data.lateIssValue = parseInt(inv[0].lateIssValue, 10) || 0;
         }));
 
-        // total iss in pending invoices
+        // biggest emissor in values
         promises.push(models.invoice.findAll({
           raw: true,
-          attributes: [[sequelize.fn('SUM', sequelize.col('valIss')), 'lateIss']],
+          attributes: ['enderecoEmissor',
+            [sequelize.fn('SUM', sequelize.col('valIss')), 'sumIss'],
+          ],
           where: {
-            estado: 1,
             prefeituraIncidencia: city.codigoMunicipio,
             dataIncidencia,
           },
-        }).then((inv) => {
-          data.lateIssValue = parseInt(inv[0].lateIssValue, 10) || 0;
+          group: ['enderecoEmissor'],
+          order: sequelize.literal('sumIss DESC'),
+          limit: 1,
+        }).then(async (issuer) => {
+          if (issuer.length) {
+            const company = await models.empresa.findOne({
+              raw: true,
+              where: { enderecoBlockchain: issuer[0].enderecoEmissor },
+            });
+            data.biggestIssuer = company.razaoSocial;
+          } else {
+            data.biggestIssuer = null;
+          }
         }));
+
         return Promise.all(promises).then(() => ({ code: 200, data }));
       }
       throw new errors.NotFoundError('City', `id ${req.params.id}`);
