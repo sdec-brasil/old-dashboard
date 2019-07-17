@@ -1,4 +1,11 @@
 export default {
-  'GET /cities': 'Cities.get',
-  'GET /cities/:id': 'Cities.getById',
+  'GET /cities': {
+    path: 'Cities.get',
+  },
+  'GET /cities/:id': {
+    path: 'Cities.getById',
+  },
+  'GET /cities/:id/general-stats': {
+    path: 'Cities.generalStats',
+  },
 };

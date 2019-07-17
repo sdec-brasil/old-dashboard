@@ -9,7 +9,6 @@ import city from './city';
 import transactions from './transactions';
 import users from './users';
 import companies from './companies';
-import cityStats from './cityStats';
 
 const routes = {
   ...addresses,
@@ -22,7 +21,6 @@ const routes = {
   ...transactions,
   ...users,
   ...companies,
-  ...cityStats,
 };
 
 export default routes;

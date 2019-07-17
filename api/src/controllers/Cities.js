@@ -21,4 +21,13 @@ export default class CitiesController {
       next(err);
     }
   }
+
+  async generalStats(req, res, next) {
+    try {
+      const response = await service.getGeneralStats(req);
+      res.status(response.code).send(response.data);
+    } catch (err) {
+      next(err);
+    }
+  }
 }
