@@ -8,4 +8,7 @@ export default {
   'GET /cities/:id/general-stats': {
     path: 'Cities.generalStats',
   },
+  'GET /cities/:id/daily-issuing': {
+    path: 'Cities.dailyIssuing',
+  },
 };

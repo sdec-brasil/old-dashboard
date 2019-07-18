@@ -157,8 +157,60 @@ const getGeneralStats = async (req) => {
 };
 
 
+const getDailyIssuing = async (req) => {
+  const { month, year } = req.query;
+  let dataIncidencia = {};
+  if (month && year) {
+    const firstDay = new Date(year, month - 1, 1);
+    const lastDay = new Date(year, month, 0);
+    dataIncidencia = { [Op.between]: [firstDay, lastDay] };
+  }
+  return models.prefeitura.findByPk(req.params.id,
+    {
+      raw: true,
+      include: [
+        {
+          model: models.municipio,
+          include: [
+            models.estado, models.regiao,
+          ],
+        },
+      ],
+    })
+    .then(async (city) => {
+      if (city) {
+        const data = {};
+        data.city = city;
+        const promises = [];
+
+        promises.push(models.invoice.findAll(
+          {
+            raw: true,
+            attributes: [
+              'dataIncidencia',
+              // calculate number of invoices
+              [sequelize.fn('COUNT', sequelize.col('txId')), 'emitedInvoicesCount'],
+            ],
+            group: ['dataIncidencia'],
+            where: {
+              prefeituraIncidencia: city.codigoMunicipio,
+              dataIncidencia,
+            },
+          },
+        ).then((inv) => {
+          data.dailyIssuing = inv;
+        }));
+
+
+        return Promise.all(promises).then(() => ({ code: 200, data }));
+      }
+      throw new errors.NotFoundError('City', `id ${req.params.id}`);
+    });
+};
+
 export default {
   listCities,
   getCity,
   getGeneralStats,
+  getDailyIssuing,
 };
