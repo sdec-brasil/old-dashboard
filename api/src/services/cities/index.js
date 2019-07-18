@@ -61,7 +61,7 @@ const getCity = async req => models.prefeitura.findByPk(req.params.id,
 
 const getGeneralStats = async (req) => {
   const { month, year } = req.query;
-  let dataIncidencia = {};
+  let dataIncidencia;
   if (month && year) {
     const firstDay = new Date(year, month - 1, 1);
     const lastDay = new Date(year, month, 0);
@@ -83,6 +83,11 @@ const getGeneralStats = async (req) => {
       if (city) {
         const data = {};
         data.city = city;
+
+        const where = { prefeituraIncidencia: city.codigoMunicipio };
+        if (dataIncidencia) {
+          where.dataIncidencia = dataIncidencia;
+        }
         const promises = [];
 
         promises.push(models.invoice.findAll(
@@ -97,8 +102,7 @@ const getGeneralStats = async (req) => {
               [sequelize.fn('AVG', sequelize.col('valIss')), 'avgIss'],
             ],
             where: {
-              prefeituraIncidencia: city.codigoMunicipio,
-              dataIncidencia,
+              ...where,
             },
           },
         ).then((inv) => {
@@ -113,8 +117,7 @@ const getGeneralStats = async (req) => {
           attributes: [[sequelize.fn('SUM', sequelize.col('valIss')), 'lateIss']],
           where: {
             estado: 1,
-            prefeituraIncidencia: city.codigoMunicipio,
-            dataIncidencia,
+            ...where,
           },
         }).then((inv) => {
           data.lateIssValue = parseInt(inv[0].lateIssValue, 10) || 0;
@@ -126,10 +129,7 @@ const getGeneralStats = async (req) => {
           attributes: ['enderecoEmissor',
             [sequelize.fn('SUM', sequelize.col('valIss')), 'sumIss'],
           ],
-          where: {
-            prefeituraIncidencia: city.codigoMunicipio,
-            dataIncidencia,
-          },
+          where,
           group: ['enderecoEmissor'],
           order: sequelize.literal('sumIss DESC'),
           limit: 1,
@@ -159,7 +159,7 @@ const getGeneralStats = async (req) => {
 
 const getDailyIssuing = async (req) => {
   const { month, year } = req.query;
-  let dataIncidencia = {};
+  let dataIncidencia;
   if (month && year) {
     const firstDay = new Date(year, month - 1, 1);
     const lastDay = new Date(year, month, 0);
@@ -181,27 +181,95 @@ const getDailyIssuing = async (req) => {
       if (city) {
         const data = {};
         data.city = city;
-        const promises = [];
 
-        promises.push(models.invoice.findAll(
+        const where = {
+          prefeituraIncidencia: city.codigoMunicipio,
+        };
+        if (dataIncidencia) {
+          where.dataIncidencia = dataIncidencia;
+        }
+        return models.invoice.findAll(
           {
             raw: true,
             attributes: [
               'dataIncidencia',
-              // calculate number of invoices
               [sequelize.fn('COUNT', sequelize.col('txId')), 'emittedInvoicesCount'],
             ],
             group: ['dataIncidencia'],
-            where: {
-              prefeituraIncidencia: city.codigoMunicipio,
-              dataIncidencia,
-            },
+            where,
           },
         ).then((inv) => {
           data.dailyIssuing = inv;
-        }));
+          return { code: 200, data };
+        });
+      }
+      throw new errors.NotFoundError('City', `id ${req.params.id}`);
+    });
+};
 
-        return Promise.all(promises).then(() => ({ code: 200, data }));
+
+const getStatusSplit = async (req) => {
+  /* range options
+  empty - since the beginning of times
+  0 - last 7 days
+  1 - last 30 days
+  2 - last 6 months
+  3 - last year
+  */
+  let { range } = req.query;
+  let dataIncidencia;
+  if (range) {
+    range = parseInt(range, 10);
+    const limitDay = new Date();
+    if (range === 0) {
+      limitDay.setDate(limitDay.getDate() - 7);
+    } else if (range === 1) {
+      limitDay.setDate(limitDay.getDate() - 30);
+    } else if (range === 2) {
+      limitDay.setMonth(limitDay.getMonth() - 6);
+    } else if (range === 3) {
+      limitDay.setYear(limitDay.getYear() - 1);
+    } else {
+      return { code: 400, data: 'Invalid range option (0 - 3).' };
+    }
+    dataIncidencia = { [Op.between]: [limitDay, new Date()] };
+  }
+  return models.prefeitura.findByPk(req.params.id,
+    {
+      raw: true,
+      include: [
+        {
+          model: models.municipio,
+          include: [
+            models.estado, models.regiao,
+          ],
+        },
+      ],
+    })
+    .then(async (city) => {
+      if (city) {
+        const data = {};
+        data.city = city;
+
+        const where = { prefeituraIncidencia: city.codigoMunicipio };
+        if (dataIncidencia) {
+          where.dataIncidencia = dataIncidencia;
+        }
+
+        return models.invoice.findAll(
+          {
+            raw: true,
+            attributes: [
+              'estado',
+              [sequelize.fn('COUNT', sequelize.col('txId')), 'count'],
+            ],
+            group: ['estado'],
+            where,
+          },
+        ).then((inv) => {
+          data.statusSplit = inv;
+          return { code: 200, data };
+        });
       }
       throw new errors.NotFoundError('City', `id ${req.params.id}`);
     });
@@ -212,4 +280,5 @@ export default {
   getCity,
   getGeneralStats,
   getDailyIssuing,
+  getStatusSplit,
 };

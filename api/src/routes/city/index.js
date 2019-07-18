@@ -11,4 +11,7 @@ export default {
   'GET /cities/:id/daily-issuing': {
     path: 'Cities.dailyIssuing',
   },
+  'GET /cities/:id/status-split': {
+    path: 'Cities.statusSplit',
+  },
 };

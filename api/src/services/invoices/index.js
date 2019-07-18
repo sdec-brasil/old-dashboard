@@ -2,7 +2,7 @@ import ResponseList from '../../utils/response';
 import { limitSettings } from '../../config/config';
 import models from '../../models';
 import {
-  serializers, treatNestedFilters, customErr, query, errors,
+  serializers, treatNestedFilters, query, errors,
 } from '../../utils';
 
 
