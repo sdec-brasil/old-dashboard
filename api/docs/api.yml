@@ -1131,7 +1131,7 @@ components:
           type: integer
           readOnly: true
           description: Número de usuário registrados na blockchain.
-        nEmitedInvoices:
+        nEmittedInvoices:
           type: integer
           readOnly: true
           description: Número total de notas fiscais emitidas.

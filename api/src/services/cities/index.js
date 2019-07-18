@@ -92,7 +92,7 @@ const getGeneralStats = async (req) => {
             // calculate average valLiquiNfse
               [sequelize.fn('AVG', sequelize.col('valLiquiNfse')), 'avgLiquidValue'],
               // calculate number of invoices
-              [sequelize.fn('COUNT', sequelize.col('txId')), 'emitedInvoicesCount'],
+              [sequelize.fn('COUNT', sequelize.col('txId')), 'emittedInvoicesCount'],
               // calculate average iss per invoice
               [sequelize.fn('AVG', sequelize.col('valIss')), 'avgIss'],
             ],
@@ -103,7 +103,7 @@ const getGeneralStats = async (req) => {
           },
         ).then((inv) => {
           data.avgLiquidValue = parseInt(inv[0].avgLiquidValue, 10) || 0;
-          data.emitedInvoicesCount = inv[0].emitedInvoicesCount || 0;
+          data.emittedInvoicesCount = inv[0].emittedInvoicesCount || 0;
           data.avgIss = parseInt(inv[0].avgIss, 10) || 0;
         }));
 
@@ -189,7 +189,7 @@ const getDailyIssuing = async (req) => {
             attributes: [
               'dataIncidencia',
               // calculate number of invoices
-              [sequelize.fn('COUNT', sequelize.col('txId')), 'emitedInvoicesCount'],
+              [sequelize.fn('COUNT', sequelize.col('txId')), 'emittedInvoicesCount'],
             ],
             group: ['dataIncidencia'],
             where: {
@@ -200,7 +200,6 @@ const getDailyIssuing = async (req) => {
         ).then((inv) => {
           data.dailyIssuing = inv;
         }));
-
 
         return Promise.all(promises).then(() => ({ code: 200, data }));
       }
