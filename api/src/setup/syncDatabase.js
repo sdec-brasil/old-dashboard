@@ -17,6 +17,7 @@ export default function () {
         })
         .catch((err) => {
           console.info('ERR - Populating Tables');
+          console.log(err);
           throw new Error(err);
         });
     })

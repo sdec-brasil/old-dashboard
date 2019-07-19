@@ -17,10 +17,10 @@ export default function (models) {
       } else {
         await fixtures.loadFile(`${__dirname}/municipio/municipiosSmall.js`, models, noLogs);
         await fixtures.loadFile(`${__dirname}/prefeitura/prefeituras.js`, models, noLogs);
-        await fixtures.loadFile(`${__dirname}/empresa/empresas.js`, models, noLogs);
-        await fixtures.loadFile(`${__dirname}/user/users.js`, models, noLogs);
+        // await fixtures.loadFile(`${__dirname}/empresa/empresas.js`, models, noLogs);
+        // await fixtures.loadFile(`${__dirname}/user/users.js`, models, noLogs);
         await fixtures.loadFile(`${__dirname}/client/clients.js`, models, noLogs);
-        await fixtures.loadFile(`${__dirname}/authorizationCode/authorizationCodes.js`, models, noLogs);
+        // await fixtures.loadFile(`${__dirname}/authorizationCode/authorizationCodes.js`, models, noLogs);
         // await generateInvoices(500);
         // await generateBlocks(4);
       }

@@ -11,8 +11,13 @@ export default class CompanyController {
     }
   }
 
-  async post(req, res) {
-    throw new Error('Not implemented');
+  async post(req, res, next) {
+    try {
+      const response = await service.postCompany(req);
+      res.status(response.code).send(response.data);
+    } catch (err) {
+      next(err);
+    }
   }
 
   async getById(req, res, next) {

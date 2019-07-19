@@ -8,7 +8,6 @@ export default {
   'POST /companies': {
     path: 'Companies.post',
     middlewares: [
-      login.ensureLoggedIn,
     ],
   },
 
@@ -16,10 +15,10 @@ export default {
   'GET /companies/:id': 'Companies.getById',
 
   // Atualiza o modelo do usuário na Blockchain
-  'POST /companies/:id': {
-    path: 'Companies.update',
-    middlewares: [
-      login.ensureLoggedIn,
-    ],
-  },
+  // 'POST /companies/:id': {
+  //   path: 'Companies.update',
+  //   middlewares: [
+  //     login.ensureLoggedIn,
+  //   ],
+  // },
 };
