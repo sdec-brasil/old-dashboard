@@ -1,7 +1,7 @@
 import ResponseList from '../../utils/response';
 import { limitSettings } from '../../config/config';
 import models from '../../models';
-import { treatNestedFilters, errors } from '../../utils';
+import { treatNestedFilters, errors, chain } from '../../utils';
 
 const sqs = require('sequelize-querystring');
 
@@ -59,41 +59,24 @@ const getCompany = async req =>
 
 
 const postCompany = async (req) => {
-// search by cnpj
-  const companyInfo = req.body;
-
-
-  invoiceInfo.enderecoEmissor = empresa.enderecoBlockchain;
-
-  const lastBlock = await models.block.findOne({ raw: true });
-  invoiceInfo.blocoConfirmacaoId = lastBlock.block_id;
-
-  const inv = await models.invoice.create(invoiceInfo);
-  return { code: 201, data: serializers.invoice.serialize(inv) };
+  const companyInfo = {
+    cnpj: req.body.cnpj,
+    razao: req.body.razaoSocial,
+    fantasia: req.body.nomeFantasia,
+    logEnd: req.body.enderecoEmpresa,
+    numEnd: req.body.numeroEndereco,
+    compEnd: req.body.complementoEndereco,
+    bairroEnd: req.body.bairroEndereco,
+    cidadeEnd: req.body.cidadeEndereco,
+    estadoEnd: req.body.unidadeFederacao,
+    paisEnd: req.body.paisEndereco,
+    cepEnd: req.body.cep,
+    email: req.body.email,
+    tel: req.body.telefone,
+  };
+  chain.registerEnterprise(companyInfo);
+  return { code: 201, data: 'created' };
 };
-
-
-async function register(stream) {
-  try {
-    const address = await this.node.getNewAddress();
-    this.json.endBlock = address;
-    const tx = await this.node.grant([address, 'send,receive', 0]);
-
-    setTimeout(async () => {
-      try {
-        await this.node.publishFrom([address, stream, ['COMPANY_REGISTRY', this.json.cnpj], { json: this.json }]);
-        this.registered = true;
-        console.log(`Empresa ${address} Registrada com ${tx}`);
-      } catch (e) {
-        console.log('Error ao registrar empresa:');
-        console.error(e);
-      }
-    }, 30000);
-  } catch (e) {
-    console.log('Error ao gerar endereço e permitir empresa:');
-    console.error(e);
-  }
-}
 
 
 export default {

@@ -26,7 +26,7 @@ setupErrorHandlers(server);
 // setupGraphQL(server);
 
 // Sync Database
-// syncDatabase();
+syncDatabase();
 
 // Start server
 setupStartServer(server);

@@ -9,6 +9,7 @@ import customErr from './customErr';
 import requests from './requests';
 import errors from './errors';
 import docker from './docker';
+import chain from './chain';
 
 export {
   query,
@@ -22,4 +23,5 @@ export {
   requests,
   errors,
   docker,
+  chain,
 };
