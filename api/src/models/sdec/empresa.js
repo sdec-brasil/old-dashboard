@@ -38,7 +38,7 @@ export default function (sequelize, DataTypes) {
       allowNull: false,
     },
     cidadeEndereco: {
-      type: DataTypes.STRING(60),
+      type: DataTypes.STRING(7),
       allowNull: false,
     },
     unidadeFederacao: {
