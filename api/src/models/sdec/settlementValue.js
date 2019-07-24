@@ -6,7 +6,7 @@ export default function (sequelize, DataTypes) {
     },
   },
   {
-    underscored: true,
+    underscored: false,
     tableName: 'settlementValues',
     freezeTableName: true,
   });

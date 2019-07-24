@@ -16,6 +16,7 @@ module.exports = [
       cep: '2003092',
       email: 'cola_com_a_gente@yahoo.com',
       telefone: '+552122343232',
+      serviceType: '4.05',
     },
   },
   {
@@ -35,6 +36,7 @@ module.exports = [
       cep: '2003062',
       email: 'cadernos@pablito.com',
       telefone: '+552122323232',
+      serviceType: '4.06',
     },
   },
   {
@@ -54,6 +56,7 @@ module.exports = [
       cep: '2003938',
       email: 'acende.ai@globo.com',
       telefone: '+552128843232',
+      serviceType: '4.07',
     },
   },
 ];

@@ -61,6 +61,10 @@ export default function (sequelize, DataTypes) {
       type: DataTypes.STRING(20),
       allowNull: true,
     },
+    serviceType: {
+      type: DataTypes.STRING(5),
+      allowNull: true,
+    },
   },
   {
     underscored: false,
@@ -68,6 +72,7 @@ export default function (sequelize, DataTypes) {
     freezeTableName: true,
     timestamps: false,
   });
+  // TODO: deveria ter uma FK para prefeituras?
 
   return empresa;
 }

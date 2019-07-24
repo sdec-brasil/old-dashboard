@@ -18,7 +18,11 @@ export default {
 
   // Retorna informações de notas de pagamento
   // de um determinado municipio pelo CNPJ
-  'GET /settlement/company/:cnpj': 'Settlement.getSettlementsFromCompany',
+  'GET /settlement/company/:cnpj': {
+    path: 'Settlement.getSettlementsFromCompany',
+    middlewares: [
+    ],
+  },
 
   // Mudar status da nota de pagamento (cancelar?)
 };
