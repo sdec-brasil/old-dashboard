@@ -114,7 +114,7 @@ function respRetencao() {
 }
 
 function itemLista() {
-  return uuid().slice(0, 5);
+  return choice(['4.23', '4.06', '4.07']);
 }
 
 function codCnae() {

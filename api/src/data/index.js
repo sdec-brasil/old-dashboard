@@ -21,8 +21,8 @@ export default function (models) {
         await fixtures.loadFile(`${__dirname}/user/users.js`, models, noLogs);
         await fixtures.loadFile(`${__dirname}/client/clients.js`, models, noLogs);
         await fixtures.loadFile(`${__dirname}/authorizationCode/authorizationCodes.js`, models, noLogs);
-        // await generateInvoices(500);
-        // await generateBlocks(4);
+        await generateInvoices(500);
+        await generateBlocks(4);
       }
       process.emit('dataLoaded');
       resolve();
